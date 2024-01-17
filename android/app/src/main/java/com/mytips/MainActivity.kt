@@ -7,6 +7,14 @@ import com.facebook.react.defaults.DefaultReactActivityDelegate
 
 class MainActivity : ReactActivity() {
 
+ /**
+   * Added because the React Navigation Docs said this change is required to avoid crashes related to View state being not 
+   * persisted consistently across Activity restarts.
+   */
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(null)
+  }
+
   /**
    * Returns the name of the main component registered from JavaScript. This is used to schedule
    * rendering of the component.
