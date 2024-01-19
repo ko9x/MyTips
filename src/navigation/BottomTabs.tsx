@@ -4,23 +4,24 @@ import SettingsScreen from '../screens/SettingsScreen';
 import StatsScreen from '../screens/StatsScreen';
 import ExportScreen from '../screens/ExportScreen';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+// import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import IconButton from '../components/IconButton';
 
 const Tab = createBottomTabNavigator();
 
-type ButtonProps = {
-  color: string;
-  size: number;
-  focused: boolean;
-};
+// type ButtonProps = {
+//   color: string;
+//   size: number;
+//   focused: boolean;
+// };
 
-const theThing = ({focused, color, size}: ButtonProps) => (
-  <MaterialCommunityIcons
-    name="home"
-    color={focused ? color : 'grey'}
-    size={size}
-  />
-);
+// const theThing = ({focused, color, size}: ButtonProps) => (
+//   <MaterialCommunityIcons
+//     name="home"
+//     color={focused ? color : 'grey'}
+//     size={size}
+//   />
+// );
 
 export default function BottomTabs() {
   return (
@@ -29,7 +30,7 @@ export default function BottomTabs() {
         name="Home"
         component={HomeScreen}
         options={{
-          tabBarIcon: theThing,
+          tabBarIcon: IconButton,
         }}
       />
       <Tab.Screen name="Stats" component={StatsScreen} />
