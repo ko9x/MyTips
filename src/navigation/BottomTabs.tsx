@@ -1,4 +1,5 @@
 import React from 'react';
+import {View, Text} from 'react-native';
 import HomeScreen from '../screens/HomeScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import StatsScreen from '../screens/StatsScreen';
@@ -8,53 +9,66 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 const Tab = createBottomTabNavigator();
 
-export default function BottomTabs() {
+const tabs = [
+  {
+    title: 'Home',
+    name: 'Home',
+    screen: HomeScreen,
+    icon: 'home',
+  },
+  {
+    title: 'Stats',
+    name: 'Stats',
+    screen: StatsScreen,
+    icon: 'chart-bar',
+  },
+  {
+    title: 'Export',
+    name: 'Export',
+    screen: ExportScreen,
+    icon: 'file-export-outline',
+  },
+  {
+    title: 'Settings',
+    name: 'Settings',
+    screen: SettingsScreen,
+    icon: 'cog',
+  },
+];
+
+const renderTabIcon = ({icon, focused, color, title}: any) => (
+  <View style={{alignItems: 'center', justifyContent: 'center'}}>
+    <MaterialCommunityIcons
+      name={icon}
+      size={25}
+      color={focused ? color : 'grey'}
+    />
+    <Text style={{fontSize: 10, color: focused ? color : 'grey'}}>{title}</Text>
+  </View>
+);
+
+const BottomTabNavigator = () => {
   return (
-    <Tab.Navigator>
-      <Tab.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{
-          tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons name="home" color={color} size={size} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Stats"
-        component={StatsScreen}
-        options={{
-          tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons
-              name="chart-bar"
-              color={color}
-              size={size}
-            />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Export"
-        component={ExportScreen}
-        options={{
-          tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons
-              name="file-export-outline"
-              color={color}
-              size={size}
-            />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Settings"
-        component={SettingsScreen}
-        options={{
-          tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons name="cog" color={color} size={size} />
-          ),
-        }}
-      />
+    <Tab.Navigator
+      initialRouteName="HomeScreen"
+      screenOptions={{
+        tabBarShowLabel: false,
+      }}>
+      {tabs.map(({title, name, screen, icon}, index) => (
+        <Tab.Screen
+          key={index}
+          name={name}
+          component={screen}
+          options={{
+            tabBarIcon: ({focused, color}: any) =>
+              renderTabIcon({icon, focused, color, title}),
+          }}
+        />
+      ))}
     </Tab.Navigator>
   );
+};
+
+export default function BottomTabs() {
+  return <BottomTabNavigator />;
 }
