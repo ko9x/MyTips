@@ -12,7 +12,7 @@ const Tab = createBottomTabNavigator();
 const tabs = [
   {
     title: 'Home',
-    name: 'Home',
+    name: 'MyTips',
     screen: HomeScreen,
     icon: 'home',
   },
