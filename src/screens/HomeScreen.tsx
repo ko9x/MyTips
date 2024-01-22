@@ -11,10 +11,18 @@ const today = momentDate.toISOString().split('T')[0];
 
 export default function HomeScreen(): React.JSX.Element {
   const initialTitleMonth = Moment(momentDate).format('MMMM YYYY');
-  // const [isCalOpen, setIsCalOpen] = useState(false);
   const [titleMonth, setTitleMonth] = useState(initialTitleMonth);
+  const [isCalOpen, setIsCalOpen] = useState(false);
 
-  console.log(Moment(momentDate).format('MMMM YYYY'));
+  function determineKnobIcon(calState: boolean): React.JSX.Element {
+    let iconName = '';
+    if (calState) {
+      iconName = 'chevron-up';
+    } else {
+      iconName = 'chevron-down';
+    }
+    return <MaterialCommunityIcons name={iconName} size={25} color={'white'} />;
+  }
 
   return (
     <>
@@ -22,9 +30,10 @@ export default function HomeScreen(): React.JSX.Element {
         style={{
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: 'white',
+          backgroundColor: '#46c482',
+          height: '5%',
         }}>
-        <Text>{titleMonth}</Text>
+        <Text style={{color: 'white'}}>{titleMonth}</Text>
       </View>
       <Agenda
         // The list of items that have to be displayed in agenda. If you want to render item as empty date
@@ -46,7 +55,7 @@ export default function HomeScreen(): React.JSX.Element {
         firstDay={1}
         // Callback that fires when the calendar is opened or closed
         onCalendarToggled={calendarOpened => {
-          console.log(calendarOpened);
+          setIsCalOpen(calendarOpened);
         }}
         // Callback that gets called on day press
         onDayPress={day => {
@@ -58,14 +67,6 @@ export default function HomeScreen(): React.JSX.Element {
         // }}
         // Initially selected day
         selected={today}
-        // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
-        minDate={undefined}
-        // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
-        maxDate={undefined}
-        // Max amount of months allowed to scroll to the past. Default = 50
-        pastScrollRange={50}
-        // Max amount of months allowed to scroll to the future. Default = 50
-        futureScrollRange={50}
         // Specify how each item should be rendered in agenda
         renderItem={(item, firstItemInDay) => {
           return <View />;
@@ -80,15 +81,7 @@ export default function HomeScreen(): React.JSX.Element {
         }}
         // Specify how agenda knob should look like
         renderKnob={() => {
-          return (
-            <View>
-              <MaterialCommunityIcons
-                name={'chevron-down'}
-                size={25}
-                color={'grey'}
-              />
-            </View>
-          );
+          return <View>{determineKnobIcon(isCalOpen)}</View>;
         }}
         // Specify what should be rendered instead of ActivityIndicator
         renderEmptyData={() => {
@@ -98,18 +91,12 @@ export default function HomeScreen(): React.JSX.Element {
         // rowHasChanged={(r1, r2) => {
         //   return r1.text !== r2.text;
         // }}
-        // Hide knob button. Default = false
-        hideKnob={false}
-        // When `true` and `hideKnob` prop is `false`, the knob will always be visible and the user will be able to drag the knob up and close the calendar. Default = false
-        showClosingKnob={false}
+        showClosingKnob={true}
         // By default, agenda dates are marked if they have at least one item, but you can override this if needed
         markedDates={{
-          '2012-05-16': {selected: true, marked: true},
-          '2012-05-17': {marked: true},
-          '2012-05-18': {disabled: true},
+          '2024-01-16': {marked: true},
+          '2024-01-17': {marked: true},
         }}
-        // If disabledByDefault={true} dates flagged as not disabled will be enabled. Default = false
-        disabledByDefault={true}
         // If provided, a standard RefreshControl will be added for "Pull to Refresh" functionality. Make sure to also set the refreshing prop correctly
         onRefresh={() => console.log('refreshing...')}
         // Set this true while waiting for new data from a refresh
@@ -118,24 +105,19 @@ export default function HomeScreen(): React.JSX.Element {
         // refreshControl={null}
         // Agenda theme
         theme={{
-          // ...calendarTheme,
-          agendaDayTextColor: 'yellow',
-          agendaDayNumColor: 'green',
-          agendaTodayColor: 'red',
-          agendaKnobColor: 'blue',
+          selectedDayBackgroundColor: 'white',
+          dayTextColor: 'white',
+          agendaDayTextColor: 'white',
+          todayTextColor: 'white',
+          selectedDayTextColor: '#21995b',
+          dotColor: 'white',
+          calendarBackground: '#46c482',
+          selectedDotColor: 'purple',
+          textSectionTitleColor: 'white',
         }}
         // Agenda container style
         style={{}}
       />
-      <View>
-        <Text>{'hello'}</Text>
-      </View>
-      <View>
-        <Text>{'hello'}</Text>
-      </View>
-      <View>
-        <Text>{'hello'}</Text>
-      </View>
     </>
   );
 }

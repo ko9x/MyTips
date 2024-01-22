@@ -36,14 +36,16 @@ const tabs = [
   },
 ];
 
-const renderTabIcon = ({icon, focused, color, title}: any) => (
+const renderTabIcon = ({icon, focused, title}: any) => (
   <View style={{alignItems: 'center', justifyContent: 'center'}}>
     <MaterialCommunityIcons
       name={icon}
       size={25}
-      color={focused ? color : 'grey'}
+      color={focused ? '#46c482' : 'grey'}
     />
-    <Text style={{fontSize: 10, color: focused ? color : 'grey'}}>{title}</Text>
+    <Text style={{fontSize: 10, color: focused ? '#46c482' : 'grey'}}>
+      {title}
+    </Text>
   </View>
 );
 
@@ -60,6 +62,11 @@ const BottomTabNavigator = () => {
           name={name}
           component={screen}
           options={{
+            headerShadowVisible: false,
+            headerTintColor: 'white',
+            headerStyle: {
+              backgroundColor: '#46c482',
+            },
             tabBarIcon: ({focused, color}: any) =>
               renderTabIcon({icon, focused, color, title}),
           }}
