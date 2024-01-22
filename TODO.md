@@ -1,14 +1,10 @@
 # What to do next
-
-- Fix those warnings in the BottomTabs file. We have bookmark in the react native folder called fix that error!
+- Make a global colors file
+- Add a smooth transition when switching screens
 - Finish adding the todo list for each screen
-- Add icons to the bottom tabs
 
 # HomeScreen TODO
-
 - Main
-  - Add a calendar
-    - I like the layout of the NoteWorthy
   - Add an image of a pile of money or something
   - Add a button to open the "Add Tips" modal
 - Modal
@@ -23,3 +19,7 @@
 # ExportScreen TODO
 
 # SettingsScreen TODO
+
+# Done
+- Add a calendar
+    - I like the layout of the NoteWorthy
