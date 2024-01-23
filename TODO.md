@@ -1,7 +1,6 @@
 # What to do next
-- Make a global colors file
-- Add a smooth transition when switching screens
 - Finish adding the todo list for each screen
+- Add a fade transition between tabs
 
 # HomeScreen TODO
 - Main
