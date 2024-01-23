@@ -6,6 +6,7 @@ import StatsScreen from '../screens/StatsScreen';
 import ExportScreen from '../screens/ExportScreen';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Colors from '../global/Colors';
 
 const Tab = createBottomTabNavigator();
 
@@ -41,9 +42,9 @@ const renderTabIcon = ({icon, focused, title}: any) => (
     <MaterialCommunityIcons
       name={icon}
       size={25}
-      color={focused ? '#46c482' : 'grey'}
+      color={focused ? Colors.primary : Colors.grey}
     />
-    <Text style={{fontSize: 10, color: focused ? '#46c482' : 'grey'}}>
+    <Text style={{fontSize: 10, color: focused ? Colors.primary : Colors.grey}}>
       {title}
     </Text>
   </View>
@@ -63,9 +64,9 @@ const BottomTabNavigator = () => {
           component={screen}
           options={{
             headerShadowVisible: false,
-            headerTintColor: 'white',
+            headerTintColor: Colors.white,
             headerStyle: {
-              backgroundColor: '#46c482',
+              backgroundColor: Colors.primary,
             },
             tabBarIcon: ({focused, color}: any) =>
               renderTabIcon({icon, focused, color, title}),

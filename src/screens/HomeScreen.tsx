@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
-import {View, Text} from 'react-native';
-import {Agenda} from 'react-native-calendars';
+import {View, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
+import {Agenda, DateData, AgendaEntry} from 'react-native-calendars';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Moment from 'moment';
+import Colors from '../global/Colors';
 const initialDate = new Date();
 const offsetAmount = initialDate.getTimezoneOffset() * 60000;
 const offsetDate = initialDate.getTime() - offsetAmount;
@@ -13,6 +14,40 @@ export default function HomeScreen(): React.JSX.Element {
   const initialTitleMonth = Moment(momentDate).format('MMMM YYYY');
   const [titleMonth, setTitleMonth] = useState(initialTitleMonth);
   const [isCalOpen, setIsCalOpen] = useState(false);
+  const [items, setItems] = useState({});
+
+  function timeToString(time: number) {
+    const date = new Date(time);
+    return date.toISOString().split('T')[0];
+  }
+
+  const loadItems = (day: DateData) => {
+    const tempItems: Record<string, any> = {} || items;
+    console.log(day);
+
+    setTimeout(() => {
+      for (let i = -15; i < 85; i++) {
+        const time = day.timestamp + i * 24 * 60 * 60 * 1000;
+        const strTime = timeToString(time);
+
+        if (!tempItems[strTime]) {
+          tempItems[strTime] = [];
+          tempItems[strTime].push({
+            name: '',
+            height: 180,
+            day: strTime,
+          });
+        }
+      }
+
+      const newItems: Record<string, any> = {};
+      Object.keys(tempItems).forEach(key => {
+        newItems[key] = tempItems[key];
+        console.log('temp items', tempItems);
+      });
+      setItems(newItems);
+    }, 1000);
+  };
 
   function determineKnobIcon(calState: boolean): React.JSX.Element {
     let iconName = '';
@@ -21,7 +56,9 @@ export default function HomeScreen(): React.JSX.Element {
     } else {
       iconName = 'chevron-down';
     }
-    return <MaterialCommunityIcons name={iconName} size={25} color={'white'} />;
+    return (
+      <MaterialCommunityIcons name={iconName} size={25} color={Colors.white} />
+    );
   }
 
   return (
@@ -30,72 +67,56 @@ export default function HomeScreen(): React.JSX.Element {
         style={{
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: '#46c482',
+          backgroundColor: Colors.primary,
           height: '5%',
         }}>
         <Text style={{color: 'white'}}>{titleMonth}</Text>
       </View>
       <Agenda
-        // The list of items that have to be displayed in agenda. If you want to render item as empty date
-        // the value of date key has to be an empty array []. If there exists no value for date key it is
-        // considered that the date in question is not yet loaded
-        // items={{
-        //   '2012-05-22': [{name: 'item 1 - any js object'}],
-        //   '2012-05-23': [{name: 'item 2 - any js object', height: 80}],
-        //   '2012-05-24': [],
-        //   '2012-05-25': [
-        //     {name: 'item 3 - any js object'},
-        //     {name: 'any js object'},
-        //   ],
-        // }}
-        // Callback that gets called when items for a certain month should be loaded (month became visible)
-        // loadItemsForMonth={month => {
-        //   console.log('trigger items loading');
-        // }}
+        items={items}
+        loadItemsForMonth={loadItems}
         firstDay={1}
-        // Callback that fires when the calendar is opened or closed
+        selected={today}
         onCalendarToggled={calendarOpened => {
           setIsCalOpen(calendarOpened);
         }}
-        // Callback that gets called on day press
         onDayPress={day => {
           setTitleMonth(Moment(day.dateString).format('MMMM YYYY'));
         }}
-        // Callback that gets called when day changes while scrolling agenda list
-        // onDayChange={day => {
-        //   console.log('day changed');
-        // }}
-        // Initially selected day
-        selected={today}
-        // Specify how each item should be rendered in agenda
-        renderItem={(item, firstItemInDay) => {
-          return <View />;
-        }}
-        // Specify how each date should be rendered. day can be undefined if the item is not first in that day
-        renderDay={(day, item) => {
-          return <View />;
+        renderItem={(reservation: AgendaEntry, isFirst: boolean) => {
+          const fontSize = isFirst ? 16 : 14;
+          const color = isFirst ? 'black' : '#43515c';
+
+          return (
+            <TouchableOpacity
+              style={[styles.item, {height: reservation.height}]}
+              onPress={() => Alert.alert(reservation.name)}>
+              <Text style={{fontSize, color}}>{reservation.name}</Text>
+            </TouchableOpacity>
+          );
         }}
         // Specify how empty date content with no items should be rendered
         renderEmptyDate={() => {
-          return <View />;
+          return (
+            <View>
+              <Text>Empty</Text>
+            </View>
+          );
         }}
         // Specify how agenda knob should look like
         renderKnob={() => {
           return <View>{determineKnobIcon(isCalOpen)}</View>;
         }}
         // Specify what should be rendered instead of ActivityIndicator
-        renderEmptyData={() => {
-          return <View />;
-        }}
-        // Specify your item comparison function for increased performance
-        // rowHasChanged={(r1, r2) => {
-        //   return r1.text !== r2.text;
+        // renderEmptyData={() => {
+        //   return <View />;
         // }}
         showClosingKnob={true}
         // By default, agenda dates are marked if they have at least one item, but you can override this if needed
         markedDates={{
-          '2024-01-16': {marked: true},
-          '2024-01-17': {marked: true},
+          '2024-01-24': {marked: true},
+          '2024-01-25': {marked: true},
+          '2024-01-22': {marked: true},
         }}
         // If provided, a standard RefreshControl will be added for "Pull to Refresh" functionality. Make sure to also set the refreshing prop correctly
         onRefresh={() => console.log('refreshing...')}
@@ -105,15 +126,17 @@ export default function HomeScreen(): React.JSX.Element {
         // refreshControl={null}
         // Agenda theme
         theme={{
-          selectedDayBackgroundColor: 'white',
-          dayTextColor: 'white',
-          agendaDayTextColor: 'white',
-          todayTextColor: 'white',
-          selectedDayTextColor: '#21995b',
-          dotColor: 'white',
-          calendarBackground: '#46c482',
-          selectedDotColor: 'purple',
-          textSectionTitleColor: 'white',
+          selectedDayBackgroundColor: Colors.white,
+          todayBackgroundColor: Colors.accent,
+          dayTextColor: Colors.white,
+          agendaDayTextColor: Colors.grey,
+          agendaTodayColor: Colors.secondary,
+          todayTextColor: Colors.secondary,
+          selectedDayTextColor: Colors.secondary,
+          dotColor: Colors.white,
+          calendarBackground: Colors.primary,
+          selectedDotColor: Colors.secondary,
+          textSectionTitleColor: Colors.white,
         }}
         // Agenda container style
         style={{}}
@@ -121,3 +144,28 @@ export default function HomeScreen(): React.JSX.Element {
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  item: {
+    backgroundColor: 'white',
+    flex: 1,
+    borderRadius: 5,
+    padding: 10,
+    marginRight: 10,
+    marginTop: 17,
+    height: 180,
+  },
+  itemText: {
+    color: 'red',
+    fontSize: 16,
+  },
+  customDay: {
+    margin: 10,
+    fontSize: 24,
+    color: 'green',
+  },
+});
