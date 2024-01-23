@@ -23,7 +23,6 @@ export default function HomeScreen(): React.JSX.Element {
 
   const loadItems = (day: DateData) => {
     const tempItems: Record<string, any> = {} || items;
-    console.log(day);
 
     setTimeout(() => {
       for (let i = -15; i < 85; i++) {
@@ -43,7 +42,6 @@ export default function HomeScreen(): React.JSX.Element {
       const newItems: Record<string, any> = {};
       Object.keys(tempItems).forEach(key => {
         newItems[key] = tempItems[key];
-        console.log('temp items', tempItems);
       });
       setItems(newItems);
     }, 1000);
