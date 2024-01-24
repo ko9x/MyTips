@@ -41,3 +41,9 @@
 ### todayButton.js location
 - To modify the today button
 `node_modules/react-native-calendar/src/expandableCalendar/Context/todayButton.js`
+
+### theme.js location
+`src/mocks/theme.js`
+
+### When we are ready to finalize the item object structure we can modify the declared type for AgendaEntry located in:
+`node_modules/react-native-calendar/src/types.d.ts`

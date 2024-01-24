@@ -1,6 +1,6 @@
 # What to do next
+- Move close caret to the bottom of the view when calendar is open
 - Continue styling the home screen
-- Change expand knob to a down/up caret
 - Update theme.ts in the mocks folder to our desired look
 - Finish adding the todo list for each screen
 - Add a fade transition between tabs
