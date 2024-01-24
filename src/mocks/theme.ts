@@ -5,45 +5,44 @@ export const themeColor = '#00AAAF';
 export const lightThemeColor = '#f2f7f7';
 
 export function getTheme() {
-  const disabledColor = 'grey';
-
   return {
     // new stuff
+    todayButtonTextColor: Colors.primary,
     calendarBackground: Colors.primary,
     expandableCalendarBackground: Colors.primary,
     calendarContainerBackground: Colors.primary,
-    monthContainerBackground: Colors.tertiary,
+    monthContainerBackground: Colors.light,
     // arrows
-    arrowColor: 'black',
+    arrowColor: Colors.white,
     arrowStyle: {padding: 0},
     // knob
     expandableKnobColor: themeColor,
     // month
-    monthTextColor: 'black',
+    monthTextColor: Colors.white,
     textMonthFontSize: 16,
     textMonthFontFamily: 'HelveticaNeue',
     textMonthFontWeight: 'bold' as const,
     // day names
-    textSectionTitleColor: 'black',
-    textDayHeaderFontSize: 12,
+    textSectionTitleColor: Colors.white,
+    textDayHeaderFontSize: 14,
     textDayHeaderFontFamily: 'HelveticaNeue',
     textDayHeaderFontWeight: 'normal' as const,
     // dates
-    dayTextColor: themeColor,
-    todayTextColor: '#af0078',
+    dayTextColor: Colors.white,
+    todayTextColor: Colors.dark,
     textDayFontSize: 18,
     textDayFontFamily: 'HelveticaNeue',
     textDayFontWeight: '500' as const,
     textDayStyle: {marginTop: Platform.OS === 'android' ? 2 : 4},
     // selected date
-    selectedDayBackgroundColor: themeColor,
-    selectedDayTextColor: 'white',
+    selectedDayBackgroundColor: Colors.white,
+    selectedDayTextColor: Colors.dark,
     // disabled date
-    textDisabledColor: disabledColor,
+    textDisabledColor: Colors.white,
     // dot (marked date)
     dotColor: themeColor,
     selectedDotColor: 'white',
-    disabledDotColor: disabledColor,
+    disabledDotColor: Colors.lighter,
     dotStyle: {marginTop: -2},
   };
 }

@@ -151,12 +151,12 @@ export default function SettingsScreen(): React.JSX.Element {
           todayBackgroundColor: Colors.accent,
           dayTextColor: Colors.white,
           agendaDayTextColor: Colors.grey,
-          agendaTodayColor: Colors.secondary,
-          todayTextColor: Colors.secondary,
-          selectedDayTextColor: Colors.secondary,
+          agendaTodayColor: Colors.dark,
+          todayTextColor: Colors.dark,
+          selectedDayTextColor: Colors.dark,
           dotColor: Colors.white,
           calendarBackground: Colors.primary,
-          selectedDotColor: Colors.secondary,
+          selectedDotColor: Colors.dark,
           textSectionTitleColor: Colors.white,
         }}
         // Agenda container style

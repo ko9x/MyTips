@@ -1,7 +1,8 @@
 export default {
-  primary: '#46c482',
-  secondary: '#21995b',
-  tertiary: '#5feca3',
+  primary: '#18d388',
+  dark: '#21995b',
+  light: '#56d8a2',
+  lighter: '#54de96',
   grey: 'grey',
   white: 'white',
   accent: 'gold',

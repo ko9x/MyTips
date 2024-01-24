@@ -15,7 +15,7 @@ import {
   DateData,
 } from 'react-native-calendars';
 import Moment from 'moment';
-import {getTheme, themeColor} from '../mocks/theme';
+import {getTheme} from '../mocks/theme';
 const initialDate = new Date();
 const offsetAmount = initialDate.getTimezoneOffset() * 60000;
 const offsetDate = initialDate.getTime() - offsetAmount;
@@ -29,9 +29,6 @@ export default function HomeScreen() {
   const [selectedDate, setSelectedDate] = useState(today);
   const [items, setItems] = useState({});
   const theme = useRef(getTheme());
-  const todayBtnTheme = useRef({
-    todayButtonTextColor: themeColor,
-  });
 
   function timeToString(time: number) {
     const date = new Date(time);
@@ -72,7 +69,7 @@ export default function HomeScreen() {
       date={today}
       onDateChanged={date => handleDateChange(date)}
       showTodayButton={showTodayButton}
-      theme={todayBtnTheme.current}
+      theme={theme.current}
       todayBottomMargin={30}>
       <View style={{zIndex: 100}}>
         <ExpandableCalendar
