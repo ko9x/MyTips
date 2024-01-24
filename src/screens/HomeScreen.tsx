@@ -16,6 +16,7 @@ import {
 } from 'react-native-calendars';
 import Moment from 'moment';
 import {getTheme} from '../mocks/theme';
+import Colors from '../global/Colors';
 const initialDate = new Date();
 const offsetAmount = initialDate.getTimezoneOffset() * 60000;
 const offsetDate = initialDate.getTime() - offsetAmount;
@@ -28,6 +29,7 @@ export default function HomeScreen() {
   const [showTodayButton, setShowTodayButton] = useState(false);
   const [selectedDate, setSelectedDate] = useState(today);
   const [items, setItems] = useState({});
+  const [calOpen, setCalOpen] = useState(false);
   const theme = useRef(getTheme());
 
   function timeToString(time: number) {
@@ -71,10 +73,16 @@ export default function HomeScreen() {
       showTodayButton={showTodayButton}
       theme={theme.current}
       todayBottomMargin={30}>
-      <View style={{zIndex: 100}}>
+      <View
+        style={{
+          zIndex: 100,
+          height: calOpen ? '99%' : 158,
+          backgroundColor: Colors.primary,
+          borderRadius: 20,
+        }}>
         <ExpandableCalendar
           onCalendarToggled={(isOpen: boolean) => {
-            console.log(isOpen);
+            setCalOpen(isOpen);
           }}
           calendarStyle={styles.calendar}
           theme={theme.current}
@@ -93,9 +101,7 @@ export default function HomeScreen() {
         loadItemsForMonth={loadItems}
         // items={items}
         items={{
-          '2024-01-24': [
-            {day: '2024-01-24', height: 180, name: 'testing this'},
-          ],
+          '2024-01-24': [{day: '2024-01-24', name: 'testing this'}],
         }}
         selected={selectedDate}
         renderEmptyData={() => {
@@ -117,7 +123,7 @@ export default function HomeScreen() {
           const color = isFirst ? 'black' : '#43515c';
           return (
             <TouchableOpacity
-              style={[styles.item, {height: reservation.height}]}
+              style={[styles.item, {height: 380}]}
               onPress={() => Alert.alert(reservation.name)}>
               <Text style={{fontSize, color}}>{reservation.name}</Text>
             </TouchableOpacity>
