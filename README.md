@@ -37,3 +37,7 @@
 - The important bit is headerStyle with the backgroundColor property set to the desired color.
 - headerShadowVisible set to false gets rid of the line that is under the header
 - headerTintColor is the color of the text inside the header
+
+### todayButton.js location
+- To modify the today button
+`node_modules/react-native-calendar/src/expandableCalendar/Context/todayButton.js`
