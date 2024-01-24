@@ -1,4 +1,5 @@
 import {Platform} from 'react-native';
+import Colors from '../global/Colors';
 
 export const themeColor = '#00AAAF';
 export const lightThemeColor = '#f2f7f7';
@@ -7,6 +8,11 @@ export function getTheme() {
   const disabledColor = 'grey';
 
   return {
+    // new stuff
+    calendarBackground: Colors.primary,
+    expandableCalendarBackground: Colors.primary,
+    calendarContainerBackground: Colors.primary,
+    monthContainerBackground: Colors.tertiary,
     // arrows
     arrowColor: 'black',
     arrowStyle: {padding: 0},
