@@ -66,6 +66,10 @@ export default function HomeScreen() {
     setShowTodayButton(true);
   }
 
+  if (calOpen) {
+    console.log('calendar is open');
+  }
+
   return (
     <CalendarProvider
       date={today}
@@ -76,9 +80,7 @@ export default function HomeScreen() {
       <View
         style={{
           zIndex: 100,
-          height: calOpen ? '99%' : 158,
           backgroundColor: Colors.primary,
-          borderRadius: 20,
         }}>
         <ExpandableCalendar
           onCalendarToggled={(isOpen: boolean) => {

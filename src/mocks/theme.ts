@@ -7,11 +7,12 @@ export const lightThemeColor = '#f2f7f7';
 export function getTheme() {
   return {
     // new stuff
+    weekBGColor: Colors.light,
     todayButtonTextColor: Colors.primary,
     calendarBackground: Colors.primary,
     expandableCalendarBackground: Colors.primary,
     calendarContainerBackground: Colors.primary,
-    monthContainerBackground: Colors.light,
+    monthContainerBackground: Colors.primary,
     // arrows
     arrowColor: Colors.white,
     arrowStyle: {padding: 0},
