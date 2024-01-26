@@ -71,6 +71,15 @@ export default function HomeScreen() {
     console.log('calendar is open');
   }
 
+  const itemObject = {
+    '2024-01-24': [
+      {day: '2024-01-24', name: 'server', amount: 420, hours: 8, section: '1'},
+    ],
+    '2024-01-25': [
+      {day: '2024-01-25', name: 'bar', amount: 380, hours: 9, section: ''},
+    ],
+  };
+
   return (
     <CalendarProvider
       date={today}
@@ -103,9 +112,7 @@ export default function HomeScreen() {
         style={{zIndex: 0, marginTop: -105}}
         loadItemsForMonth={loadItems}
         // items={items}
-        items={{
-          '2024-01-24': [{day: '2024-01-24', name: 'testing this'}],
-        }}
+        items={itemObject}
         selected={selectedDate}
         renderEmptyData={() => {
           return (
@@ -116,21 +123,23 @@ export default function HomeScreen() {
           );
         }}
         renderItem={(reservation: AgendaEntry, isFirst: boolean) => {
-          // return (
-          //   <View style={styles.item}>
-          //     <Text>Hey add something here!</Text>
-          //     <Button title={'click'} />
-          //   </View>
-          // );
-          const fontSize = isFirst ? 16 : 14;
-          const color = isFirst ? 'black' : '#43515c';
-          return (
-            <TouchableOpacity
-              style={[styles.item, {height: 380}]}
-              onPress={() => Alert.alert(reservation.name)}>
-              <Text style={{fontSize, color}}>{reservation.name}</Text>
-            </TouchableOpacity>
-          );
+          if (reservation.day === selectedDate) {
+            const fontSize = isFirst ? 16 : 14;
+            const color = isFirst ? 'black' : '#43515c';
+            return (
+              <TouchableOpacity
+                style={[styles.item, {height: 380}]}
+                onPress={() => Alert.alert(reservation.day)}>
+                <Text style={{fontSize, color}}>{reservation.day}</Text>
+              </TouchableOpacity>
+            );
+          } else {
+            return (
+              <View style={{height: 0}}>
+                <Text />
+              </View>
+            );
+          }
         }}
         // Specify how empty date content with no items should be rendered
         renderEmptyDate={() => {
