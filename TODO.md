@@ -1,4 +1,8 @@
 # What to do next
+- We need to figure out a way to make sure all the changes we made in node modules persists
+  - Node modules isn't being tracked.
+    - Can we track just that one folder?
+      - Can we just move that folder out of mode modules and into our project?
 - Research what type of database to use and how to get it setup to collect user data
   - Do we want a local storage database? Is that possible for what we want to be able to do?
   - Do we want to just make a database using Laravel and Docker like we have in the past?
