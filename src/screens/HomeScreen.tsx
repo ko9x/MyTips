@@ -66,6 +66,7 @@ export default function HomeScreen() {
     setShowTodayButton(true);
   }
 
+  // This is here because I am probably going to need the calOpen state eventually and I kept getting warnings about it not being used anywhere
   if (calOpen) {
     console.log('calendar is open');
   }

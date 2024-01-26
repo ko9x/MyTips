@@ -1,10 +1,15 @@
 # What to do next
-- Move close caret to the bottom of the view when calendar is open
-- Continue styling the home screen
-- Update theme.ts in the mocks folder to our desired look
+- Research what type of database to use and how to get it setup to collect user data
+  - Do we want a local storage database? Is that possible for what we want to be able to do?
+  - Do we want to just make a database using Laravel and Docker like we have in the past?
+- Setup interface to collect and store user data
+- Figure out how to display the stored data from the user
+  - Decide how we want that data to be displayed in each screen
 - Finish adding the todo list for each screen
 - Add a fade transition between tabs
 - Don't allow user to go into landscape view
+- Check how app looks and runs on android
+- Check if the user settings for large text breaks the styling (we disabled large text in NoteWorthy for this reason)
 
 # HomeScreen TODO
 - Main

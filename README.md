@@ -47,3 +47,15 @@
 
 ### When we are ready to finalize the item object structure we can modify the declared type for AgendaEntry located in:
 `node_modules/react-native-calendar/src/types.d.ts`
+
+### Fixed the opening and closing animation by modifying some function in:
+`node_modules/react-native-calendar/src/expandableCalendar/index.js`
+- The main changes were: 
+  - commenting out the pan gesture functions
+  - modifying the knob appearance 
+  - fixing the bounceToPosition function 
+
+### MySql database stuff
+  - `https://github.com/OP-Engineering/op-sqlite`
+  - `https://stackoverflow.com/questions/5967426/select-day-of-week-from-date`
+  - `https://stackoverflow.com/questions/30215059/day-of-week-in-sql`
