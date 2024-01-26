@@ -1,0 +1,344 @@
+diff --git a/node_modules/react-native-calendars/src/agenda/reservation-list/reservation.js b/node_modules/react-native-calendars/src/agenda/reservation-list/reservation.js
+index bc1e2c0..47138f9 100644
+--- a/node_modules/react-native-calendars/src/agenda/reservation-list/reservation.js
++++ b/node_modules/react-native-calendars/src/agenda/reservation-list/reservation.js
+@@ -48,25 +48,26 @@ class Reservation extends Component {
+         }
+         return changed;
+     }
+-    renderDate() {
+-        const { item, date, renderDay } = this.props;
+-        if (isFunction(renderDay)) {
+-            return renderDay(date, item);
+-        }
+-        const today = date && isToday(date) ? this.style.today : undefined;
+-        const dayNames = getDefaultLocale().dayNamesShort;
+-        if (date) {
+-            return (<View style={this.style.day} testID={RESERVATION_DATE}>
+-          <Text allowFontScaling={false} style={[this.style.dayNum, today]}>
+-            {date.getDate()}
+-          </Text>
+-          <Text allowFontScaling={false} style={[this.style.dayText, today]}>
+-            {dayNames ? dayNames[date.getDay()] : undefined}
+-          </Text>
+-        </View>);
+-        }
+-        return <View style={this.style.day}/>;
+-    }
++    // Commented out renderDate because we don't want it to show in the Agenda component
++    // renderDate() {
++    //     const { item, date, renderDay } = this.props;
++    //     if (isFunction(renderDay)) {
++    //         return renderDay(date, item);
++    //     }
++    //     const today = date && isToday(date) ? this.style.today : undefined;
++    //     const dayNames = getDefaultLocale().dayNamesShort;
++    //     if (date) {
++    //         return (<View style={this.style.day} testID={RESERVATION_DATE}>
++    //       <Text allowFontScaling={false} style={[this.style.dayNum, today]}>
++    //         {date.getDate()}
++    //       </Text>
++    //       <Text allowFontScaling={false} style={[this.style.dayText, today]}>
++    //         {dayNames ? dayNames[date.getDay()] : undefined}
++    //       </Text>
++    //     </View>);
++    //     }
++    //     return <View style={this.style.day}/>;
++    // }
+     render() {
+         const { item, date, renderItem, renderEmptyDate } = this.props;
+         let content;
+@@ -80,7 +81,7 @@ class Reservation extends Component {
+             content = renderEmptyDate(date);
+         }
+         return (<View style={this.style.container}>
+-        {this.renderDate()}
++        {/* {this.renderDate()} */}
+         <View style={this.style.innerContainer}>{content}</View>
+       </View>);
+     }
+diff --git a/node_modules/react-native-calendars/src/calendar/style.js b/node_modules/react-native-calendars/src/calendar/style.js
+index 735afb5..73ba076 100644
+--- a/node_modules/react-native-calendars/src/calendar/style.js
++++ b/node_modules/react-native-calendars/src/calendar/style.js
+@@ -4,9 +4,9 @@ export default function getStyle(theme = {}) {
+     const appStyle = { ...defaultStyle, ...theme };
+     return StyleSheet.create({
+         container: {
++            backgroundColor: appStyle.calendarContainerBackground,
+             paddingLeft: 5,
+             paddingRight: 5,
+-            backgroundColor: appStyle.calendarBackground
+         },
+         dayContainer: {
+             flex: 1,
+@@ -16,7 +16,8 @@ export default function getStyle(theme = {}) {
+             flex: 1
+         },
+         monthView: {
+-            backgroundColor: appStyle.calendarBackground
++            marginTop: 2,
++            backgroundColor: appStyle.monthContainerBackground
+         },
+         week: {
+             marginVertical: appStyle.weekVerticalMargin,
+diff --git a/node_modules/react-native-calendars/src/expandableCalendar/Context/todayButton.js b/node_modules/react-native-calendars/src/expandableCalendar/Context/todayButton.js
+index 80a7348..504bb6c 100644
+--- a/node_modules/react-native-calendars/src/expandableCalendar/Context/todayButton.js
++++ b/node_modules/react-native-calendars/src/expandableCalendar/Context/todayButton.js
+@@ -25,7 +25,7 @@ const TodayButton = (props, ref) => {
+     /** Effects */
+     useEffect(() => {
+         if (shouldShow) {
+-            setButtonIcon(getButtonIcon());
++            // setButtonIcon(getButtonIcon());
+         }
+         animatePosition();
+     }, [state]);
+@@ -48,12 +48,12 @@ const TodayButton = (props, ref) => {
+     };
+     const today = useRef(getFormattedLabel());
+     /** Icon */
+-    const getButtonIcon = () => {
+-        if (shouldShow) {
+-            return state === 1 ? UP_ICON : DOWN_ICON;
+-        }
+-    };
+-    const [buttonIcon, setButtonIcon] = useState(getButtonIcon());
++    // const getButtonIcon = () => {
++    //     if (shouldShow) {
++    //         return state === 1 ? UP_ICON : DOWN_ICON;
++    //     }
++    // };
++    // const [buttonIcon, setButtonIcon] = useState(getButtonIcon());
+     /** Animations */
+     const buttonY = useRef(new Animated.Value(margin ? -margin : -TOP_POSITION));
+     const opacity = useRef(new Animated.Value(1));
+@@ -93,7 +93,7 @@ const TodayButton = (props, ref) => {
+     }, [setDate]);
+     return (<Animated.View style={[style.current.todayButtonContainer, { transform: [{ translateY: buttonY.current }] }]}>
+       <TouchableOpacity style={[style.current.todayButton, propsStyle]} onPress={onPress} disabled={disabled}>
+-        <Animated.Image style={[style.current.todayButtonImage, { opacity: opacity.current }]} source={buttonIcon}/>
++        {/* <Animated.Image style={[style.current.todayButtonImage, { opacity: opacity.current }]} source={buttonIcon}/> */}
+         <Animated.Text allowFontScaling={false} style={[style.current.todayButtonText, { opacity: opacity.current }]}>
+           {today.current}
+         </Animated.Text>
+diff --git a/node_modules/react-native-calendars/src/expandableCalendar/index.js b/node_modules/react-native-calendars/src/expandableCalendar/index.js
+index 4fb12b0..1d9b19b 100644
+--- a/node_modules/react-native-calendars/src/expandableCalendar/index.js
++++ b/node_modules/react-native-calendars/src/expandableCalendar/index.js
+@@ -16,13 +16,14 @@ import WeekCalendar from './WeekCalendar';
+ import Context from './Context';
+ import constants from '../commons/constants';
+ import { UpdateSources } from './commons';
++import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+ export var Positions;
+ (function (Positions) {
+     Positions["CLOSED"] = "closed";
+     Positions["OPEN"] = "open";
+ })(Positions || (Positions = {}));
+-const SPEED = 20;
+-const BOUNCINESS = 6;
++const SPEED = 2;
++const BOUNCINESS = 1;
+ const CLOSED_HEIGHT = 120; // header + 1 week
+ const WEEK_HEIGHT = 46;
+ const DAY_NAMES_PADDING = 24;
+@@ -59,6 +60,17 @@ const ExpandableCalendar = (props) => {
+     /** CalendarList props */
+     horizontal = true, calendarStyle, theme, style: propsStyle, firstDay = 0, onDayPress, hideArrows, onPressArrowLeft, onPressArrowRight, renderArrow, testID, ...others } = props;
+     const [screenReaderEnabled, setScreenReaderEnabled] = useState(false);
++    /** Knob */
++    // Created this knob function to handle the toggle of the icon
++    const [knobIcon, setKnobIcon] = useState('chevron-down');
++    function toggleKnobIcon() {
++        if (isOpen) {
++            setKnobIcon('chevron-down');
++        }
++        if (!isOpen) {
++            setKnobIcon('chevron-up');
++        }
++    }
+     /** Date */
+     const getYear = (date) => {
+         const d = new XDate(date);
+@@ -236,26 +248,28 @@ const ExpandableCalendar = (props) => {
+         return gestureState.dy > 5 || gestureState.dy < -5;
+     };
+     const handlePanResponderMove = (_, gestureState) => {
++        // REMOVED THIS FUNCTION BECAUSE IT DOESN'T WORK VERY WELL
+         // limit min height to closed height and max to open height
+-        _wrapperStyles.current.style.height = Math.min(Math.max(closedHeight, _height.current + gestureState.dy), openHeight.current);
+-        if (!horizontal) {
+-            // vertical CalenderList header
+-            _headerStyles.style.top = Math.min(Math.max(-gestureState.dy, -HEADER_HEIGHT), 0);
+-        }
+-        else {
+-            // horizontal Week view
+-            if (!isOpen) {
+-                _weekCalendarStyles.style.opacity = Math.min(1, Math.max(1 - gestureState.dy / 100, 0));
+-            }
+-            else if (gestureState.dy < 0) {
+-                _weekCalendarStyles.style.opacity = Math.max(0, Math.min(Math.abs(gestureState.dy / 200), 1));
+-            }
+-        }
+-        updateNativeStyles();
++        // _wrapperStyles.current.style.height = Math.min(Math.max(closedHeight, _height.current + gestureState.dy), openHeight.current);
++        // if (!horizontal) {
++        //     // vertical CalenderList header
++        //     _headerStyles.style.top = Math.min(Math.max(-gestureState.dy, -HEADER_HEIGHT), 0);
++        // }
++        // else {
++        //     // horizontal Week view
++        //     if (!isOpen) {
++        //         _weekCalendarStyles.style.opacity = Math.min(1, Math.max(1 - gestureState.dy / 100, 0));
++        //     }
++        //     else if (gestureState.dy < 0) {
++        //         _weekCalendarStyles.style.opacity = Math.max(0, Math.min(Math.abs(gestureState.dy / 200), 1));
++        //     }
++        // }
++        // updateNativeStyles();
+     };
+     const handlePanResponderEnd = () => {
+-        _height.current = Number(_wrapperStyles.current.style.height);
+-        bounceToPosition();
++        // REMOVED THIS FUNCTION BECAUSE IT DOESN'T WORK VERY WELL
++        // _height.current = Number(_wrapperStyles.current.style.height);
++        // bounceToPosition();
+     };
+     const numberOfDaysCondition = useMemo(() => {
+         return !numberOfDays || numberOfDays && numberOfDays <= 1;
+@@ -280,12 +294,14 @@ const ExpandableCalendar = (props) => {
+                 speed: SPEED,
+                 bounciness: BOUNCINESS,
+                 useNativeDriver: false
+-            }).start();
++                // Moved the setPosition function to inside the .start so it happens at the right time
++                // It was previously at the bottom of this bounceToPosition function but was getting called too early
++            }).start(() => setPosition(() => _height.current === closedHeight ? Positions.CLOSED : Positions.OPEN));
++            toggleKnobIcon();
+             onCalendarToggled?.(_isOpen);
+-            setPosition(() => _height.current === closedHeight ? Positions.CLOSED : Positions.OPEN);
+             closeHeader(_isOpen);
+             resetWeekCalendarOpacity(_isOpen);
+-        }
++            }
+     };
+     const resetWeekCalendarOpacity = (isOpen) => {
+         _weekCalendarStyles.style.opacity = isOpen ? 0 : 1;
+@@ -383,8 +399,27 @@ const ExpandableCalendar = (props) => {
+       </Animated.View>);
+     };
+     const renderKnob = () => {
++        // function toggleKnobIcon() {
++        //     if (isOpen) {
++
++        //     }
++        // }
++        // function determineKnobIcon(): React.JSX.Element {
++        //     let iconName = '';
++        //     if (isOpen) {
++        //       iconName = 'chevron-up';
++        //     } else {
++        //       iconName = 'chevron-down';
++        //     }
++        //     return (
++        //       <MaterialCommunityIcons name={iconName} size={25} color='white' />
++        //     );
++        //   }
++        //   determineKnobIcon();
+         return (<View style={style.current.knobContainer} pointerEvents={'box-none'}>
+-        <TouchableOpacity style={style.current.knob} testID={`${testID}.knob`} onPress={toggleCalendarPosition} hitSlop={knobHitSlop} /* activeOpacity={isOpen ? undefined : 1} *//>
++        <TouchableOpacity testID={`${testID}.knob`} onPress={toggleCalendarPosition} hitSlop={knobHitSlop} /* activeOpacity={isOpen ? undefined : 1} */>
++        <MaterialCommunityIcons name={knobIcon} size={25} color='white' />
++        </TouchableOpacity>
+       </View>);
+     };
+     const renderWeekCalendar = () => {
+diff --git a/node_modules/react-native-calendars/src/expandableCalendar/style.js b/node_modules/react-native-calendars/src/expandableCalendar/style.js
+index 775ff1c..dd76301 100644
+--- a/node_modules/react-native-calendars/src/expandableCalendar/style.js
++++ b/node_modules/react-native-calendars/src/expandableCalendar/style.js
+@@ -6,26 +6,26 @@ export const KNOB_CONTAINER_HEIGHT = 24;
+ export default function styleConstructor(theme = {}) {
+     const appStyle = { ...defaultStyle, ...theme };
+     return StyleSheet.create({
+-        containerShadow: {
+-            backgroundColor: appStyle.calendarBackground,
+-            ...Platform.select({
+-                ios: {
+-                    shadowColor: '#858F96',
+-                    shadowOpacity: 0.25,
+-                    shadowRadius: 10,
+-                    shadowOffset: { height: 2, width: 0 },
+-                    zIndex: 99
+-                },
+-                android: {
+-                    elevation: 3
+-                }
+-            })
+-        },
++        // containerShadow: {
++        //     backgroundColor: appStyle.calendarBackground,
++        //     ...Platform.select({
++        //         ios: {
++        //             shadowColor: '#858F96',
++        //             shadowOpacity: 0.25,
++        //             shadowRadius: 10,
++        //             shadowOffset: { height: 2, width: 0 },
++        //             zIndex: 99
++        //         },
++        //         android: {
++        //             elevation: 3
++        //         }
++        //     })
++        // },
+         containerWrapper: {
+             paddingBottom: 6
+         },
+         container: {
+-            backgroundColor: appStyle.calendarBackground
++            backgroundColor: appStyle.expandableCalendarBackground
+         },
+         knobContainer: {
+             position: 'absolute',
+diff --git a/node_modules/react-native-calendars/src/style.js b/node_modules/react-native-calendars/src/style.js
+index 5efb8bd..6549e4a 100644
+--- a/node_modules/react-native-calendars/src/style.js
++++ b/node_modules/react-native-calendars/src/style.js
+@@ -1,6 +1,6 @@
+ // default values for app style (see all options for theme type in types.ts)
+ const FOREGROUND_COLOR = 'white';
+-const DEFAULT_TEXT_COLOR = '#2d4150';
++const DEFAULT_TEXT_COLOR = 'white';
+ const SECONDARY_TEXT_COLOR = '#00BBF2';
+ const AGENDA_TEXT_COLOR = '#7a92a5';
+ const AGENDA_BG_COLOR = '#f2F4f5';
+diff --git a/node_modules/react-native-calendars/src/types.d.ts b/node_modules/react-native-calendars/src/types.d.ts
+index 9ae91c9..6de01ea 100644
+--- a/node_modules/react-native-calendars/src/types.d.ts
++++ b/node_modules/react-native-calendars/src/types.d.ts
+@@ -98,9 +98,11 @@ export interface Theme {
+     };
+ }
+ export declare type AgendaEntry = {
+-    name: string;
+-    height: number;
+     day: string;
++    name: string;
++    amount: number;
++    hours: number;
++    section: string
+ };
+ export declare type AgendaSchedule = {
+     [date: string]: AgendaEntry[];
+@@ -109,3 +111,8 @@ export interface DayAgenda {
+     reservation?: AgendaEntry;
+     date?: XDate;
+ }
++// date: string;
++//     amount: number;
++//     hours: number;
++//     job: string
++//     section?: string;
+\ No newline at end of file
