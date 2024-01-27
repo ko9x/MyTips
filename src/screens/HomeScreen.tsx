@@ -1,12 +1,6 @@
 import React, {useRef, useState} from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  Button,
-  TouchableOpacity,
-  Alert,
-} from 'react-native';
+import {StyleSheet, View, Text} from 'react-native';
+import {Button} from 'react-native-paper';
 import {
   ExpandableCalendar,
   CalendarProvider,
@@ -75,8 +69,8 @@ export default function HomeScreen() {
     '2024-01-24': [
       {day: '2024-01-24', name: 'server', amount: 420, hours: 8, section: '1'},
     ],
-    '2024-01-25': [
-      {day: '2024-01-25', name: 'bar', amount: 380, hours: 9, section: ''},
+    '2024-01-26': [
+      {day: '2024-01-26', name: 'bar', amount: 380, hours: 9, section: ''},
     ],
   };
 
@@ -116,22 +110,73 @@ export default function HomeScreen() {
         selected={selectedDate}
         renderEmptyData={() => {
           return (
-            <View style={styles.item}>
+            <View style={styles.agendaItemContainer}>
               <Text>Hey add something here!</Text>
-              <Button title={'click'} />
+              <Button mode="contained">Click here</Button>
             </View>
           );
         }}
-        renderItem={(reservation: AgendaEntry, isFirst: boolean) => {
+        renderItem={(reservation: AgendaEntry) => {
           if (reservation.day === selectedDate) {
-            const fontSize = isFirst ? 16 : 14;
-            const color = isFirst ? 'black' : '#43515c';
             return (
-              <TouchableOpacity
-                style={[styles.item, {height: 380}]}
-                onPress={() => Alert.alert(reservation.day)}>
-                <Text style={{fontSize, color}}>{reservation.day}</Text>
-              </TouchableOpacity>
+              <>
+                <View style={styles.agendaItemContainer}>
+                  <View style={styles.agendaItemTopContainer}>
+                    <View>
+                      <Text style={styles.agendaSectionTitle}>
+                        {Moment(reservation.day).format('MMMM Do, YYYY')}
+                      </Text>
+                      <Text style={styles.agendaDaySubtitle}>Tip summary</Text>
+                    </View>
+                    <Button
+                      buttonColor={Colors.primary}
+                      onPress={() => console.log('clicked')}
+                      icon="cash-multiple"
+                      mode="contained">
+                      Add Tips
+                    </Button>
+                  </View>
+                  <View style={styles.tipSummaryContainer}>
+                    <View>
+                      <Text>$2.90/hr</Text>
+                    </View>
+                    <View>
+                      <Text style={styles.tipSummaryDivider}>|</Text>
+                    </View>
+                    <View>
+                      <Text>$30</Text>
+                    </View>
+                    <Text style={styles.tipSummaryDivider}>|</Text>
+                    <View>
+                      <Text>11hr 20min</Text>
+                    </View>
+                  </View>
+                  <View style={{}}>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                      }}>
+                      <Text style={styles.agendaSectionTitle}>My Tips</Text>
+                      <Text style={styles.agendaSectionTitle}>
+                        Today's Total: $30
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        height: 80,
+                        borderColor: Colors.grey,
+                        borderWidth: 1,
+                        borderRadius: 20,
+                        marginVertical: 10,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}>
+                      <Text>We need to loop this</Text>
+                    </View>
+                  </View>
+                </View>
+              </>
             );
           } else {
             return (
@@ -144,9 +189,9 @@ export default function HomeScreen() {
         // Specify how empty date content with no items should be rendered
         renderEmptyDate={() => {
           return (
-            <View style={styles.item}>
+            <View style={styles.agendaItemContainer}>
               <Text>Hey add something here!</Text>
-              <Button title={'click'} />
+              <Button mode="contained">Click here</Button>
             </View>
           );
         }}
@@ -160,13 +205,32 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
   },
-  item: {
+  agendaItemContainer: {
+    zIndex: 1000,
     backgroundColor: 'white',
     flex: 1,
     borderRadius: 5,
     padding: 10,
     marginHorizontal: 10,
-    marginVertical: 17,
-    height: 180,
+    marginTop: 20,
   },
+  agendaItemTopContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  agendaSectionTitle: {fontSize: 16, fontWeight: '600'},
+  agendaDaySubtitle: {fontSize: 12, fontWeight: '300'},
+  tipSummaryContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    padding: 10,
+    height: 40,
+    marginVertical: 20,
+    borderRadius: 20,
+    backgroundColor: Colors.lightGrey,
+  },
+  tipSummaryDivider: {fontWeight: '200'},
 });
