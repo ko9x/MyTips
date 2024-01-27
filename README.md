@@ -59,3 +59,8 @@
   - `https://github.com/OP-Engineering/op-sqlite`
   - `https://stackoverflow.com/questions/5967426/select-day-of-week-from-date`
   - `https://stackoverflow.com/questions/30215059/day-of-week-in-sql`
+
+### Installed patch-package
+  - `https://www.npmjs.com/package/patch-package`
+  - This allows us to make changes to the files in node modules and save those changes even if we need to npm install again
+    - react-native-calendars is the package that prompted this as I made several changes to that package
