@@ -40,11 +40,6 @@ export default function HomeScreen() {
 
       if (!tempItems[strTime]) {
         tempItems[strTime] = [];
-        // tempItems[strTime].push({
-        //   name: '',
-        //   height: 180,
-        //   day: strTime,
-        // });
       }
     }
 
@@ -65,14 +60,125 @@ export default function HomeScreen() {
     console.log('calendar is open');
   }
 
+  function renderDataArray(arr: any = []): React.JSX.Element {
+    return arr.map((item: any) => (
+      <View key={item.id}>
+        <View
+          style={{
+            borderColor: Colors.grey,
+            borderWidth: 1,
+            borderRadius: 20,
+            marginVertical: 10,
+            paddingVertical: 5,
+            paddingHorizontal: 10,
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-evenly',
+              alignItems: 'center',
+              marginVertical: 10,
+            }}>
+            <Text>Job: Server</Text>
+            <Text>Section: 1</Text>
+          </View>
+          <View
+            style={{
+              borderBottomColor: Colors.grey,
+              borderBottomWidth: 1,
+              marginLeft: 5,
+              marginRight: 5,
+            }}
+          />
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-evenly',
+              alignItems: 'center',
+              paddingTop: 10,
+            }}>
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Text>total tips</Text>
+              <Text>$15</Text>
+            </View>
+            <View>
+              <Text style={styles.tipSummaryDivider}>|</Text>
+            </View>
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Text>total hours</Text>
+              <Text>8</Text>
+            </View>
+            <View>
+              <Text style={styles.tipSummaryDivider}>|</Text>
+            </View>
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Text>per hour</Text>
+              <Text>$4.29</Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    ));
+  }
+
   const itemObject = {
-    '2024-01-24': [
-      {day: '2024-01-24', name: 'server', amount: 420, hours: 8, section: '1'},
-    ],
     '2024-01-26': [
-      {day: '2024-01-26', name: 'bar', amount: 380, hours: 9, section: ''},
+      {
+        day: '2024-01-26',
+        data: [
+          {id: 1, name: 'server', amount: 420, hours: 8, section: '1'},
+          {id: 2, name: 'bar', amount: 480, hours: 9, section: '3'},
+        ],
+      },
     ],
   };
+
+  // const itemObject = {
+  //   '2024-01-26': [
+  //     [
+  //       [
+  //         {
+  //           day: '2024-01-26',
+  //           name: 'server',
+  //           amount: 420,
+  //           hours: 8,
+  //           section: '1',
+  //         },
+  //       ],
+  //       [
+  //         {
+  //           day: '2024-01-26',
+  //           name: 'server',
+  //           amount: 480,
+  //           hours: 9,
+  //           section: '3',
+  //         },
+  //       ],
+  //     ],
+  //   ],
+  //   '2024-01-27': [
+  //     {
+  //       day: '2024-01-27',
+  //       data: [],
+  //       name: 'bar',
+  //       amount: 380,
+  //       hours: 9,
+  //       section: '',
+  //     },
+  //   ],
+  // };
 
   return (
     <CalendarProvider
@@ -119,64 +225,50 @@ export default function HomeScreen() {
         renderItem={(reservation: AgendaEntry) => {
           if (reservation.day === selectedDate) {
             return (
-              <>
-                <View style={styles.agendaItemContainer}>
-                  <View style={styles.agendaItemTopContainer}>
-                    <View>
-                      <Text style={styles.agendaSectionTitle}>
-                        {Moment(reservation.day).format('MMMM Do, YYYY')}
-                      </Text>
-                      <Text style={styles.agendaDaySubtitle}>Tip summary</Text>
-                    </View>
-                    <Button
-                      buttonColor={Colors.primary}
-                      onPress={() => console.log('clicked')}
-                      icon="cash-multiple"
-                      mode="contained">
-                      Add Tips
-                    </Button>
+              <View style={styles.agendaItemContainer}>
+                <View style={styles.agendaItemTopContainer}>
+                  <View>
+                    <Text style={styles.agendaSectionTitle}>
+                      {Moment(reservation.day).format('MMMM Do, YYYY')}
+                    </Text>
+                    <Text style={styles.agendaDaySubtitle}>Tip summary</Text>
                   </View>
-                  <View style={styles.tipSummaryContainer}>
-                    <View>
-                      <Text>$2.90/hr</Text>
-                    </View>
-                    <View>
-                      <Text style={styles.tipSummaryDivider}>|</Text>
-                    </View>
-                    <View>
-                      <Text>$30</Text>
-                    </View>
+                  <Button
+                    buttonColor={Colors.primary}
+                    onPress={() => console.log('clicked')}
+                    icon="cash-multiple"
+                    mode="contained">
+                    Add Tips
+                  </Button>
+                </View>
+                <View style={styles.tipSummaryContainer}>
+                  <View>
+                    <Text>$2.90/hr</Text>
+                  </View>
+                  <View>
                     <Text style={styles.tipSummaryDivider}>|</Text>
-                    <View>
-                      <Text>11hr 20min</Text>
-                    </View>
                   </View>
-                  <View style={{}}>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                      }}>
-                      <Text style={styles.agendaSectionTitle}>My Tips</Text>
-                      <Text style={styles.agendaSectionTitle}>
-                        Today's Total: $30
-                      </Text>
-                    </View>
-                    <View
-                      style={{
-                        height: 80,
-                        borderColor: Colors.grey,
-                        borderWidth: 1,
-                        borderRadius: 20,
-                        marginVertical: 10,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}>
-                      <Text>We need to loop this</Text>
-                    </View>
+                  <View>
+                    <Text>$30</Text>
+                  </View>
+                  <Text style={styles.tipSummaryDivider}>|</Text>
+                  <View>
+                    <Text>11hr 20min</Text>
                   </View>
                 </View>
-              </>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    marginTop: 20,
+                  }}>
+                  <Text style={styles.agendaSectionTitle}>My Tips</Text>
+                  <Text style={styles.agendaSectionTitle}>
+                    Today's Total: $30
+                  </Text>
+                </View>
+                {renderDataArray(reservation.data)}
+              </View>
             );
           } else {
             return (
@@ -211,14 +303,12 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 5,
     padding: 10,
-    marginHorizontal: 10,
-    marginTop: 20,
   },
   agendaItemTopContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 20,
+    marginVertical: 10,
   },
   agendaSectionTitle: {fontSize: 16, fontWeight: '600'},
   agendaDaySubtitle: {fontSize: 12, fontWeight: '300'},
