@@ -11,6 +11,7 @@ import {
 import Moment from 'moment';
 import {getTheme} from '../mocks/theme';
 import Colors from '../global/Colors';
+import {DUMMY_DATA} from '../mocks/DUMMYDB';
 const initialDate = new Date();
 const offsetAmount = initialDate.getTimezoneOffset() * 60000;
 const offsetDate = initialDate.getTime() - offsetAmount;
@@ -65,7 +66,7 @@ export default function HomeScreen() {
       <View key={item.id}>
         <View
           style={{
-            borderColor: Colors.grey,
+            borderColor: Colors.lighterGrey,
             borderWidth: 1,
             borderRadius: 20,
             marginVertical: 10,
@@ -84,7 +85,7 @@ export default function HomeScreen() {
           </View>
           <View
             style={{
-              borderBottomColor: Colors.grey,
+              borderBottomColor: Colors.lighterGrey,
               borderBottomWidth: 1,
               marginLeft: 5,
               marginRight: 5,
@@ -133,53 +134,6 @@ export default function HomeScreen() {
     ));
   }
 
-  const itemObject = {
-    '2024-01-26': [
-      {
-        day: '2024-01-26',
-        data: [
-          {id: 1, name: 'server', amount: 420, hours: 8, section: '1'},
-          {id: 2, name: 'bar', amount: 480, hours: 9, section: '3'},
-        ],
-      },
-    ],
-  };
-
-  // const itemObject = {
-  //   '2024-01-26': [
-  //     [
-  //       [
-  //         {
-  //           day: '2024-01-26',
-  //           name: 'server',
-  //           amount: 420,
-  //           hours: 8,
-  //           section: '1',
-  //         },
-  //       ],
-  //       [
-  //         {
-  //           day: '2024-01-26',
-  //           name: 'server',
-  //           amount: 480,
-  //           hours: 9,
-  //           section: '3',
-  //         },
-  //       ],
-  //     ],
-  //   ],
-  //   '2024-01-27': [
-  //     {
-  //       day: '2024-01-27',
-  //       data: [],
-  //       name: 'bar',
-  //       amount: 380,
-  //       hours: 9,
-  //       section: '',
-  //     },
-  //   ],
-  // };
-
   return (
     <CalendarProvider
       date={today}
@@ -212,7 +166,7 @@ export default function HomeScreen() {
         style={{zIndex: 0, marginTop: -105}}
         loadItemsForMonth={loadItems}
         // items={items}
-        items={itemObject}
+        items={DUMMY_DATA}
         selected={selectedDate}
         renderEmptyData={() => {
           return (
@@ -322,5 +276,5 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: Colors.lightGrey,
   },
-  tipSummaryDivider: {fontWeight: '200'},
+  tipSummaryDivider: {color: Colors.lighterGrey},
 });
