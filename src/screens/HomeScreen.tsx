@@ -12,6 +12,7 @@ import Moment from 'moment';
 import {getTheme} from '../mocks/theme';
 import Colors from '../global/Colors';
 import {DUMMY_DATA} from '../mocks/DUMMYDB';
+import ListItems from '../components/ListItems';
 const initialDate = new Date();
 const offsetAmount = initialDate.getTimezoneOffset() * 60000;
 const offsetDate = initialDate.getTime() - offsetAmount;
@@ -59,79 +60,6 @@ export default function HomeScreen() {
   // This is here because I am probably going to need the calOpen state eventually and I kept getting warnings about it not being used anywhere
   if (calOpen) {
     console.log('calendar is open');
-  }
-
-  function renderDataArray(arr: any = []): React.JSX.Element {
-    return arr.map((item: any) => (
-      <View key={item.id}>
-        <View
-          style={{
-            borderColor: Colors.lighterGrey,
-            borderWidth: 1,
-            borderRadius: 20,
-            marginVertical: 10,
-            paddingVertical: 5,
-            paddingHorizontal: 10,
-          }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-evenly',
-              alignItems: 'center',
-              marginVertical: 10,
-            }}>
-            <Text>Job: Server</Text>
-            <Text>Section: 1</Text>
-          </View>
-          <View
-            style={{
-              borderBottomColor: Colors.lighterGrey,
-              borderBottomWidth: 1,
-              marginLeft: 5,
-              marginRight: 5,
-            }}
-          />
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-evenly',
-              alignItems: 'center',
-              paddingTop: 10,
-            }}>
-            <View
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Text>total tips</Text>
-              <Text>$15</Text>
-            </View>
-            <View>
-              <Text style={styles.tipSummaryDivider}>|</Text>
-            </View>
-            <View
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Text>total hours</Text>
-              <Text>8</Text>
-            </View>
-            <View>
-              <Text style={styles.tipSummaryDivider}>|</Text>
-            </View>
-            <View
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Text>per hour</Text>
-              <Text>$4.29</Text>
-            </View>
-          </View>
-        </View>
-      </View>
-    ));
   }
 
   return (
@@ -221,7 +149,7 @@ export default function HomeScreen() {
                     Today's Total: $30
                   </Text>
                 </View>
-                {renderDataArray(reservation.data)}
+                <ListItems itemArr={reservation.data} />
               </View>
             );
           } else {
