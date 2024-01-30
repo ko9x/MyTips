@@ -13,6 +13,7 @@ import {getTheme} from '../mocks/theme';
 import Colors from '../global/Colors';
 import {DUMMY_DATA} from '../mocks/DUMMYDB';
 import DayItem from '../components/DayItem';
+import MultiItemBar from '../components/MultiItemBar';
 const initialDate = new Date();
 const offsetAmount = initialDate.getTimezoneOffset() * 60000;
 const offsetDate = initialDate.getTime() - offsetAmount;
@@ -74,6 +75,11 @@ export default function HomeScreen() {
           zIndex: 100,
           backgroundColor: Colors.primary,
         }}>
+        <View style={{height: calOpen ? 60 : 0}}>
+          <MultiItemBar
+            props={{first: '$32.20/hr', second: '$300', third: '11hr 20min'}}
+          />
+        </View>
         <ExpandableCalendar
           onCalendarToggled={(isOpen: boolean) => {
             setCalOpen(isOpen);
@@ -93,7 +99,6 @@ export default function HomeScreen() {
       <Agenda
         style={{zIndex: 0, marginTop: -105}}
         loadItemsForMonth={loadItems}
-        // items={items}
         items={DUMMY_DATA}
         selected={selectedDate}
         renderEmptyData={() => {
