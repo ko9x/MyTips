@@ -8,21 +8,6 @@ import ListItems from './ListItems';
 export default function DayItem({reservation}: any): React.JSX.Element {
   return (
     <View style={styles.agendaItemContainer}>
-      <View style={styles.agendaItemTopContainer}>
-        <View>
-          <Text style={styles.agendaSectionTitle}>
-            {Moment(reservation.day).format('MMMM Do, YYYY')}
-          </Text>
-          <Text style={styles.agendaDaySubtitle}>Tip summary</Text>
-        </View>
-        <Button
-          buttonColor={Colors.primary}
-          onPress={() => console.log('clicked')}
-          icon="cash-multiple"
-          mode="contained">
-          Add Tips
-        </Button>
-      </View>
       <View style={styles.tipSummaryContainer}>
         <View>
           <Text>$2.90/hr</Text>
@@ -37,6 +22,21 @@ export default function DayItem({reservation}: any): React.JSX.Element {
         <View>
           <Text>11hr 20min</Text>
         </View>
+      </View>
+      <View style={styles.agendaItemTopContainer}>
+        <View>
+          <Text style={styles.agendaSectionTitle}>
+            {Moment(reservation.day).format('MMMM Do, YYYY')}
+          </Text>
+          <Text style={styles.agendaDaySubtitle}>Tip breakdown</Text>
+        </View>
+        <Button
+          buttonColor={Colors.primary}
+          onPress={() => console.log('clicked')}
+          icon="cash-multiple"
+          mode="contained">
+          Add Tips
+        </Button>
       </View>
       <View
         style={{
