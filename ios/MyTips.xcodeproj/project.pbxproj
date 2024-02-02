@@ -13,6 +13,7 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		14549F2B2B59F3D30071BCE4 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 14549F2A2B59F3D30071BCE4 /* Fonts */; };
+		147199422B6B6D2000F2848C /* www in Resources */ = {isa = PBXBuildFile; fileRef = 147199412B6B6D2000F2848C /* www */; };
 		149967562B68DF36000FB35C /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 149967432B68DF36000FB35C /* SimpleLineIcons.ttf */; };
 		149967572B68DF36000FB35C /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 149967442B68DF36000FB35C /* FontAwesome5_Regular.ttf */; };
 		149967582B68DF36000FB35C /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 149967452B68DF36000FB35C /* Ionicons.ttf */; };
@@ -57,6 +58,7 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = MyTips/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = MyTips/main.m; sourceTree = "<group>"; };
 		14549F2A2B59F3D30071BCE4 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = "../node_modules/react-native-vector-icons/Fonts"; sourceTree = "<group>"; };
+		147199412B6B6D2000F2848C /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; name = www; path = ../../../../Desktop/www; sourceTree = "<group>"; };
 		149967432B68DF36000FB35C /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
 		149967442B68DF36000FB35C /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome5_Regular.ttf; sourceTree = "<group>"; };
 		149967452B68DF36000FB35C /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ionicons.ttf; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 		13B07FAE1A68108700A75B9A /* MyTips */ = {
 			isa = PBXGroup;
 			children = (
+				147199412B6B6D2000F2848C /* www */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -309,6 +312,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				147199422B6B6D2000F2848C /* www in Resources */,
 				1499675C2B68DF36000FB35C /* FontAwesome6_Brands.ttf in Resources */,
 				149967672B68DF36000FB35C /* MaterialCommunityIcons.ttf in Resources */,
 				14549F2B2B59F3D30071BCE4 /* Fonts in Resources */,

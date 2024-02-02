@@ -8,6 +8,12 @@ export const DUMMY_DATA = {
       ],
     },
   ],
+  '2024-01-30': [
+    {
+      day: '2024-01-30',
+      data: [{id: 1, name: 'server', amount: 450, hours: 9, section: '3'}],
+    },
+  ],
 };
 
 // const itemObject = {
