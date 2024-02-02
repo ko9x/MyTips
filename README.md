@@ -64,3 +64,8 @@
   - `https://www.npmjs.com/package/patch-package`
   - This allows us to make changes to the files in node modules and save those changes even if we need to npm install again
     - react-native-calendars is the package that prompted this as I made several changes to that package
+  - To run the patch use this command `npx patch-package package-name` substitute `package-name` with the name of you package as it appears in node_modules
+
+### Vector Icons Stopped Working
+- I think all we need to do if this happens again is double click the xcworkspace file and let xcode launch that simulator. 
+  - After that the icons started working again with the normal metro and npm run 12mini commands
