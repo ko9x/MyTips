@@ -3,6 +3,8 @@
 - We need to run `patch package` if we edit something in the node_modules and we want the changes to persist
 
 # What to do next
+- Figure out the amount of money made per hour function for the TipProvider to return to the HomeScreen
+  - We already figured out how to return the total amount and the hours and minutes
 - Come up with a game plan to optimize our what to do next flow
 - Create some dummy data we can use to create the UI/UX
 - Make sure the database object we create can be parsed to poplate our fields correctly
