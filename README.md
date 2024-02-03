@@ -56,6 +56,8 @@
   - fixing the bounceToPosition function 
 
 ### MySql database stuff
+  - Having enablePromise true in the TipProvider breaks the db variable in StatsScreen
+    - Not really sure why
   - `https://github.com/OP-Engineering/op-sqlite`
   - `https://stackoverflow.com/questions/5967426/select-day-of-week-from-date`
   - `https://stackoverflow.com/questions/30215059/day-of-week-in-sql`

@@ -14,11 +14,6 @@ import Colors from '../global/Colors';
 import {DUMMY_DATA} from '../mocks/DUMMYDB';
 import DayItem from '../components/DayItem';
 import MultiItemBar from '../components/MultiItemBar';
-// import {
-//   openDatabase,
-//   enablePromise,
-//   SQLiteDatabase,
-// } from 'react-native-sqlite-storage';
 import {getTodayData, connectToDatabase} from '../providers/TipProvider';
 const initialDate = new Date();
 const offsetAmount = initialDate.getTimezoneOffset() * 60000;

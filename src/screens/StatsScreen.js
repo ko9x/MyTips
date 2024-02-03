@@ -58,7 +58,8 @@ export default function StatsScreen(): React.JSX.Element {
     });
   };
 
-  searchUser();
+  // Comment out enablePromise in TipProvider to use searchUser
+  // searchUser();
   return (
     <View>
       <Text>Hello from Stats!</Text>

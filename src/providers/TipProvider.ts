@@ -4,6 +4,8 @@ import {
   SQLiteDatabase,
 } from 'react-native-sqlite-storage';
 
+// This breaks the database call in StatsScreen for some reason.
+// But without it the data from the database doesn't render
 enablePromise(true);
 
 export const connectToDatabase = async () => {
