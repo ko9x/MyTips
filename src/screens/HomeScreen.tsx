@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 import {Button} from 'react-native-paper';
 import {
@@ -14,6 +14,12 @@ import Colors from '../global/Colors';
 import {DUMMY_DATA} from '../mocks/DUMMYDB';
 import DayItem from '../components/DayItem';
 import MultiItemBar from '../components/MultiItemBar';
+// import {
+//   openDatabase,
+//   enablePromise,
+//   SQLiteDatabase,
+// } from 'react-native-sqlite-storage';
+import {getTodayData, connectToDatabase} from '../providers/TipProvider';
 const initialDate = new Date();
 const offsetAmount = initialDate.getTimezoneOffset() * 60000;
 const offsetDate = initialDate.getTime() - offsetAmount;
@@ -27,7 +33,18 @@ export default function HomeScreen() {
   const [selectedDate, setSelectedDate] = useState(today);
   const [items, setItems] = useState({});
   const [calOpen, setCalOpen] = useState(false);
+  const [data, setData] = useState(Array);
   const theme = useRef(getTheme());
+
+  async function getThing() {
+    const db = await connectToDatabase();
+    const grabbedData = await getTodayData(db);
+    setData(grabbedData);
+  }
+
+  useEffect(() => {
+    getThing();
+  }, []);
 
   function timeToString(time: number) {
     const date = new Date(time);

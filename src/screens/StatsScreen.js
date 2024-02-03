@@ -43,7 +43,7 @@ export default function StatsScreen(): React.JSX.Element {
     db.transaction(tx => {
       tx.executeSql(
         'SELECT * FROM tbl_tip where id = ?',
-        [6],
+        [7],
         (dbObj, results) => {
           var len = results.rows.length;
           console.log('ugggggh', dbObj.db);
