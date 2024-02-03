@@ -8,6 +8,27 @@ import {
 // But without it the data from the database doesn't render
 enablePromise(true);
 
+function toDollars(dataArr: Array<any>) {
+  var amount: number = 0;
+  dataArr.forEach(item => {
+    amount += item.amount;
+  });
+  const dollars = (amount / 100).toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  });
+  return dollars;
+}
+function toHoursAndMinutes(dataArr: Array<any>) {
+  var time: number = 0;
+  dataArr.forEach(item => {
+    time += item.minutes;
+  });
+  const hours = Math.floor(time / 60);
+  const minutes = time % 60;
+  return {hours: hours, minutes: minutes};
+}
+
 export const connectToDatabase = async () => {
   return openDatabase(
     {name: 'tip.db', createFromLocation: 1},
@@ -56,7 +77,9 @@ export const getCurrentMonthData = async (
         data.push(result.rows.item(index));
       }
     });
-    return data;
+    const dollars = toDollars(data);
+    const totalTime = toHoursAndMinutes(data);
+    return {dollars: dollars, totalTime: totalTime};
   } catch (error) {
     console.error(error);
     throw Error('failed to get current month data from database');

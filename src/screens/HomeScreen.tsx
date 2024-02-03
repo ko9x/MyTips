@@ -39,7 +39,7 @@ export default function HomeScreen() {
 
   async function getThing() {
     const db = await connectToDatabase();
-    const grabbedData = await getSectionData(db, '1');
+    const grabbedData = await getCurrentMonthData(db, '02', '2024');
     console.log(grabbedData);
 
     setData(grabbedData);
