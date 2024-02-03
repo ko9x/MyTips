@@ -14,7 +14,13 @@ import Colors from '../global/Colors';
 import {DUMMY_DATA} from '../mocks/DUMMYDB';
 import DayItem from '../components/DayItem';
 import MultiItemBar from '../components/MultiItemBar';
-import {getTodayData, connectToDatabase} from '../providers/TipProvider';
+import {
+  connectToDatabase,
+  getTodayData,
+  getCurrentMonthData,
+  getMonthData,
+  getSectionData,
+} from '../providers/TipProvider';
 const initialDate = new Date();
 const offsetAmount = initialDate.getTimezoneOffset() * 60000;
 const offsetDate = initialDate.getTime() - offsetAmount;
@@ -33,7 +39,9 @@ export default function HomeScreen() {
 
   async function getThing() {
     const db = await connectToDatabase();
-    const grabbedData = await getTodayData(db);
+    const grabbedData = await getSectionData(db, '1');
+    console.log(grabbedData);
+
     setData(grabbedData);
   }
 

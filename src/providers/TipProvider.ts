@@ -18,13 +18,14 @@ export const connectToDatabase = async () => {
     },
   );
 };
-
-export const getTodayData = async (db: SQLiteDatabase) => {
+// Return all database objects that have a date that matches todays date
+// So we can show the user their tips for the current day
+export const getTodayData = async (db: SQLiteDatabase, today: String) => {
   try {
     const data: Array<any> = [];
     const results = await db.executeSql(
       'Select * from tbl_tip where date = ?',
-      ['2024-02-03'],
+      [today],
     );
     results?.forEach(result => {
       for (let index = 0; index < result.rows.length; index++) {
@@ -34,21 +35,70 @@ export const getTodayData = async (db: SQLiteDatabase) => {
     return data;
   } catch (error) {
     console.error(error);
-    throw Error('failed to get data from database');
+    throw Error('failed to get today data from database');
   }
 };
-
-// tx.executeSql(
-//     'SELECT * FROM tbl_tip where id = ?',
-//     [7],
-//     (dbObj, results) => {
-//       var len = results.rows.length;
-//       console.log('ugggggh', dbObj.db);
-//       if (len > 0) {
-//         let res = results.rows.item(0);
-//         console.log('up in here', res);
-//       } else {
-//         console.log('nothing');
-//       }
-//     },
-//   );
+// Return all database objects that match the current month and current year
+// So we can show the user their tips for the current month
+export const getCurrentMonthData = async (
+  db: SQLiteDatabase,
+  month: String,
+  year: String,
+) => {
+  try {
+    const data: Array<any> = [];
+    const results = await db.executeSql(
+      "Select * from tbl_tip where strftime('%m', date) = ? and strftime('%Y', date) = ?",
+      [month, year],
+    );
+    results?.forEach(result => {
+      for (let index = 0; index < result.rows.length; index++) {
+        data.push(result.rows.item(index));
+      }
+    });
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw Error('failed to get current month data from database');
+  }
+};
+// Return all database objects that match the entered month
+// So we can show the user how much they average in tips in a certain month
+export const getMonthData = async (db: SQLiteDatabase, month: String) => {
+  try {
+    const data: Array<any> = [];
+    const results = await db.executeSql(
+      "Select * from tbl_tip where strftime('%m', date) = ?",
+      [month],
+    );
+    results?.forEach(result => {
+      for (let index = 0; index < result.rows.length; index++) {
+        data.push(result.rows.item(index));
+      }
+    });
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw Error('failed to get selected month data from database');
+  }
+};
+// Return all database objects that match the entered section
+// So we can show the user how much they average in tips in a certain section
+export const getSectionData = async (db: SQLiteDatabase, section: String) => {
+  try {
+    const data: Array<any> = [];
+    const results = await db.executeSql(
+      'Select * from tbl_tip where section = ?',
+      [section],
+    );
+    results?.forEach(result => {
+      for (let index = 0; index < result.rows.length; index++) {
+        data.push(result.rows.item(index));
+      }
+    });
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw Error('failed to get section data from database');
+  }
+};
