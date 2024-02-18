@@ -1,9 +1,15 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import Colors from '../global/Colors';
-import {toDollars, toHoursAndMinutes, toPerHour} from '../helpers/helpers';
+import {
+  toDollars,
+  toHoursAndMinutes,
+  toPerHour,
+  combineMoney,
+} from '../helpers/helpers';
 
 export default function ListItems({itemArr}: any): React.JSX.Element {
+  const totalMoney = Number(combineMoney(itemArr));
   return itemArr.map((item: any) => (
     <View key={item.id}>
       <View
@@ -22,7 +28,7 @@ export default function ListItems({itemArr}: any): React.JSX.Element {
             alignItems: 'center',
             marginVertical: 10,
           }}>
-          <Text>Job: {item.name}</Text>
+          <Text>Job: {item.job}</Text>
           <Text>Section: {item.section}</Text>
         </View>
         <View
@@ -46,7 +52,7 @@ export default function ListItems({itemArr}: any): React.JSX.Element {
               alignItems: 'center',
             }}>
             <Text>tips</Text>
-            <Text>{toDollars(item.amount)}</Text>
+            <Text>{toDollars(totalMoney)}</Text>
           </View>
           <View>
             <Text style={styles.tipSummaryDivider}>|</Text>
@@ -58,9 +64,11 @@ export default function ListItems({itemArr}: any): React.JSX.Element {
             }}>
             <Text>shift length</Text>
             <Text>
-              {toHoursAndMinutes(item.minutes).hours} hrs
+              {toHoursAndMinutes(item.time).hours}{' '}
+              {toHoursAndMinutes(item.time).hours > 1 ? 'hrs' : 'hr'}
               <Text> </Text>
-              {toHoursAndMinutes(item.minutes).minutes} mins
+              {toHoursAndMinutes(item.time).minutes}{' '}
+              {toHoursAndMinutes(item.time).minutes > 1 ? 'mins' : 'min'}
             </Text>
           </View>
           <View>
@@ -72,7 +80,7 @@ export default function ListItems({itemArr}: any): React.JSX.Element {
               alignItems: 'center',
             }}>
             <Text>per hour</Text>
-            <Text>${toPerHour(item.minutes, item.amount)}/hr</Text>
+            <Text>${toPerHour(item.time, totalMoney)}/hr</Text>
           </View>
         </View>
       </View>

@@ -8,27 +8,6 @@ import {
 // But without it the data from the database doesn't render
 enablePromise(true);
 
-function toDollars(dataArr: Array<any>) {
-  var amount: number = 0;
-  dataArr.forEach(item => {
-    amount += item.amount;
-  });
-  const dollars = (amount / 100).toLocaleString('en-US', {
-    style: 'currency',
-    currency: 'USD',
-  });
-  return dollars;
-}
-function toHoursAndMinutes(dataArr: Array<any>) {
-  var time: number = 0;
-  dataArr.forEach(item => {
-    time += item.minutes;
-  });
-  const hours = Math.floor(time / 60);
-  const minutes = time % 60;
-  return {hours: hours, minutes: minutes};
-}
-
 // Initial call to the database to we can create a database object in the HomeScreen
 export const connectToDatabase = async () => {
   return openDatabase(
@@ -46,7 +25,7 @@ export const getTodayData = async (db: SQLiteDatabase, today: String) => {
   try {
     const data: Array<any> = [];
     const results = await db.executeSql(
-      'Select * from tbl_tip where date = ?',
+      'Select * from tip_2_tbl where date = ?',
       [today],
     );
     results?.forEach(result => {
@@ -66,7 +45,7 @@ export const getAllData = async (db: SQLiteDatabase) => {
   }
   try {
     const data: DataObj = {};
-    const results = await db.executeSql('Select * from tbl_tip');
+    const results = await db.executeSql('Select * from tip_2_tbl');
     results?.forEach(result => {
       for (let index = 0; index < result.rows.length; index++) {
         data[result.rows.item(index).date] = [
@@ -75,10 +54,16 @@ export const getAllData = async (db: SQLiteDatabase) => {
             data: [
               {
                 id: result.rows.item(index).id,
-                amount: result.rows.item(index).amount,
-                minutes: result.rows.item(index).minutes,
-                name: result.rows.item(index).name,
+                job: result.rows.item(index).job,
                 section: result.rows.item(index).section,
+                time: result.rows.item(index).time,
+                cash: result.rows.item(index).cash,
+                credit: result.rows.item(index).credit,
+                tip_in: result.rows.item(index).tip_in,
+                tip_out: result.rows.item(index).tip_out,
+                total_sales: result.rows.item(index).total_sales,
+                hourly_rate: result.rows.item(index).hourly_rate,
+                note: result.rows.item(index).note,
               },
             ],
           },
@@ -101,7 +86,7 @@ export const getCurrentMonthData = async (
   try {
     const data: Array<any> = [];
     const results = await db.executeSql(
-      "Select * from tbl_tip where strftime('%m', date) = ? and strftime('%Y', date) = ?",
+      "Select * from tip_2_tbl where strftime('%m', date) = ? and strftime('%Y', date) = ?",
       [month, year],
     );
     results?.forEach(result => {
@@ -109,9 +94,7 @@ export const getCurrentMonthData = async (
         data.push(result.rows.item(index));
       }
     });
-    const dollars = toDollars(data);
-    const totalTime = toHoursAndMinutes(data);
-    return {dollars: dollars, totalTime: totalTime};
+    return {data};
   } catch (error) {
     console.error(error);
     throw Error('failed to get current month data from database');
@@ -123,7 +106,7 @@ export const getMonthData = async (db: SQLiteDatabase, month: String) => {
   try {
     const data: Array<any> = [];
     const results = await db.executeSql(
-      "Select * from tbl_tip where strftime('%m', date) = ?",
+      "Select * from tip_2_tbl where strftime('%m', date) = ?",
       [month],
     );
     results?.forEach(result => {
@@ -143,7 +126,7 @@ export const getSectionData = async (db: SQLiteDatabase, section: String) => {
   try {
     const data: Array<any> = [];
     const results = await db.executeSql(
-      'Select * from tbl_tip where section = ?',
+      'Select * from tip_2_tbl where section = ?',
       [section],
     );
     results?.forEach(result => {

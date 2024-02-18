@@ -28,7 +28,6 @@ export default function DayItem({reservation}: any): React.JSX.Element {
           <Text style={styles.agendaSectionTitle}>
             {Moment(reservation.day).format('MMMM Do, YYYY')}
           </Text>
-          <Text style={styles.agendaDaySubtitle}>Tip breakdown</Text>
         </View>
         <Button
           buttonColor={Colors.primary}
@@ -67,7 +66,6 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   agendaSectionTitle: {fontSize: 16, fontWeight: '600'},
-  agendaDaySubtitle: {fontSize: 12, fontWeight: '300'},
   tipSummaryContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
