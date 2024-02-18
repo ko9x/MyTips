@@ -1,8 +1,8 @@
-### How to Run the App
+# How to Run the App
 
-# navigate to folder and run `npx react-native start` to start Metro
+### navigate to folder and run `npm start` to start Metro
 
-# open a new tab and run `npm run iPhone13` or `npm run 12mini` to run the simulator for the desired device
+### open a new tab and run `npm run iPhone13` or `npm run 12mini` to run the simulator for the desired device
 
 ### Cocoapods and pod install
 
@@ -21,53 +21,107 @@
 ### Setting the color of the StatusBar
 
 - `<Tab.Screen
-      key={index}
-      name={name}
-      component={screen}
-      options={{
-        headerShadowVisible: false,
-        headerTintColor: 'white',
-        headerStyle: {
-          backgroundColor: '#46c482',
-        },
-        tabBarIcon: ({focused, color}: any) =>
-          renderTabIcon({icon, focused, color, title}),
-      }}
-    />`
+  key={index}
+  name={name}
+  component={screen}
+  options={{
+    headerShadowVisible: false,
+    headerTintColor: 'white',
+    headerStyle: {
+      backgroundColor: '#46c482',
+    },
+    tabBarIcon: ({focused, color}: any) =>
+      renderTabIcon({icon, focused, color, title}),
+  }}
+/>`
 - The important bit is headerStyle with the backgroundColor property set to the desired color.
 - headerShadowVisible set to false gets rid of the line that is under the header
 - headerTintColor is the color of the text inside the header
 
 ### todayButton.js location
+
 - To modify the today button
-`node_modules/react-native-calendar/src/expandableCalendar/Context/todayButton.js`
+  `node_modules/react-native-calendar/src/expandableCalendar/Context/todayButton.js`
 
 ### theme.js location
+
 `src/mocks/theme.js`
 
 ### When we are ready to finalize the item object structure we can modify the declared type for AgendaEntry located in:
+
 `node_modules/react-native-calendar/src/types.d.ts`
 
 ### Fixed the opening and closing animation by modifying some function in:
+
 `node_modules/react-native-calendar/src/expandableCalendar/index.js`
-- The main changes were: 
+
+- The main changes were:
   - commenting out the pan gesture functions
-  - modifying the knob appearance 
-  - fixing the bounceToPosition function 
+  - modifying the knob appearance
+  - fixing the bounceToPosition function
 
 ### MySql database stuff
-  - Having enablePromise true in the TipProvider breaks the db variable in StatsScreen
-    - Not really sure why
-  - `https://github.com/OP-Engineering/op-sqlite`
-  - `https://stackoverflow.com/questions/5967426/select-day-of-week-from-date`
-  - `https://stackoverflow.com/questions/30215059/day-of-week-in-sql`
+
+- Having enablePromise true in the TipProvider breaks the db variable in StatsScreen
+  - Not really sure why
+- `https://github.com/OP-Engineering/op-sqlite`
+- `https://stackoverflow.com/questions/5967426/select-day-of-week-from-date`
+- `https://stackoverflow.com/questions/30215059/day-of-week-in-sql`
 
 ### Installed patch-package
-  - `https://www.npmjs.com/package/patch-package`
-  - This allows us to make changes to the files in node modules and save those changes even if we need to npm install again
-    - react-native-calendars is the package that prompted this as I made several changes to that package
-  - To run the patch use this command `npx patch-package package-name` substitute `package-name` with the name of you package as it appears in node_modules
+
+- `https://www.npmjs.com/package/patch-package`
+- This allows us to make changes to the files in node modules and save those changes even if we need to npm install again
+  - react-native-calendars is the package that prompted this as I made several changes to that package
+- To run the patch use this command `npx patch-package package-name` substitute `package-name` with the name of you package as it appears in node_modules
 
 ### Vector Icons Stopped Working
-- I think all we need to do if this happens again is double click the xcworkspace file and let xcode launch that simulator. 
+
+- I think all we need to do if this happens again is double click the xcworkspace file and let xcode launch that simulator.
   - After that the icons started working again with the normal metro and npm run 12mini commands
+
+# Database Info
+
+- id
+  - Integer, Not Null, AutoIncrement
+  - Used to identify each database item
+- date
+  - Text, Not Null
+  - Each item needs to have a date, the same date can be used on multiple items
+- job
+  - Text, Not Null
+  - The user must set a job to help identify the type of tip, for example "server" or "bar tender"
+    section
+  - Text
+  - The user can enter a section which can be used to figure out how much money is earned on average in that section
+    - The user may want to be able to filter by name, section, day of the week, month, and year
+- time
+  - Integer, Not Null
+  - The period of time it took to earn the tip
+    - The amount of time will be stored in minutes and a method will be used to display the time in hours and minutes for the UI
+- cash
+  - Integer
+  - The amount of cash money earned
+    - The amount of money will be stored in cents and a method will be used to display the amount in dollars and cents for the UI
+- credit
+  - Integer
+  - The amount of credit card money earned
+    - The amount of money will be stored in cents and a method will be used to display the amount in dollars and cents for the UI
+- tip_in
+  - Integer
+  - The amount the user added to their tips (sometimes a bar tender will get a "tip in" from the server they made drinks for)
+    - The amount of money will be stored in cents and a method will be used to display the amount in dollars and cents for the UI
+- tip_out
+  - Integer
+  - The amount the user subtracted from their tips (sometimes a server will "tip out" to the bar for making drinks for them)
+    - The amount of money will be stored in cents and a method will be used to display the amount in dollars and cents for the UI
+- total_sales
+  - Integer
+  - The total amount of sales the user was responsible for (including drinks and food)
+    - The amount of money will be stored in cents and a method will be used to display the amount in dollars and cents for the UI
+- hourly_rate
+  - Integer
+  - The amount of money the user is payed per hour
+    - The amount of money will be stored in cents and a method will be used to display the amount in dollars and cents for the UI
+- note
+  - Text
