@@ -19,16 +19,21 @@ export function toPerHour(time: number, cents: number) {
 }
 
 export function combineMoney(dataArr: Array<any>) {
-  var amount: number = 0;
+  var itemsArr: Array<any> = [];
   dataArr.forEach(item => {
+    var amount: number = 0;
+    var id: number = item.id;
     amount += item.cash;
     amount += item.credit;
     amount += item.tip_in;
     amount += item.hourly_rate * (item.time / 60);
     amount -= item.tip_out;
+    itemsArr.push({
+      id: id,
+      amount: (Math.round(amount * 100) / 100).toFixed(0),
+    });
   });
-  console.log('amount', (Math.round(amount * 100) / 100).toFixed(2)); //@DEBUG
-  return (Math.round(amount * 100) / 100).toFixed(2);
+  return itemsArr;
 }
 
 export function combineTime(dataArr: Array<any>) {

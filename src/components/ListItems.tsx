@@ -9,7 +9,15 @@ import {
 } from '../helpers/helpers';
 
 export default function ListItems({itemArr}: any): React.JSX.Element {
-  const totalMoney = Number(combineMoney(itemArr));
+  const totalMoney = combineMoney(itemArr);
+
+  // Some days have more than one tip/job. In some places, only the total money for a specific job should be show
+  // This matches the id of the current item with the id in the totalMoney object
+  function findCorrectItem(arr: Array<any>, num: number) {
+    let item = arr.find(element => element.id === num);
+    return item?.amount;
+  }
+
   return itemArr.map((item: any) => (
     <View key={item.id}>
       <View
@@ -52,7 +60,7 @@ export default function ListItems({itemArr}: any): React.JSX.Element {
               alignItems: 'center',
             }}>
             <Text>tips</Text>
-            <Text>{toDollars(totalMoney)}</Text>
+            <Text>{toDollars(findCorrectItem(totalMoney, item.id))}</Text>
           </View>
           <View>
             <Text style={styles.tipSummaryDivider}>|</Text>
@@ -80,7 +88,9 @@ export default function ListItems({itemArr}: any): React.JSX.Element {
               alignItems: 'center',
             }}>
             <Text>per hour</Text>
-            <Text>${toPerHour(item.time, totalMoney)}/hr</Text>
+            <Text>
+              ${toPerHour(item.time, findCorrectItem(totalMoney, item.id))}/hr
+            </Text>
           </View>
         </View>
       </View>
