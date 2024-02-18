@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import Colors from '../global/Colors';
+import {toDollars, toHoursAndMinutes, toPerHour} from '../helpers/helpers';
 
 export default function ListItems({itemArr}: any): React.JSX.Element {
   return itemArr.map((item: any) => (
@@ -21,8 +22,8 @@ export default function ListItems({itemArr}: any): React.JSX.Element {
             alignItems: 'center',
             marginVertical: 10,
           }}>
-          <Text>Job: Server</Text>
-          <Text>Section: 1</Text>
+          <Text>Job: {item.name}</Text>
+          <Text>Section: {item.section}</Text>
         </View>
         <View
           style={{
@@ -44,8 +45,8 @@ export default function ListItems({itemArr}: any): React.JSX.Element {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <Text>total tips</Text>
-            <Text>$15</Text>
+            <Text>tips</Text>
+            <Text>{toDollars(item.amount)}</Text>
           </View>
           <View>
             <Text style={styles.tipSummaryDivider}>|</Text>
@@ -55,8 +56,12 @@ export default function ListItems({itemArr}: any): React.JSX.Element {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <Text>total hours</Text>
-            <Text>8</Text>
+            <Text>shift length</Text>
+            <Text>
+              {toHoursAndMinutes(item.minutes).hours} hrs
+              <Text> </Text>
+              {toHoursAndMinutes(item.minutes).minutes} mins
+            </Text>
           </View>
           <View>
             <Text style={styles.tipSummaryDivider}>|</Text>
@@ -67,7 +72,7 @@ export default function ListItems({itemArr}: any): React.JSX.Element {
               alignItems: 'center',
             }}>
             <Text>per hour</Text>
-            <Text>$4.29</Text>
+            <Text>${toPerHour(item.minutes, item.amount)}/hr</Text>
           </View>
         </View>
       </View>
