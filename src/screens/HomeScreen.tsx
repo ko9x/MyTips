@@ -34,20 +34,52 @@ export default function HomeScreen() {
   const [selectedDate, setSelectedDate] = useState(today);
   const [items, setItems] = useState({});
   const [calOpen, setCalOpen] = useState(false);
-  const [data, setData] = useState(Array);
+  const [data, setData] = useState(Object);
   const theme = useRef(getTheme());
+
+  interface MarkedItem {
+    [key: string]: InnerObj;
+  }
+
+  interface InnerObj {
+    marked?: boolean;
+    dotColor?: string;
+    selected?: boolean;
+  }
+
+  interface arrItem {
+    date?: string;
+  }
+
+  function createMarked(arr: Array<any>) {
+    const marked: MarkedItem = {};
+    arr.forEach((item: arrItem) => {
+      if (item.date) {
+        marked[item.date] = {marked: true, dotColor: 'white'};
+      }
+      if (item.date && item.date === selectedDate) {
+        marked[item.date] = {
+          selected: true,
+          marked: true,
+          dotColor: Colors.primary,
+        };
+      }
+    });
+    return marked;
+  }
 
   async function getThing() {
     const db = await connectToDatabase();
-    const grabbedData = await getCurrentMonthData(db, '02', '2024');
-    console.log(grabbedData);
+    const grabbedData = await getMonthData(db, '02');
 
-    setData(grabbedData);
+    setData(createMarked(grabbedData));
   }
 
+  // This useEffect is mad because we are not adding getThing to the dependancy array.
+  // We could wrap getThing in a useCallback but I haven't done that yet.
   useEffect(() => {
     getThing();
-  }, []);
+  }, [selectedDate]);
 
   function timeToString(time: number) {
     const date = new Date(time);
@@ -107,7 +139,7 @@ export default function HomeScreen() {
           calendarStyle={styles.calendar}
           theme={theme.current}
           firstDay={1}
-          // markedDates={marked.current}
+          markedDates={data}
           leftArrowImageSource={leftArrowIcon}
           rightArrowImageSource={rightArrowIcon}
           // onDayPress={date => {

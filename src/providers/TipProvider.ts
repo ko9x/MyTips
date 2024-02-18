@@ -29,6 +29,7 @@ function toHoursAndMinutes(dataArr: Array<any>) {
   return {hours: hours, minutes: minutes};
 }
 
+// Initial call to the database to we can create a database object in the HomeScreen
 export const connectToDatabase = async () => {
   return openDatabase(
     {name: 'tip.db', createFromLocation: 1},
