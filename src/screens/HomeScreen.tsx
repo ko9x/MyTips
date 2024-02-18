@@ -20,6 +20,7 @@ import {
   getCurrentMonthData,
   getMonthData,
   getSectionData,
+  getAllData,
 } from '../providers/TipProvider';
 const initialDate = new Date();
 const offsetAmount = initialDate.getTimezoneOffset() * 60000;
@@ -36,6 +37,7 @@ export default function HomeScreen() {
   const [calOpen, setCalOpen] = useState(false);
   const [data, setData] = useState(Object);
   const theme = useRef(getTheme());
+  const [databaseItems, setDatabaseItems] = useState(Object);
 
   interface MarkedItem {
     [key: string]: InnerObj;
@@ -51,6 +53,8 @@ export default function HomeScreen() {
     date?: string;
   }
 
+  // For the marked items we are going to want to get the current months marked items but also the month before and after
+  // That way if the calendar is showing a couple days from another month also we will still see the marked items
   function createMarked(arr: Array<any>) {
     const marked: MarkedItem = {};
     arr.forEach((item: arrItem) => {
@@ -70,9 +74,10 @@ export default function HomeScreen() {
 
   async function getThing() {
     const db = await connectToDatabase();
-    const grabbedData = await getMonthData(db, '02');
-
-    setData(createMarked(grabbedData));
+    const monthData = await getMonthData(db, '02');
+    const allData = await getAllData(db);
+    setDatabaseItems(allData);
+    setData(createMarked(monthData));
   }
 
   // This useEffect is mad because we are not adding getThing to the dependancy array.
@@ -110,11 +115,6 @@ export default function HomeScreen() {
     setShowTodayButton(true);
   }
 
-  // This is here because I am probably going to need the calOpen state eventually and I kept getting warnings about it not being used anywhere
-  if (calOpen) {
-    console.log('calendar is open');
-  }
-
   return (
     <CalendarProvider
       date={today}
@@ -145,13 +145,13 @@ export default function HomeScreen() {
           // onDayPress={date => {
           //   console.log(date);
           // }}
-          // closeOnDayPress={false}
+          closeOnDayPress={false}
         />
       </View>
       <Agenda
         style={{zIndex: 0, marginTop: -105}}
         loadItemsForMonth={loadItems}
-        items={DUMMY_DATA}
+        items={databaseItems}
         selected={selectedDate}
         renderEmptyData={() => {
           return (

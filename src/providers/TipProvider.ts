@@ -60,6 +60,37 @@ export const getTodayData = async (db: SQLiteDatabase, today: String) => {
     throw Error('failed to get today data from database');
   }
 };
+export const getAllData = async (db: SQLiteDatabase) => {
+  interface DataObj {
+    [key: string]: Array<any>;
+  }
+  try {
+    const data: DataObj = {};
+    const results = await db.executeSql('Select * from tbl_tip');
+    results?.forEach(result => {
+      for (let index = 0; index < result.rows.length; index++) {
+        data[result.rows.item(index).date] = [
+          {
+            day: result.rows.item(index).date,
+            data: [
+              {
+                id: result.rows.item(index).id,
+                amount: result.rows.item(index).amount,
+                minutes: result.rows.item(index).minutes,
+                name: result.rows.item(index).name,
+                section: result.rows.item(index).section,
+              },
+            ],
+          },
+        ];
+      }
+    });
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw Error('failed to get current month data from database');
+  }
+};
 // Return all database objects that match the current month and current year
 // So we can show the user their tips for the current month
 export const getCurrentMonthData = async (
