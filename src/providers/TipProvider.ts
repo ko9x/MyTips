@@ -48,26 +48,42 @@ export const getAllData = async (db: SQLiteDatabase) => {
     const results = await db.executeSql('Select * from tip_2_tbl');
     results?.forEach(result => {
       for (let index = 0; index < result.rows.length; index++) {
-        data[result.rows.item(index).date] = [
-          {
-            day: result.rows.item(index).date,
-            data: [
-              {
-                id: result.rows.item(index).id,
-                job: result.rows.item(index).job,
-                section: result.rows.item(index).section,
-                time: result.rows.item(index).time,
-                cash: result.rows.item(index).cash,
-                credit: result.rows.item(index).credit,
-                tip_in: result.rows.item(index).tip_in,
-                tip_out: result.rows.item(index).tip_out,
-                total_sales: result.rows.item(index).total_sales,
-                hourly_rate: result.rows.item(index).hourly_rate,
-                note: result.rows.item(index).note,
-              },
-            ],
-          },
-        ];
+        if (data[result.rows.item(index).date]) {
+          data[result.rows.item(index).date][0].data.push({
+            id: result.rows.item(index).id,
+            job: result.rows.item(index).job,
+            section: result.rows.item(index).section,
+            time: result.rows.item(index).time,
+            cash: result.rows.item(index).cash,
+            credit: result.rows.item(index).credit,
+            tip_in: result.rows.item(index).tip_in,
+            tip_out: result.rows.item(index).tip_out,
+            total_sales: result.rows.item(index).total_sales,
+            hourly_rate: result.rows.item(index).hourly_rate,
+            note: result.rows.item(index).note,
+          });
+        } else {
+          data[result.rows.item(index).date] = [
+            {
+              day: result.rows.item(index).date,
+              data: [
+                {
+                  id: result.rows.item(index).id,
+                  job: result.rows.item(index).job,
+                  section: result.rows.item(index).section,
+                  time: result.rows.item(index).time,
+                  cash: result.rows.item(index).cash,
+                  credit: result.rows.item(index).credit,
+                  tip_in: result.rows.item(index).tip_in,
+                  tip_out: result.rows.item(index).tip_out,
+                  total_sales: result.rows.item(index).total_sales,
+                  hourly_rate: result.rows.item(index).hourly_rate,
+                  note: result.rows.item(index).note,
+                },
+              ],
+            },
+          ];
+        }
       }
     });
     return data;
