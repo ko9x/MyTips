@@ -9,4 +9,5 @@ export default {
   white: 'white',
   black: 'black',
   accent: 'gold',
+  danger: '#d9291c',
 };
