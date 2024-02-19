@@ -5,11 +5,11 @@ import {
   toDollars,
   toHoursAndMinutes,
   toPerHour,
-  combineMoney,
+  combineItemMoney,
 } from '../helpers/helpers';
 
 export default function ListItems({itemArr}: any): React.JSX.Element {
-  const totalMoney = combineMoney(itemArr);
+  const totalMoney = combineItemMoney(itemArr);
 
   // Some days have more than one tip/job. In some places, only the total money for a specific job should be show
   // This matches the id of the current item with the id in the totalMoney object
