@@ -21,6 +21,7 @@ import {
   getMonthData,
   getSectionData,
   getAllData,
+  getCalendarData,
 } from '../providers/TipProvider';
 const initialDate = new Date();
 const offsetAmount = initialDate.getTimezoneOffset() * 60000;
@@ -74,10 +75,13 @@ export default function HomeScreen() {
 
   async function getThing() {
     const db = await connectToDatabase();
-    const monthData = await getMonthData(db, '02');
-    const allData = await getAllData(db);
-    setDatabaseItems(allData);
-    setData(createMarked(monthData));
+    const markedDates = await getMonthData(db, '02');
+    // const allData = await getAllData(db);
+    const calData = await getCalendarData(db, selectedDate);
+    console.log('calData', calData);
+
+    setDatabaseItems(calData);
+    setData(createMarked(markedDates));
   }
 
   // This useEffect is mad because we are not adding getThing to the dependancy array.
