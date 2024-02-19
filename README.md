@@ -99,6 +99,9 @@
   - Integer, Not Null
   - The period of time it took to earn the tip
     - The amount of time will be stored in minutes and a method will be used to display the time in hours and minutes for the UI
+- section
+  - Text
+    - The user has the option to enter a section name to help filter useful tip information
 - cash
   - Integer
   - The amount of cash money earned

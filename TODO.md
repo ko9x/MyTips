@@ -4,27 +4,18 @@
 
 # What to do next
 
-- UPDATE THE DATABASE!
 - Optimize our what to do next flow
 
 # Database TODO
 
-- Create an updated database with all the new database info in the readme file
-  - We made a note in myNotes about it. It's in the react native section
-
 # TipProvider TODO
 
-- Update getAllData function to include all the new colums added to the database
 - Create the rest of the functions needed to supply the data we need
-- Clean up unused functions
 
 # HomeScreen TODO
 
 - Main
-  - Update the ListItems and DayItem components to work with the new database columns
-  - If the calendar is open grab all the data for the selected month and display it in the MultiItemBar above the month header
-    - Figure out the amount of money made per hour function in the TipProvider for the MultiItemBars
-  - Display tip data if selected day has tips in the database
+  - Add new fields to ListItems component to show a breakdown of cash, credit, tip_in, tip_out etc...
   - If there are no tips for the selected day, Add an image of a pile of money or something and an "Add Tips" button
   - The "Add Tips" button will open a modal
 - Modal
@@ -45,6 +36,8 @@
         - If 2 rates exist for the same job show the more common one, if more than 2 exist, don't auto fill the rate field
     - Note (text area type field)
 - Main Styling
+  - Add a $ icon instead of the dot. Use the multidot option to show days with larger tips
+  - Have a subtitle under the date in the DayItem that says the tip size
   - When the calendar is opened or closed I would like the MultiItemBar to have an animation like the calendar does
   - Add some icons to the DayItem component to give it a litle more character
   - See if we can add some shadow to the white `selectedDay` icon
@@ -81,6 +74,8 @@
 - Make a custom icon to replace the marked day dot
 
 # Bugs
+- Fix this error or at least figure out what it means and if it needs to be fixed
+  - `VirtualizedList: You have a large list that is slow to update - make sure your renderItem function renders components that follow React performance best practices like PureComponent, shouldComponentUpdate, etc. {"contentLength": 4875, "dt": 105431, "prevDt": 108791}`
 
 # Done
 
@@ -92,3 +87,4 @@
     - Yes. Research SQLite for React Native, here is a link https://blog.logrocket.com/using-sqlite-with-react-native/
       - This link is also bookmarked in the react native folder
   - Do we want to just make a database using Laravel and Docker like we have in the past?
+  - UPDATE THE DATABASE!
