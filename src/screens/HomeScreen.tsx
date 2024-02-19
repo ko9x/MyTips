@@ -73,21 +73,17 @@ export default function HomeScreen() {
     return marked;
   }
 
-  async function getThing() {
+  async function getTipData() {
     const db = await connectToDatabase();
-    const markedDates = await getMonthData(db, '02');
-    // const allData = await getAllData(db);
     const calData = await getCalendarData(db, selectedDate);
-    console.log('calData', calData);
-
-    setDatabaseItems(calData);
-    setData(createMarked(markedDates));
+    setDatabaseItems(calData.itemObj);
+    setData(createMarked(calData.itemArr));
   }
 
-  // This useEffect is mad because we are not adding getThing to the dependancy array.
-  // We could wrap getThing in a useCallback but I haven't done that yet.
+  // This useEffect is mad because we are not adding getTipData to the dependancy array.
+  // We could wrap getTipData in a useCallback but I haven't done that yet.
   useEffect(() => {
-    getThing();
+    getTipData();
   }, [selectedDate]);
 
   function timeToString(time: number) {

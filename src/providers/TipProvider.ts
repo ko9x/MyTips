@@ -93,7 +93,9 @@ export const getCalendarData = async (
     [key: string]: Array<any>;
   }
   try {
+    const databaseObj = {};
     const data: DataObj = {};
+    const itemArr: Array<any> = [];
     const results = await db.executeSql(
       'Select * from tip_2_tbl where (date between ? AND ?)',
       [startDate, endDate],
@@ -138,7 +140,12 @@ export const getCalendarData = async (
         }
       }
     });
-    return data;
+    results?.forEach(result => {
+      for (let index = 0; index < result.rows.length; index++) {
+        itemArr.push(result.rows.item(index));
+      }
+    });
+    return {itemObj: data, itemArr: itemArr};
   } catch (error) {
     console.error(error);
     throw Error('failed to get current month data from database');
