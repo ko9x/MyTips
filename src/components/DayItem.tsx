@@ -34,9 +34,7 @@ export default function DayItem({reservation}: any): React.JSX.Element {
         </View>
         <Text style={styles.tipSummaryDivider}>|</Text>
         <View>
-          <Text>
-            ${toPerHour(totalTime, combineDayMoney(reservation.data))}/hr
-          </Text>
+          <Text>{toPerHour(totalTime, combineDayMoney(reservation.data))}</Text>
         </View>
       </View>
       <View style={styles.agendaItemTopContainer}>

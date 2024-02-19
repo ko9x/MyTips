@@ -89,7 +89,7 @@ export default function ListItems({itemArr}: any): React.JSX.Element {
             }}>
             <Text>per hour</Text>
             <Text>
-              ${toPerHour(item.time, findCorrectItem(totalMoney, item.id))}/hr
+              {toPerHour(item.time, findCorrectItem(totalMoney, item.id))}
             </Text>
           </View>
         </View>

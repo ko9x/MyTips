@@ -23,6 +23,7 @@ import {
   getAllData,
   getCalendarData,
 } from '../providers/TipProvider';
+import {getCurrentMonthTotals} from '../helpers/helpers';
 const initialDate = new Date();
 const offsetAmount = initialDate.getTimezoneOffset() * 60000;
 const offsetDate = initialDate.getTime() - offsetAmount;
@@ -39,6 +40,7 @@ export default function HomeScreen() {
   const [data, setData] = useState(Object);
   const theme = useRef(getTheme());
   const [databaseItems, setDatabaseItems] = useState(Object);
+  const [monthTotals, setMonthTotals] = useState(Object);
 
   interface MarkedItem {
     [key: string]: InnerObj;
@@ -75,9 +77,10 @@ export default function HomeScreen() {
 
   async function getTipData() {
     const db = await connectToDatabase();
-    const calData = await getCalendarData(db, selectedDate);
-    setDatabaseItems(calData.itemObj);
-    setData(createMarked(calData.itemArr));
+    const tipData = await getCalendarData(db, selectedDate);
+    setDatabaseItems(tipData.itemObj);
+    setData(createMarked(tipData.itemArr));
+    setMonthTotals(getCurrentMonthTotals(tipData.itemArr, selectedDate));
   }
 
   // This useEffect is mad because we are not adding getTipData to the dependancy array.
@@ -129,7 +132,11 @@ export default function HomeScreen() {
         }}>
         <View style={{height: calOpen ? 60 : 0}}>
           <MultiItemBar
-            props={{first: '$32.20/hr', second: '$300', third: '11hr 20min'}}
+            props={{
+              first: monthTotals?.money,
+              second: `${monthTotals.time?.hours}h ${monthTotals.time?.minutes}m`,
+              third: monthTotals?.hourly,
+            }}
           />
         </View>
         <ExpandableCalendar
