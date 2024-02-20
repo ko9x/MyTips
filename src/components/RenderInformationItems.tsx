@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatList} from 'react-native';
+import {View, FlatList} from 'react-native';
 import {toDollars, combineHourlyRateAndTime} from '../helpers/helpers';
 import InformationItem from './InformationItem';
 import Colors from '../global/Colors';
@@ -117,7 +117,7 @@ export default function RenderInformationItems(
   }
 
   function renderItem(item: any) {
-    return item.item;
+    return <View style={{width: '45%'}}>{item.item}</View>;
   }
 
   const ItemArr = renderInformationItems(
@@ -131,6 +131,7 @@ export default function RenderInformationItems(
       renderItem={renderItem}
       keyExtractor={item => item.key}
       numColumns={2}
+      columnWrapperStyle={{justifyContent: 'space-evenly'}}
     />
   );
 }
