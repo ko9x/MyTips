@@ -15,10 +15,6 @@ import {
 
 export default function DayItem({reservation}: any): React.JSX.Element {
   const totalTime = combineTime(reservation.data);
-  const itemsArray = RenderInformationItems({...[reservation.data]});
-  function renderItem(item: any) {
-    return item.item;
-  }
 
   return (
     <View style={styles.agendaItemContainer}>
@@ -75,12 +71,7 @@ export default function DayItem({reservation}: any): React.JSX.Element {
           Tip Information
         </Text>
       </View>
-      <FlatList
-        data={itemsArray}
-        renderItem={renderItem}
-        keyExtractor={item => item.key}
-        numColumns={2}
-      />
+      <RenderInformationItems {...[reservation.data]} />
     </View>
   );
 }

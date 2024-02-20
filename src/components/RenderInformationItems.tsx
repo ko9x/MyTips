@@ -1,4 +1,5 @@
 import React from 'react';
+import {FlatList} from 'react-native';
 import {toDollars, combineHourlyRateAndTime} from '../helpers/helpers';
 import InformationItem from './InformationItem';
 import Colors from '../global/Colors';
@@ -115,8 +116,21 @@ export default function RenderInformationItems(
     return builtInfoItemArr;
   }
 
-  return renderInformationItems(
+  function renderItem(item: any) {
+    return item.item;
+  }
+
+  const ItemArr = renderInformationItems(
     infoItemBuilderObjArr,
     Object.values(reservationDataArray)[0],
+  );
+
+  return (
+    <FlatList
+      data={ItemArr}
+      renderItem={renderItem}
+      keyExtractor={item => item.key}
+      numColumns={2}
+    />
   );
 }
