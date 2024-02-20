@@ -11,66 +11,56 @@ import {
   combineTime,
   toHoursAndMinutes,
   toPerHour,
+  infoItemBuilderObjArr,
 } from '../helpers/helpers';
+
+interface InfoItemBuilderObj {
+  itemName: string;
+  iconName: string;
+  title: string;
+  color: string;
+  key: number;
+  itemFunction: Function;
+}
 
 export default function DayItem({reservation}: any): React.JSX.Element {
   const totalTime = combineTime(reservation.data);
+  function informationItemsBuilder(
+    infoItemBuilderObj: InfoItemBuilderObj,
+    itemArr: Array<any>,
+  ) {
+    let total: number = 0;
+    itemArr.forEach(item => {
+      if (
+        item.hasOwnProperty(infoItemBuilderObj.itemName) &&
+        infoItemBuilderObj.itemName === 'hourly_rate'
+      ) {
+        total += infoItemBuilderObj.itemFunction(item.hourly_rate, item.time);
+      }
+      if (
+        item.hasOwnProperty(infoItemBuilderObj.itemName) &&
+        infoItemBuilderObj.itemName !== 'hourly_rate'
+      ) {
+        total = infoItemBuilderObj.itemFunction(
+          total,
+          item?.[infoItemBuilderObj.itemName],
+        );
+      }
+    });
+    const infoObj = {
+      iconName: infoItemBuilderObj.iconName,
+      title: infoItemBuilderObj.title,
+      amount: toDollars(total),
+      color: infoItemBuilderObj.color,
+    };
+    return <InformationItem key={infoItemBuilderObj.key} {...infoObj} />;
+  }
+
   function renderInformationItems(itemArr: Array<any>) {
     const infoItemArr: Array<any> = [];
-    if (itemArr[0].cash) {
-      const infoObj = {
-        iconName: 'cash',
-        title: 'cash',
-        amount: toDollars(itemArr[0].cash),
-        color: Colors.dark,
-      };
-      infoItemArr.push(<InformationItem key={1} {...infoObj} />);
-    }
-    if (itemArr[0].credit) {
-      const infoObj = {
-        iconName: 'credit-card',
-        title: 'credit',
-        amount: toDollars(itemArr[0].credit),
-        color: Colors.dark,
-      };
-      infoItemArr.push(<InformationItem key={2} {...infoObj} />);
-    }
-    if (itemArr[0].hourly) {
-      const infoObj = {
-        iconName: 'cash-clock',
-        title: 'hourly',
-        amount: toDollars(itemArr[0].hourly),
-        color: Colors.dark,
-      };
-      infoItemArr.push(<InformationItem key={3} {...infoObj} />);
-    }
-    if (itemArr[0].tip_in) {
-      const infoObj = {
-        iconName: 'cash-plus',
-        title: 'tip in',
-        amount: toDollars(itemArr[0].tip_in),
-        color: Colors.dark,
-      };
-      infoItemArr.push(<InformationItem key={4} {...infoObj} />);
-    }
-    if (itemArr[0].tip_out) {
-      const infoObj = {
-        iconName: 'cash-minus',
-        title: 'tip out',
-        amount: toDollars(itemArr[0].tip_out),
-        color: Colors.danger,
-      };
-      infoItemArr.push(<InformationItem key={5} {...infoObj} />);
-    }
-    if (itemArr[0].total_sales) {
-      const infoObj = {
-        iconName: 'cash-register',
-        title: 'total sales',
-        amount: toDollars(itemArr[0].total_sales),
-        color: Colors.dark,
-      };
-      infoItemArr.push(<InformationItem key={6} {...infoObj} />);
-    }
+    itemArr.forEach(item => {
+      infoItemArr.push(informationItemsBuilder(item, reservation.data));
+    });
     return infoItemArr;
   }
   return (
@@ -128,7 +118,7 @@ export default function DayItem({reservation}: any): React.JSX.Element {
           Tip Information
         </Text>
       </View>
-      <View>{renderInformationItems(reservation.data)}</View>
+      <View>{renderInformationItems(infoItemBuilderObjArr)}</View>
     </View>
   );
 }

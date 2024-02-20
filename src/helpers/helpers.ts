@@ -1,3 +1,5 @@
+import Colors from '../global/Colors';
+
 export function getCurrentMonthTotals(
   dataArr: Array<any>,
   selectedDate: String,
@@ -47,6 +49,11 @@ export function toDollars(cents: number) {
   return dollars;
 }
 
+export function combineHourlyRateAndTime(hourlyRate: number, time: number) {
+  const amount = hourlyRate * (time / 60);
+  return amount;
+}
+
 export function combineItemMoney(dataArr: Array<any>) {
   var itemsArr: Array<any> = [];
   dataArr.forEach(item => {
@@ -82,8 +89,69 @@ export function combineMonthMoney(dataArr: Array<any>) {
     amount += item.cash;
     amount += item.credit;
     amount += item.tip_in;
-    amount += item.hourly_rate * (item.time / 60);
+    amount += combineHourlyRateAndTime(item.hourly_rate, item.time);
     amount -= item.tip_out;
   });
   return Number((Math.round(amount * 100) / 100).toFixed(0));
 }
+
+export const infoItemBuilderObjArr: Array<any> = [
+  {
+    itemName: 'cash',
+    iconName: 'cash',
+    title: 'cash',
+    color: Colors.dark,
+    key: 1,
+    itemFunction: (totalNum: number, itemNum: number) => {
+      return totalNum + itemNum;
+    },
+  },
+  {
+    itemName: 'credit',
+    iconName: 'credit-card',
+    title: 'credit',
+    color: Colors.dark,
+    key: 2,
+    itemFunction: (totalNum: number, itemNum: number) => {
+      return (totalNum += itemNum);
+    },
+  },
+  {
+    itemName: 'hourly_rate',
+    iconName: 'cash-fast',
+    title: 'wages',
+    color: Colors.dark,
+    key: 3,
+    itemFunction: combineHourlyRateAndTime,
+  },
+  {
+    itemName: 'tip_in',
+    iconName: 'cash-plus',
+    title: 'tip in',
+    color: Colors.dark,
+    key: 4,
+    itemFunction: (totalNum: number, itemNum: number) => {
+      return (totalNum += itemNum);
+    },
+  },
+  {
+    itemName: 'tip_out',
+    iconName: 'cash-minus',
+    title: 'tip out',
+    color: Colors.danger,
+    key: 5,
+    itemFunction: (totalNum: number, itemNum: number) => {
+      return (totalNum -= itemNum);
+    },
+  },
+  {
+    itemName: 'total_sales',
+    iconName: 'cash-register',
+    title: 'total sales',
+    color: Colors.dark,
+    key: 6,
+    itemFunction: (totalNum: number, itemNum: number) => {
+      return totalNum + itemNum;
+    },
+  },
+];

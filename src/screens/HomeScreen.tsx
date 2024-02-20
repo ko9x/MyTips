@@ -122,7 +122,8 @@ export default function HomeScreen() {
     <CalendarProvider
       date={today}
       onDateChanged={date => handleDateChange(date)}
-      showTodayButton={showTodayButton}
+      // We need to move the position of the todayButton. It covers the informationItems
+      // showTodayButton={showTodayButton}
       theme={theme.current}
       todayBottomMargin={30}>
       <View
