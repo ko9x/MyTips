@@ -94,13 +94,16 @@ function informationItemsBuilder(
       );
     }
   });
-  const infoObj = {
-    iconName: infoItemBuilderObj.iconName,
-    title: infoItemBuilderObj.title,
-    amount: toDollars(total),
-    color: infoItemBuilderObj.color,
-  };
-  return <InformationItem key={infoItemBuilderObj.key} {...infoObj} />;
+  // Only add information items that have a positive or negative amount
+  if (total !== 0) {
+    const infoObj = {
+      iconName: infoItemBuilderObj.iconName,
+      title: infoItemBuilderObj.title,
+      amount: toDollars(total),
+      color: infoItemBuilderObj.color,
+    };
+    return <InformationItem key={infoItemBuilderObj.key} {...infoObj} />;
+  }
 }
 export default function RenderInformationItems(
   reservationDataArray: Array<any>,
@@ -113,7 +116,12 @@ export default function RenderInformationItems(
     infoItemArr.forEach(item => {
       builtInfoItemArr.push(informationItemsBuilder(item, reservationDataArr));
     });
-    return builtInfoItemArr;
+    // Filter out undefined info items that had an amount of 0
+    const filteredBuiltInfoItemsArr = builtInfoItemArr.filter(element => {
+      return element !== undefined;
+    });
+
+    return filteredBuiltInfoItemsArr;
   }
 
   function renderItem(item: any) {
@@ -131,7 +139,7 @@ export default function RenderInformationItems(
       renderItem={renderItem}
       keyExtractor={item => item.key}
       numColumns={2}
-      columnWrapperStyle={{justifyContent: 'space-evenly'}}
+      columnWrapperStyle={{flexWrap: 'wrap'}}
     />
   );
 }
