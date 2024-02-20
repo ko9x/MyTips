@@ -11,18 +11,9 @@ import {
 import Moment from 'moment';
 import {getTheme} from '../mocks/theme';
 import Colors from '../global/Colors';
-import {DUMMY_DATA} from '../mocks/DUMMYDB';
 import DayItem from '../components/DayItem';
 import MultiItemBar from '../components/MultiItemBar';
-import {
-  connectToDatabase,
-  getTodayData,
-  getCurrentMonthData,
-  getMonthData,
-  getSectionData,
-  getAllData,
-  getCalendarData,
-} from '../providers/TipProvider';
+import {connectToDatabase, getCalendarData} from '../providers/TipProvider';
 import {getCurrentMonthTotals} from '../helpers/helpers';
 const initialDate = new Date();
 const offsetAmount = initialDate.getTimezoneOffset() * 60000;

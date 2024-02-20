@@ -5,6 +5,7 @@
 # What to do next
 
 - Optimize our what to do next flow
+- Doublecheck that all the math is being done correctly and displaying correctly
 
 # Database TODO
 
@@ -13,11 +14,16 @@
 - Create the rest of the functions needed to supply the data we need
 
 # HomeScreen TODO
+- General
+  - The useEffect is mad because the getTipData function is not in the dependancy array
+    - Fixing this will require useCallback which I don't think I have ever been able to get working
+      - Maybve there is another way to fix the error. I just don't like having a red tab
 
 - Main
-  - Add new fields to ListItems component to show a breakdown of cash, credit, tip_in, tip_out etc...
+  - Display two InformationItems per row
   - If there are no tips for the selected day, Add an image of a pile of money or something and an "Add Tips" button
   - The "Add Tips" button will open a modal
+  - Clicking on a ListItem should launch a modal that shows the informationItems for just that one ListItem
 - Modal
   - Create the modal
   - Add a Tips Section with the following inputs
