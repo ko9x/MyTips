@@ -1,6 +1,5 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import Colors from '../global/Colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 interface InfoObj {

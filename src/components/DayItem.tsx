@@ -4,65 +4,17 @@ import {Button} from 'react-native-paper';
 import Colors from '../global/Colors';
 import Moment from 'moment';
 import ListItems from './ListItems';
-import InformationItem from './InformationItem';
+import RenderInformationItems from './RenderInformationItems';
 import {
   combineDayMoney,
   toDollars,
   combineTime,
   toHoursAndMinutes,
   toPerHour,
-  infoItemBuilderObjArr,
 } from '../helpers/helpers';
-
-interface InfoItemBuilderObj {
-  itemName: string;
-  iconName: string;
-  title: string;
-  color: string;
-  key: number;
-  itemFunction: Function;
-}
 
 export default function DayItem({reservation}: any): React.JSX.Element {
   const totalTime = combineTime(reservation.data);
-  function informationItemsBuilder(
-    infoItemBuilderObj: InfoItemBuilderObj,
-    itemArr: Array<any>,
-  ) {
-    let total: number = 0;
-    itemArr.forEach(item => {
-      if (
-        item.hasOwnProperty(infoItemBuilderObj.itemName) &&
-        infoItemBuilderObj.itemName === 'hourly_rate'
-      ) {
-        total += infoItemBuilderObj.itemFunction(item.hourly_rate, item.time);
-      }
-      if (
-        item.hasOwnProperty(infoItemBuilderObj.itemName) &&
-        infoItemBuilderObj.itemName !== 'hourly_rate'
-      ) {
-        total = infoItemBuilderObj.itemFunction(
-          total,
-          item?.[infoItemBuilderObj.itemName],
-        );
-      }
-    });
-    const infoObj = {
-      iconName: infoItemBuilderObj.iconName,
-      title: infoItemBuilderObj.title,
-      amount: toDollars(total),
-      color: infoItemBuilderObj.color,
-    };
-    return <InformationItem key={infoItemBuilderObj.key} {...infoObj} />;
-  }
-
-  function renderInformationItems(itemArr: Array<any>) {
-    const infoItemArr: Array<any> = [];
-    itemArr.forEach(item => {
-      infoItemArr.push(informationItemsBuilder(item, reservation.data));
-    });
-    return infoItemArr;
-  }
   return (
     <View style={styles.agendaItemContainer}>
       <View style={styles.tipSummaryContainer}>
@@ -118,7 +70,9 @@ export default function DayItem({reservation}: any): React.JSX.Element {
           Tip Information
         </Text>
       </View>
-      <View>{renderInformationItems(infoItemBuilderObjArr)}</View>
+      <View>
+        <RenderInformationItems {...[reservation.data]} />
+      </View>
     </View>
   );
 }
