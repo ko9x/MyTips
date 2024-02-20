@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, FlatList} from 'react-native';
 import {Button} from 'react-native-paper';
 import Colors from '../global/Colors';
 import Moment from 'moment';
@@ -15,6 +15,11 @@ import {
 
 export default function DayItem({reservation}: any): React.JSX.Element {
   const totalTime = combineTime(reservation.data);
+  const itemsArray = RenderInformationItems({...[reservation.data]});
+  function renderItem(item: any) {
+    return item.item;
+  }
+
   return (
     <View style={styles.agendaItemContainer}>
       <View style={styles.tipSummaryContainer}>
@@ -70,9 +75,12 @@ export default function DayItem({reservation}: any): React.JSX.Element {
           Tip Information
         </Text>
       </View>
-      <View>
-        <RenderInformationItems {...[reservation.data]} />
-      </View>
+      <FlatList
+        data={itemsArray}
+        renderItem={renderItem}
+        keyExtractor={item => item.key}
+        numColumns={2}
+      />
     </View>
   );
 }
