@@ -105,9 +105,13 @@ function informationItemsBuilder(
     return <InformationItem key={infoItemBuilderObj.key} {...infoObj} />;
   }
 }
-export default function RenderInformationItems(
-  reservationDataArray: Array<any>,
-) {
+export default function RenderInformationItems({
+  reservationData,
+  reservationDay,
+  itemId,
+}: any) {
+  console.log(itemId);
+
   function renderInformationItems(
     infoItemArr: Array<any>,
     reservationDataArr: Array<any>,
@@ -130,7 +134,7 @@ export default function RenderInformationItems(
 
   const ItemArr = renderInformationItems(
     infoItemBuilderObjArr,
-    Object.values(reservationDataArray)[0],
+    reservationData,
   );
 
   return (

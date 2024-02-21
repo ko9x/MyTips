@@ -19,29 +19,14 @@ export default function DayItem({
 }: any): React.JSX.Element {
   const totalTime = combineTime(reservation.data);
   const [showItemModal, setShowItemModal] = useState(false);
+  const [pressedItemId, setPressedItemId] = useState(null);
+  function handleListItemPressed(itemId: any) {
+    setPressedItemId(itemId);
+    setShowItemModal(true);
+  }
 
   return (
     <View style={styles.agendaItemContainer}>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={showItemModal}
-        onRequestClose={() => {
-          setShowItemModal(false);
-        }}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <View style={styles.innerModalView}>
-              <Text style={styles.modalText}>Show Item Modal</Text>
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => setShowItemModal(false)}>
-                <Text style={styles.textStyle}>Hide Modal</Text>
-              </Pressable>
-            </View>
-          </View>
-        </View>
-      </Modal>
       <View style={styles.tipSummaryContainer}>
         <View>
           <Text>{toDollars(combineDayMoney(reservation.data))}</Text>
@@ -91,15 +76,41 @@ export default function DayItem({
           Today's Total: {toDollars(combineDayMoney(reservation.data))}
         </Text>
       </View>
-      <Pressable onPress={() => setShowItemModal(true)}>
-        <ListItems itemArr={reservation.data} />
-      </Pressable>
+      <ListItems
+        itemArr={reservation.data}
+        pressHandler={handleListItemPressed}
+      />
       <View>
         <Text style={[styles.agendaSectionTitle, styles.informationItemTitle]}>
           Tip Information
         </Text>
       </View>
-      <RenderInformationItems {...[reservation.data]} />
+      <RenderInformationItems reservationData={reservation.data} />
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={showItemModal}
+        onRequestClose={() => {
+          setShowItemModal(false);
+        }}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <View style={styles.innerModalView}>
+              <Text style={styles.modalText}>Show Item Modal</Text>
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => setShowItemModal(false)}>
+                <Text style={styles.textStyle}>Hide Modal</Text>
+              </Pressable>
+              <RenderInformationItems
+                reservationData={reservation.data}
+                reservationDay={reservation.day}
+                itemId={pressedItemId}
+              />
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
