@@ -1,5 +1,5 @@
-import React from 'react';
-import {View, Text, StyleSheet, FlatList} from 'react-native';
+import React, {useState} from 'react';
+import {View, Text, StyleSheet, Modal, Pressable} from 'react-native';
 import {Button} from 'react-native-paper';
 import Colors from '../global/Colors';
 import Moment from 'moment';
@@ -13,11 +13,35 @@ import {
   toPerHour,
 } from '../helpers/helpers';
 
-export default function DayItem({reservation}: any): React.JSX.Element {
+export default function DayItem({
+  reservation,
+  handleSetShowAddTipModal,
+}: any): React.JSX.Element {
   const totalTime = combineTime(reservation.data);
+  const [showItemModal, setShowItemModal] = useState(false);
 
   return (
     <View style={styles.agendaItemContainer}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={showItemModal}
+        onRequestClose={() => {
+          setShowItemModal(false);
+        }}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <View style={styles.innerModalView}>
+              <Text style={styles.modalText}>Show Item Modal</Text>
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => setShowItemModal(false)}>
+                <Text style={styles.textStyle}>Hide Modal</Text>
+              </Pressable>
+            </View>
+          </View>
+        </View>
+      </Modal>
       <View style={styles.tipSummaryContainer}>
         <View>
           <Text>{toDollars(combineDayMoney(reservation.data))}</Text>
@@ -48,7 +72,9 @@ export default function DayItem({reservation}: any): React.JSX.Element {
         </View>
         <Button
           buttonColor={Colors.primary}
-          onPress={() => console.log('clicked')}
+          onPress={() => {
+            handleSetShowAddTipModal(true);
+          }}
           icon="cash-multiple"
           mode="contained">
           Add Tips
@@ -65,7 +91,9 @@ export default function DayItem({reservation}: any): React.JSX.Element {
           Today's Total: {toDollars(combineDayMoney(reservation.data))}
         </Text>
       </View>
-      <ListItems itemArr={reservation.data} />
+      <Pressable onPress={() => setShowItemModal(true)}>
+        <ListItems itemArr={reservation.data} />
+      </Pressable>
       <View>
         <Text style={[styles.agendaSectionTitle, styles.informationItemTitle]}>
           Tip Information
@@ -104,4 +132,50 @@ const styles = StyleSheet.create({
   },
   tipSummaryDivider: {color: Colors.lighterGrey},
   informationItemTitle: {paddingTop: 5},
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalView: {
+    backgroundColor: Colors.primary,
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
+  },
+  innerModalView: {
+    height: '100%',
+    marginTop: '25%',
+    borderRadius: 20,
+    width: '100%',
+    backgroundColor: 'white',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: -2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: '#F194FF',
+  },
+  buttonClose: {
+    backgroundColor: '#2196F3',
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+  },
 });

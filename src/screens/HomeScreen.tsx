@@ -1,5 +1,5 @@
 import React, {useRef, useState, useEffect} from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View, Text, Modal, Pressable} from 'react-native';
 import {Button} from 'react-native-paper';
 import {
   ExpandableCalendar,
@@ -32,6 +32,7 @@ export default function HomeScreen() {
   const theme = useRef(getTheme());
   const [databaseItems, setDatabaseItems] = useState(Object);
   const [monthTotals, setMonthTotals] = useState(Object);
+  const [showAddTipModal, setShowAddTipModal] = useState(false);
 
   interface MarkedItem {
     [key: string]: InnerObj;
@@ -110,78 +111,102 @@ export default function HomeScreen() {
   }
 
   return (
-    <CalendarProvider
-      date={today}
-      onDateChanged={date => handleDateChange(date)}
-      // We need to move the position of the todayButton. It covers the informationItems
-      // showTodayButton={showTodayButton}
-      theme={theme.current}
-      todayBottomMargin={30}>
-      <View
-        style={{
-          zIndex: 100,
-          backgroundColor: Colors.primary,
+    <>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={showAddTipModal}
+        onRequestClose={() => {
+          setShowAddTipModal(false);
         }}>
-        <View style={{height: calOpen ? 60 : 0}}>
-          <MultiItemBar
-            props={{
-              first: monthTotals?.money,
-              second: `${monthTotals.time?.hours}h ${monthTotals.time?.minutes}m`,
-              third: monthTotals?.hourly,
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Add Tip Modal</Text>
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => setShowAddTipModal(false)}>
+              <Text style={styles.textStyle}>Hide Modal</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
+      <CalendarProvider
+        date={today}
+        onDateChanged={date => handleDateChange(date)}
+        // We need to move the position of the todayButton. It covers the informationItems
+        // showTodayButton={showTodayButton}
+        theme={theme.current}
+        todayBottomMargin={30}>
+        <View
+          style={{
+            zIndex: 100,
+            backgroundColor: Colors.primary,
+          }}>
+          <View style={{height: calOpen ? 60 : 0}}>
+            <MultiItemBar
+              props={{
+                first: monthTotals?.money,
+                second: `${monthTotals.time?.hours}h ${monthTotals.time?.minutes}m`,
+                third: monthTotals?.hourly,
+              }}
+            />
+          </View>
+          <ExpandableCalendar
+            onCalendarToggled={(isOpen: boolean) => {
+              setCalOpen(isOpen);
             }}
+            calendarStyle={styles.calendar}
+            theme={theme.current}
+            firstDay={1}
+            markedDates={data}
+            leftArrowImageSource={leftArrowIcon}
+            rightArrowImageSource={rightArrowIcon}
+            // onDayPress={date => {
+            //   console.log(date);
+            // }}
+            closeOnDayPress={false}
           />
         </View>
-        <ExpandableCalendar
-          onCalendarToggled={(isOpen: boolean) => {
-            setCalOpen(isOpen);
-          }}
-          calendarStyle={styles.calendar}
-          theme={theme.current}
-          firstDay={1}
-          markedDates={data}
-          leftArrowImageSource={leftArrowIcon}
-          rightArrowImageSource={rightArrowIcon}
-          // onDayPress={date => {
-          //   console.log(date);
-          // }}
-          closeOnDayPress={false}
-        />
-      </View>
-      <Agenda
-        style={{zIndex: 0, marginTop: -105}}
-        loadItemsForMonth={loadItems}
-        items={databaseItems}
-        selected={selectedDate}
-        renderEmptyData={() => {
-          return (
-            <View style={styles.agendaItemContainer}>
-              <Text>Hey add something here!</Text>
-              <Button mode="contained">Click here</Button>
-            </View>
-          );
-        }}
-        renderItem={(reservation: AgendaEntry) => {
-          if (reservation.day === selectedDate) {
-            return <DayItem reservation={reservation} />;
-          } else {
+        <Agenda
+          style={{zIndex: 0, marginTop: -105}}
+          loadItemsForMonth={loadItems}
+          items={databaseItems}
+          selected={selectedDate}
+          renderEmptyData={() => {
             return (
-              <View style={{height: 0}}>
-                <Text />
+              <View style={styles.agendaItemContainer}>
+                <Text>Hey add something here!</Text>
+                <Button
+                  onPress={() => {
+                    setShowAddTipModal(true);
+                  }}
+                  mode="contained">
+                  Open Modal
+                </Button>
               </View>
             );
-          }
-        }}
-        // Specify how empty date content with no items should be rendered
-        renderEmptyDate={() => {
-          return (
-            <View style={styles.agendaItemContainer}>
-              <Text>Hey add something here!</Text>
-              <Button mode="contained">Click here</Button>
-            </View>
-          );
-        }}
-      />
-    </CalendarProvider>
+          }}
+          renderItem={(reservation: AgendaEntry) => {
+            if (reservation.day === selectedDate) {
+              return (
+                <DayItem
+                  handleSetShowAddTipModal={setShowAddTipModal}
+                  reservation={reservation}
+                />
+              );
+            } else {
+              return (
+                <View style={{height: 0}}>
+                  <Text />
+                </View>
+              );
+            }
+          }}
+          // Specify how empty date content with no items should be rendered
+          // renderEmptyDate={() => {}}
+        />
+      </CalendarProvider>
+    </>
   );
 }
 
@@ -196,5 +221,46 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 5,
     padding: 10,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: '#F194FF',
+  },
+  buttonClose: {
+    backgroundColor: '#2196F3',
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
   },
 });
