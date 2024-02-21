@@ -4,8 +4,9 @@
 
 # What to do next
 
-- Optimize our what to do next flow
+- Keep working on the modals
 - Doublecheck that all the math is being done correctly and displaying correctly
+- Optimize our what to do next flow
 
 # Database TODO
 
@@ -20,10 +21,10 @@
       - Maybve there is another way to fix the error. I just don't like having a red tab
 
 - Main
-  - Display two InformationItems per row
+  - Clicking on a ListItem should launch a modal that shows the informationItems for just that one ListItem
+    - This will just render the information items like we do at the bottom of the DayItem
   - If there are no tips for the selected day, Add an image of a pile of money or something and an "Add Tips" button
   - The "Add Tips" button will open a modal
-  - Clicking on a ListItem should launch a modal that shows the informationItems for just that one ListItem
 - Modal
   - Create the modal
   - Add a Tips Section with the following inputs
@@ -44,9 +45,11 @@
 - Main Styling
   - Add a $ icon instead of the dot. Use the multidot option to show days with larger tips
   - Have a subtitle under the date in the DayItem that says the tip size
-  - When the calendar is opened or closed I would like the MultiItemBar to have an animation like the calendar does
+  - When the calendar is opens and closes I would like the MultiItemBar to have an animation like the calendar does
   - Add some icons to the DayItem component to give it a litle more character
   - See if we can add some shadow to the white `selectedDay` icon
+  - Try downloading the cash-clock SVG from material design icons and implement it that way
+    - Maybe we should do that will all the icons
 - Modal Styling
   - Make sure the modal looks good with and without the optional inputs (tip in, tip out, total sales, and hourly rate)
 
