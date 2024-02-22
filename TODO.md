@@ -4,6 +4,10 @@
 
 # What to do next
 
+- Add total money made per hour to renderTipInformationItems
+- Cleanup RenderJobInformationItems
+- Rename RenderInformationItems to RenderTipInformationItems
+- Use the itemId to only show the data from the ListItem that was clicked in the RenderInfoItems components
 - Keep working on the modals
 - Doublecheck that all the math is being done correctly and displaying correctly
 - Optimize our what to do next flow
