@@ -105,12 +105,8 @@ function informationItemsBuilder(
     return <InformationItem key={infoItemBuilderObj.key} {...infoObj} />;
   }
 }
-export default function RenderInformationItems({
-  reservationData,
-  reservationDay,
-  itemId,
-}: any) {
-  console.log(itemId);
+export default function RenderInformationItems({reservationData, itemId}: any) {
+  console.log(reservationData);
 
   function renderInformationItems(
     infoItemArr: Array<any>,
@@ -138,12 +134,14 @@ export default function RenderInformationItems({
   );
 
   return (
-    <FlatList
-      data={ItemArr}
-      renderItem={renderItem}
-      keyExtractor={item => item.key}
-      numColumns={2}
-      columnWrapperStyle={{flexWrap: 'wrap'}}
-    />
+    <View>
+      <FlatList
+        data={ItemArr}
+        renderItem={renderItem}
+        keyExtractor={item => item.key}
+        numColumns={2}
+        columnWrapperStyle={{flexWrap: 'wrap'}}
+      />
+    </View>
   );
 }

@@ -24,7 +24,6 @@ export default function DayItem({
     setPressedItemId(itemId);
     setShowItemModal(true);
   }
-
   return (
     <View style={styles.agendaItemContainer}>
       <View style={styles.tipSummaryContainer}>
@@ -96,12 +95,14 @@ export default function DayItem({
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <View style={styles.modalHeaderContainer}>
-              <View style={styles.backButtonContainer}>
-                <Text
-                  style={[styles.modalHeaderButton, styles.textShadowStyle]}>
-                  Back
-                </Text>
-              </View>
+              <Pressable onPress={() => setShowItemModal(false)}>
+                <View style={styles.backButtonContainer}>
+                  <Text
+                    style={[styles.modalHeaderButton, styles.textShadowStyle]}>
+                    Back
+                  </Text>
+                </View>
+              </Pressable>
               <View>
                 <Text style={[styles.modalDate, styles.textShadowStyle]}>
                   {Moment(reservation.day).format('MMMM Do, YYYY')}
@@ -115,15 +116,30 @@ export default function DayItem({
               </View>
             </View>
             <View style={styles.innerModalView}>
-              <Text style={styles.modalText}>Show Item Modal</Text>
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => setShowItemModal(false)}>
-                <Text style={styles.textStyle}>Hide Modal</Text>
-              </Pressable>
+              <View style={{paddingLeft: 10, paddingTop: 20}}>
+                <Text
+                  style={[
+                    styles.agendaSectionTitle,
+                    styles.informationItemTitle,
+                  ]}>
+                  Tip Information
+                </Text>
+              </View>
               <RenderInformationItems
                 reservationData={reservation.data}
-                reservationDay={reservation.day}
+                itemId={pressedItemId}
+              />
+              <View style={{paddingLeft: 10, paddingTop: 20}}>
+                <Text
+                  style={[
+                    styles.agendaSectionTitle,
+                    styles.informationItemTitle,
+                  ]}>
+                  Job Information
+                </Text>
+              </View>
+              <RenderInformationItems
+                reservationData={reservation.data}
                 itemId={pressedItemId}
               />
             </View>
@@ -187,16 +203,8 @@ const styles = StyleSheet.create({
     elevation: 5,
     borderRadius: 20,
   },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
   buttonOpen: {
     backgroundColor: '#F194FF',
-  },
-  buttonClose: {
-    backgroundColor: '#2196F3',
   },
   textStyle: {
     color: 'white',
