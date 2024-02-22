@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
   modalView: {
     backgroundColor: Colors.primary,
     width: '100%',
-    height: '100%',
+    height: '90%',
     alignItems: 'center',
   },
   innerModalView: {
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     justifyContent: 'space-between',
-    marginTop: '20%',
+    marginTop: '5%',
     paddingBottom: 20,
   },
   modalDate: {
