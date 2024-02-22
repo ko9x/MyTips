@@ -95,6 +95,25 @@ export default function DayItem({
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
+            <View style={styles.modalHeaderContainer}>
+              <View style={styles.backButtonContainer}>
+                <Text
+                  style={[styles.modalHeaderButton, styles.textShadowStyle]}>
+                  Back
+                </Text>
+              </View>
+              <View>
+                <Text style={[styles.modalDate, styles.textShadowStyle]}>
+                  {Moment(reservation.day).format('MMMM Do, YYYY')}
+                </Text>
+              </View>
+              <View style={styles.editButtonContainer}>
+                <Text
+                  style={[styles.modalHeaderButton, styles.textShadowStyle]}>
+                  Edit
+                </Text>
+              </View>
+            </View>
             <View style={styles.innerModalView}>
               <Text style={styles.modalText}>Show Item Modal</Text>
               <Pressable
@@ -156,8 +175,6 @@ const styles = StyleSheet.create({
   },
   innerModalView: {
     height: '100%',
-    marginTop: '25%',
-    borderRadius: 20,
     width: '100%',
     backgroundColor: 'white',
     shadowColor: '#000',
@@ -168,6 +185,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+    borderRadius: 20,
   },
   button: {
     borderRadius: 20,
@@ -188,5 +206,31 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
+  },
+  modalHeaderContainer: {
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-between',
+    marginTop: '20%',
+    paddingBottom: 20,
+  },
+  modalDate: {
+    color: 'white',
+    fontWeight: '800',
+  },
+  backButtonContainer: {
+    paddingLeft: 20,
+  },
+  editButtonContainer: {
+    paddingRight: 20,
+  },
+  modalHeaderButton: {
+    color: 'white',
+    fontWeight: '700',
+  },
+  textShadowStyle: {
+    textShadowColor: Colors.textShadow,
+    textShadowRadius: Colors.shadowRadius,
+    textShadowOffset: Colors.shadowOffset,
   },
 });

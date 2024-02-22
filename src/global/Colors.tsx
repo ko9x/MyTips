@@ -10,4 +10,10 @@ export default {
   black: 'black',
   accent: 'gold',
   danger: '#d9291c',
+  textShadow: 'rgba(0, 0, 0, 0.35)',
+  shadowRadius: 1,
+  shadowOffset: {
+    width: 0,
+    height: -1,
+  },
 };
