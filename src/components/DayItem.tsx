@@ -5,6 +5,7 @@ import Colors from '../global/Colors';
 import Moment from 'moment';
 import ListItems from './ListItems';
 import RenderInformationItems from './RenderInformationItems';
+import RenderJobInformationItems from './RenderJobInformationItems';
 import {
   combineDayMoney,
   toDollars,
@@ -138,7 +139,7 @@ export default function DayItem({
                   Job Information
                 </Text>
               </View>
-              <RenderInformationItems
+              <RenderJobInformationItems
                 reservationData={reservation.data}
                 itemId={pressedItemId}
               />
