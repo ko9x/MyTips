@@ -51,7 +51,7 @@ export function toDollars(cents: number) {
 
 export function combineHourlyRateAndTime(hourlyRate: number, time: number) {
   const amount = hourlyRate * (time / 60);
-  return amount;
+  return Math.round(amount);
 }
 
 export function combineItemMoney(dataArr: Array<any>) {
