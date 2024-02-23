@@ -1,9 +1,15 @@
 import React from 'react';
 import {View, FlatList} from 'react-native';
-import {toDollars, combineHourlyRateAndTime} from '../helpers/helpers';
+import {
+  toDollars,
+  toPerHour,
+  combineHourlyRateAndTime,
+  combineDayMoney,
+} from '../helpers/helpers';
 import InformationItem from './InformationItem';
 import Colors from '../global/Colors';
 
+// Interfaces
 interface InfoItemBuilderObj {
   itemName: string;
   iconName: string;
@@ -12,6 +18,7 @@ interface InfoItemBuilderObj {
   key: number;
   itemFunction: Function;
 }
+// Arrays
 const infoItemBuilderObjArr: Array<any> = [
   {
     itemName: 'cash',
@@ -72,6 +79,7 @@ const infoItemBuilderObjArr: Array<any> = [
     },
   },
 ];
+// Functions
 function informationItemsBuilder(
   infoItemBuilderObj: InfoItemBuilderObj,
   itemArr: Array<any>,
@@ -105,9 +113,35 @@ function informationItemsBuilder(
     return <InformationItem key={infoItemBuilderObj.key} {...infoObj} />;
   }
 }
-export default function RenderInformationItems({reservationData, itemId}: any) {
-  console.log(reservationData);
-
+function totalPerHourItem(itemArr: Array<any>) {
+  let time: number = 0;
+  itemArr.find(item => {
+    time = item.time;
+  });
+  const infoObj = {
+    iconName: 'cash-fast',
+    title: 'per hour',
+    amount: toPerHour(time, combineDayMoney(itemArr)),
+    color: Colors.dark,
+  };
+  return <InformationItem key={7} {...infoObj} />;
+}
+// Start of RenderTipInformationItems function //////////////////////////////
+export default function RenderTipInformationItems({
+  reservationData,
+  itemId,
+  showTotalPerHr,
+}: any) {
+  let reservationDataById: Array<any> = [];
+  if (itemId) {
+    reservationData.forEach((obj: {id: any}) => {
+      if (obj.id === itemId) {
+        reservationDataById = [obj];
+      }
+    });
+  } else {
+    reservationDataById = reservationData;
+  }
   function renderInformationItems(
     infoItemArr: Array<any>,
     reservationDataArr: Array<any>,
@@ -121,6 +155,10 @@ export default function RenderInformationItems({reservationData, itemId}: any) {
       return element !== undefined;
     });
 
+    if (showTotalPerHr) {
+      filteredBuiltInfoItemsArr.push(totalPerHourItem(reservationDataById));
+    }
+
     return filteredBuiltInfoItemsArr;
   }
 
@@ -130,7 +168,7 @@ export default function RenderInformationItems({reservationData, itemId}: any) {
 
   const ItemArr = renderInformationItems(
     infoItemBuilderObjArr,
-    reservationData,
+    reservationDataById,
   );
 
   return (

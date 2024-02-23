@@ -49,8 +49,6 @@ function informationItemsBuilder(
   infoItemBuilderObj: InfoItemBuilderObj,
   itemArr: Array<any>,
 ) {
-  console.log(itemArr);
-
   let itemVal: string = '';
   itemArr.forEach(item => {
     if (item.hasOwnProperty(infoItemBuilderObj.itemName)) {
@@ -67,10 +65,21 @@ function informationItemsBuilder(
   };
   return <InformationItem key={infoItemBuilderObj.key} {...infoObj} />;
 }
+
 export default function RenderJobInformationItems({
   reservationData,
   itemId,
 }: any) {
+  let reservationDataById: Array<any> = [];
+  if (itemId) {
+    reservationData.forEach((obj: {id: any}) => {
+      if (obj.id === itemId) {
+        reservationDataById = [obj];
+      }
+    });
+  } else {
+    reservationDataById = reservationData;
+  }
   function renderInformationItems(
     infoItemArr: Array<any>,
     reservationDataArr: Array<any>,
@@ -93,7 +102,7 @@ export default function RenderJobInformationItems({
 
   const ItemArr = renderInformationItems(
     infoItemBuilderObjArr,
-    reservationData,
+    reservationDataById,
   );
 
   return (

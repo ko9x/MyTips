@@ -4,7 +4,7 @@ import {Button} from 'react-native-paper';
 import Colors from '../global/Colors';
 import Moment from 'moment';
 import ListItems from './ListItems';
-import RenderInformationItems from './RenderInformationItems';
+import RenderTipInformationItems from './RenderTipInformationItems';
 import RenderJobInformationItems from './RenderJobInformationItems';
 import {
   combineDayMoney,
@@ -85,7 +85,7 @@ export default function DayItem({
           Tip Information
         </Text>
       </View>
-      <RenderInformationItems reservationData={reservation.data} />
+      <RenderTipInformationItems reservationData={reservation.data} />
       <Modal
         animationType="slide"
         transparent={true}
@@ -126,9 +126,10 @@ export default function DayItem({
                   Tip Information
                 </Text>
               </View>
-              <RenderInformationItems
+              <RenderTipInformationItems
                 reservationData={reservation.data}
                 itemId={pressedItemId}
+                showTotalPerHr={true}
               />
               <View style={{paddingLeft: 10, paddingTop: 20}}>
                 <Text

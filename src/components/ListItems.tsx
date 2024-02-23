@@ -40,8 +40,8 @@ export default function ListItems({
               alignItems: 'center',
               marginVertical: 10,
             }}>
-            <Text>Job: {item.job}</Text>
-            <Text>Section: {item.section}</Text>
+            <Text>job: {item.job}</Text>
+            <Text>section: {item.section}</Text>
           </View>
           <View
             style={{
@@ -74,7 +74,7 @@ export default function ListItems({
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <Text>shift length</Text>
+              <Text>time worked</Text>
               <Text>
                 {toHoursAndMinutes(item.time).hours}{' '}
                 {toHoursAndMinutes(item.time).hours > 1 ? 'hrs' : 'hr'}
