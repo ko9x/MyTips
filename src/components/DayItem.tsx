@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {View, Text, StyleSheet, Modal, Pressable} from 'react-native';
-import {Button} from 'react-native-paper';
 import Colors from '../global/Colors';
 import Moment from 'moment';
 import ListItems from './ListItems';
@@ -13,6 +12,7 @@ import {
   toHoursAndMinutes,
   toPerHour,
 } from '../helpers/helpers';
+import CashMultiple from '../assets/SVG/cash-multiple.svg';
 
 export default function DayItem({
   reservation,
@@ -55,15 +55,41 @@ export default function DayItem({
           </Text>
           <Text style={styles.agendaSubTitle}>Tip size</Text>
         </View>
-        <Button
-          buttonColor={Colors.primary}
+        <Pressable
+          android_ripple={{
+            color: Colors.white,
+            borderless: false,
+            foreground: true,
+          }}
+          style={({pressed}) => [
+            {
+              backgroundColor: pressed ? Colors.dark : Colors.primary,
+              borderRadius: 20,
+            },
+          ]}
           onPress={() => {
             handleSetShowAddTipModal(true);
-          }}
-          icon="cash-multiple"
-          mode="contained">
-          Add Tips
-        </Button>
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              paddingVertical: 10,
+              paddingHorizontal: 20,
+              borderRadius: 20,
+              alignItems: 'center',
+            }}>
+            <View
+              style={{
+                marginLeft: -20,
+                marginRight: -10,
+              }}>
+              <CashMultiple width={60} height={20} fill={Colors.white} />
+            </View>
+            <Text style={{color: Colors.white, fontWeight: '600'}}>
+              Add Tips
+            </Text>
+          </View>
+        </Pressable>
       </View>
       <View
         style={{
