@@ -14,9 +14,15 @@
 - Run this command to see console logs in the Metro tab `npx react-native log-ios`
   - I am not sure if this is even required anymore. It may show logs there without running this command
 
-### Where to find react-native-calendar theme styles
+### Where to find react-native-calendar theme and other changes
 
-- `node_modules/react-native-calendar/src/style.js`
+- The theme file is located in the mocks director
+- Check the react-native-calendar file in the patches directory to see what changes have been made to node_module packages
+- We still use vector icons in node_modules/react-native-calendar/expandable-calendar/index.js
+
+# Remember
+
+- We need to run `patch package` if we edit something in the node_modules and we want the changes to persist
 
 ### Setting the color of the StatusBar
 

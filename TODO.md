@@ -1,19 +1,11 @@
-# Remember
-
-- We need to run `patch package` if we edit something in the node_modules and we want the changes to persist
-
 # What to do next
 
+- Keep working on the modals
+- Doublecheck that all the maths is being done correctly and displaying correctly!
 - We should probably go through and capitalize all the hard coded. Right now its a mix of lower and upper case
 - Transform any words the user enters to be capitalized also?
   - I want to make sure when we do database queries for job title we don't get two different results for the same word
     - But maybe there is a better way to address that issue
-- Keep working on the modals
-  - renderInformationItems modal needs better icons
-    - Figure out how to download SVG files into the assets folder and use them instead of vector icons
-      - There are too many vector icons that don't work and I don't know if the app needs to be online to use them
-        - Having the SVGs local would solve both problems
-- Doublecheck that all the math is being done correctly and displaying correctly!
 
 # Database TODO
 - Edit an item or add a new item to test the total_sales informationItem
@@ -31,7 +23,6 @@
   - The useEffect is mad because the getTipData function is not in the dependancy array
     - Fixing this will require useCallback which I don't think I have ever been able to get working
       - Maybve there is another way to fix the error. I just don't like having a red tab
-
 - Main
   - If there are no tips for the selected day, Add an image of a pile of money or something and an "Add Tips" button
   - The "Add Tips" button will open a modal
@@ -107,3 +98,7 @@
       - This link is also bookmarked in the react native folder
   - Do we want to just make a database using Laravel and Docker like we have in the past?
   - UPDATE THE DATABASE!
+  - renderInformationItems modal needs better icons
+  - Figure out how to download SVG files into the assets folder and use them instead of vector icons
+    - There are too many vector icons that don't work and I don't know if the app needs to be online to use them
+      - Having the SVGs local would solve both problems
