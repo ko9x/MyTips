@@ -12,6 +12,7 @@ import Moment from 'moment';
 import {getTheme} from '../mocks/theme';
 import Colors from '../global/Colors';
 import DayItem from '../components/DayItem';
+import ManageTipModal from '../modals/ManageTipModal';
 import MultiItemBar from '../components/MultiItemBar';
 import {connectToDatabase, getCalendarData} from '../providers/TipProvider';
 import {getCurrentMonthTotals} from '../helpers/helpers';
@@ -32,7 +33,7 @@ export default function HomeScreen() {
   const theme = useRef(getTheme());
   const [databaseItems, setDatabaseItems] = useState(Object);
   const [monthTotals, setMonthTotals] = useState(Object);
-  const [showAddTipModal, setShowAddTipModal] = useState(false);
+  const [showManageTipModal, setShowManageTipModal] = useState(false);
 
   interface MarkedItem {
     [key: string]: InnerObj;
@@ -110,26 +111,12 @@ export default function HomeScreen() {
     setShowTodayButton(true);
   }
 
+  function closeManageTipModal() {
+    setShowManageTipModal(false);
+  }
+
   return (
     <>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={showAddTipModal}
-        onRequestClose={() => {
-          setShowAddTipModal(false);
-        }}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Add Tip Modal</Text>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => setShowAddTipModal(false)}>
-              <Text style={styles.textStyle}>Hide Modal</Text>
-            </Pressable>
-          </View>
-        </View>
-      </Modal>
       <CalendarProvider
         date={today}
         onDateChanged={date => handleDateChange(date)}
@@ -178,7 +165,7 @@ export default function HomeScreen() {
                 <Text>Hey add something here!</Text>
                 <Button
                   onPress={() => {
-                    setShowAddTipModal(true);
+                    setShowManageTipModal(true);
                   }}
                   mode="contained">
                   Open Modal
@@ -190,7 +177,7 @@ export default function HomeScreen() {
             if (reservation.day === selectedDate) {
               return (
                 <DayItem
-                  handleSetShowAddTipModal={setShowAddTipModal}
+                  handleSetShowManageTipModal={setShowManageTipModal}
                   reservation={reservation}
                 />
               );
@@ -202,10 +189,15 @@ export default function HomeScreen() {
               );
             }
           }}
-          // Specify how empty date content with no items should be rendered
+          // Specify how empty date content with no items should be rendered.
+          // This should never happen
           // renderEmptyDate={() => {}}
         />
       </CalendarProvider>
+      <ManageTipModal
+        showManageTipModal={showManageTipModal}
+        closeManageTipModal={closeManageTipModal}
+      />
     </>
   );
 }
@@ -221,46 +213,5 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 5,
     padding: 10,
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 22,
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  buttonOpen: {
-    backgroundColor: '#F194FF',
-  },
-  buttonClose: {
-    backgroundColor: '#2196F3',
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
   },
 });

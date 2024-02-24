@@ -1,32 +1,29 @@
 import React from 'react';
 import {View, Text, Pressable, Modal, StyleSheet} from 'react-native';
-import Moment from 'moment';
-import Colors from '../global/Colors';
 import ModalHeader from './ModalHeader';
-import RenderJobInformationItems from '../components/RenderJobInformationItems';
-import RenderTipInformationItems from '../components/RenderTipInformationItems';
+import Colors from '../global/Colors';
 
 export default function ViewTipModal({
   reservation,
   itemId,
-  showViewTipModal,
-  closeViewTipModal,
+  showManageTipModal,
+  closeManageTipModal,
 }: any) {
   return (
     <Modal
       animationType="slide"
       transparent={true}
-      visible={showViewTipModal}
+      visible={showManageTipModal}
       onRequestClose={() => {
-        closeViewTipModal();
+        closeManageTipModal();
       }}>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <ModalHeader
             leftButtonText={'Back'}
-            titleText={Moment(reservation.day).format('MMMM Do, YYYY')}
-            rightButtonText={'Edit'}
-            leftButtonFunction={closeViewTipModal}
+            titleText={'Add Tips'}
+            rightButtonText={'Save'}
+            leftButtonFunction={closeManageTipModal}
             rightButtonFunction={() => {}}
           />
           <View style={styles.innerModalView}>
@@ -39,11 +36,6 @@ export default function ViewTipModal({
                 Tip Information
               </Text>
             </View>
-            <RenderTipInformationItems
-              reservationData={reservation.data}
-              itemId={itemId}
-              showTotalPerHr={true}
-            />
             <View style={{paddingLeft: 10, paddingTop: 20}}>
               <Text
                 style={[
@@ -53,10 +45,6 @@ export default function ViewTipModal({
                 Job Information
               </Text>
             </View>
-            <RenderJobInformationItems
-              reservationData={reservation.data}
-              itemId={itemId}
-            />
           </View>
         </View>
       </View>

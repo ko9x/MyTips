@@ -16,14 +16,17 @@ import ViewTipModal from '../modals/ViewTipModal';
 
 export default function DayItem({
   reservation,
-  handleSetShowAddTipModal,
+  handleSetShowManageTipModal,
 }: any): React.JSX.Element {
   const totalTime = combineTime(reservation.data);
-  const [showItemModal, setShowItemModal] = useState(false);
+  const [showViewTipModal, setShowViewTipModal] = useState(false);
   const [pressedItemId, setPressedItemId] = useState(null);
   function handleListItemPressed(itemId: any) {
     setPressedItemId(itemId);
-    setShowItemModal(true);
+    setShowViewTipModal(true);
+  }
+  function closeViewTipModal() {
+    setShowViewTipModal(false);
   }
   return (
     <View style={styles.agendaItemContainer}>
@@ -68,7 +71,7 @@ export default function DayItem({
             },
           ]}
           onPress={() => {
-            handleSetShowAddTipModal(true);
+            handleSetShowManageTipModal(true);
           }}>
           <View
             style={{
@@ -115,8 +118,8 @@ export default function DayItem({
       <ViewTipModal
         reservation={reservation}
         itemId={pressedItemId}
-        showItemModal={showItemModal}
-        handleShowItemModal={setShowItemModal}
+        showViewTipModal={showViewTipModal}
+        closeViewTipModal={closeViewTipModal}
       />
     </View>
   );
