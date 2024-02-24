@@ -15,7 +15,7 @@ interface InfoItemBuilderObj {
 const infoItemBuilderObjArr: Array<any> = [
   {
     itemName: 'job',
-    iconName: 'notebook-outline',
+    iconName: 'book-outline',
     title: 'job title',
     color: Colors.dark,
     key: 1,
@@ -25,7 +25,7 @@ const infoItemBuilderObjArr: Array<any> = [
   },
   {
     itemName: 'time',
-    iconName: 'clock-time-three-outline',
+    iconName: 'clock-outline',
     title: 'time worked',
     color: Colors.dark,
     key: 2,
@@ -36,7 +36,7 @@ const infoItemBuilderObjArr: Array<any> = [
   },
   {
     itemName: 'hourly_rate',
-    iconName: 'cash-fast',
+    iconName: 'cash-clock',
     title: 'hourly wage',
     color: Colors.dark,
     key: 3,

@@ -42,7 +42,7 @@ const infoItemBuilderObjArr: Array<any> = [
   },
   {
     itemName: 'hourly_rate',
-    iconName: 'cash-fast',
+    iconName: 'cash-check',
     title: 'wages',
     color: Colors.dark,
     key: 3,
@@ -119,7 +119,7 @@ function totalPerHourItem(itemArr: Array<any>) {
     time = item.time;
   });
   const infoObj = {
-    iconName: 'cash-fast',
+    iconName: 'cash-clock',
     title: 'per hour',
     amount: toPerHour(time, combineDayMoney(itemArr)),
     color: Colors.dark,
