@@ -1,8 +1,7 @@
 import React from 'react';
 import {View, FlatList} from 'react-native';
-import {toDollars, toHoursAndMinutes} from '../helpers/helpers';
+import {jobInfoItemBuilderObjArr} from '../helpers/helpers';
 import InformationItem from './InformationItem';
-import Colors from '../global/Colors';
 
 interface InfoItemBuilderObj {
   itemName: string;
@@ -12,39 +11,7 @@ interface InfoItemBuilderObj {
   key: number;
   itemFunction: Function;
 }
-const infoItemBuilderObjArr: Array<any> = [
-  {
-    itemName: 'job',
-    iconName: 'book-outline',
-    title: 'job title',
-    color: Colors.dark,
-    key: 1,
-    itemFunction: (itemVal: string) => {
-      return itemVal;
-    },
-  },
-  {
-    itemName: 'time',
-    iconName: 'clock-outline',
-    title: 'time worked',
-    color: Colors.dark,
-    key: 2,
-    itemFunction: (itemNum: number) => {
-      const timeObj = toHoursAndMinutes(itemNum);
-      return `${timeObj.hours} hrs ${timeObj.minutes} mins`;
-    },
-  },
-  {
-    itemName: 'hourly_rate',
-    iconName: 'cash-clock',
-    title: 'hourly wage',
-    color: Colors.dark,
-    key: 3,
-    itemFunction: (itemNum: number) => {
-      return toDollars(itemNum);
-    },
-  },
-];
+
 function informationItemsBuilder(
   infoItemBuilderObj: InfoItemBuilderObj,
   itemArr: Array<any>,
@@ -101,7 +68,7 @@ export default function RenderJobInformationItems({
   }
 
   const ItemArr = renderInformationItems(
-    infoItemBuilderObjArr,
+    jobInfoItemBuilderObjArr,
     reservationDataById,
   );
 

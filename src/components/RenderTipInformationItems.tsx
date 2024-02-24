@@ -3,13 +3,12 @@ import {View, FlatList} from 'react-native';
 import {
   toDollars,
   toPerHour,
-  combineHourlyRateAndTime,
   combineDayMoney,
+  tipInfoItemBuilderObjArr,
 } from '../helpers/helpers';
 import InformationItem from './InformationItem';
 import Colors from '../global/Colors';
 
-// Interfaces
 interface InfoItemBuilderObj {
   itemName: string;
   iconName: string;
@@ -18,68 +17,7 @@ interface InfoItemBuilderObj {
   key: number;
   itemFunction: Function;
 }
-// Arrays
-const infoItemBuilderObjArr: Array<any> = [
-  {
-    itemName: 'cash',
-    iconName: 'cash',
-    title: 'cash',
-    color: Colors.dark,
-    key: 1,
-    itemFunction: (totalNum: number, itemNum: number) => {
-      return totalNum + itemNum;
-    },
-  },
-  {
-    itemName: 'credit',
-    iconName: 'credit-card',
-    title: 'credit',
-    color: Colors.dark,
-    key: 2,
-    itemFunction: (totalNum: number, itemNum: number) => {
-      return (totalNum += itemNum);
-    },
-  },
-  {
-    itemName: 'hourly_rate',
-    iconName: 'cash-check',
-    title: 'wages',
-    color: Colors.dark,
-    key: 3,
-    itemFunction: combineHourlyRateAndTime,
-  },
-  {
-    itemName: 'tip_in',
-    iconName: 'cash-plus',
-    title: 'tip in',
-    color: Colors.dark,
-    key: 4,
-    itemFunction: (totalNum: number, itemNum: number) => {
-      return (totalNum += itemNum);
-    },
-  },
-  {
-    itemName: 'tip_out',
-    iconName: 'cash-minus',
-    title: 'tip out',
-    color: Colors.danger,
-    key: 5,
-    itemFunction: (totalNum: number, itemNum: number) => {
-      return (totalNum -= itemNum);
-    },
-  },
-  {
-    itemName: 'total_sales',
-    iconName: 'cash-register',
-    title: 'total sales',
-    color: Colors.dark,
-    key: 6,
-    itemFunction: (totalNum: number, itemNum: number) => {
-      return totalNum + itemNum;
-    },
-  },
-];
-// Functions
+
 function informationItemsBuilder(
   infoItemBuilderObj: InfoItemBuilderObj,
   itemArr: Array<any>,
@@ -126,7 +64,7 @@ function totalPerHourItem(itemArr: Array<any>) {
   };
   return <InformationItem key={7} {...infoObj} />;
 }
-// Start of RenderTipInformationItems function //////////////////////////////
+// Start of RenderTipInformationItems Component //////////////////////////////
 export default function RenderTipInformationItems({
   reservationData,
   itemId,
@@ -167,7 +105,7 @@ export default function RenderTipInformationItems({
   }
 
   const ItemArr = renderInformationItems(
-    infoItemBuilderObjArr,
+    tipInfoItemBuilderObjArr,
     reservationDataById,
   );
 
