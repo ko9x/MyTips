@@ -14,6 +14,7 @@ import CashSync from '../assets/SVG/cash-sync.svg';
 import Cash from '../assets/SVG/cash.svg';
 import ClockOutline from '../assets/SVG/clock-outline.svg';
 import CreditCard from '../assets/SVG/credit-card.svg';
+import {iconMedium} from '../global/Variables';
 
 // FUNCTIONS //////////////////////////////////////////////////////////////////////////////////////////////
 export function getCurrentMonthTotals(
@@ -112,10 +113,10 @@ export function combineMonthMoney(dataArr: Array<any>) {
 }
 
 // const used in iconComponentArray
-const iconSize = {
-  width: 90,
-  height: 30,
-};
+// const iconMedium = {
+//   width: 90,
+//   height: 30,
+// };
 
 // ARRAYS //////////////////////////////////////////////////////////////////////////////////////////////
 export const iconComponentArray: Array<any> = [
@@ -123,8 +124,8 @@ export const iconComponentArray: Array<any> = [
     name: 'cash-check',
     icon: (
       <CashCheck
-        width={iconSize.width}
-        height={iconSize.height}
+        width={iconMedium.width}
+        height={iconMedium.height}
         fill={Colors.dark}
       />
     ),
@@ -133,8 +134,8 @@ export const iconComponentArray: Array<any> = [
     name: 'book-outline',
     icon: (
       <BookOutline
-        width={iconSize.width}
-        height={iconSize.height}
+        width={iconMedium.width}
+        height={iconMedium.height}
         fill={Colors.dark}
       />
     ),
@@ -143,8 +144,8 @@ export const iconComponentArray: Array<any> = [
     name: 'cash-clock',
     icon: (
       <CashClock
-        width={iconSize.width}
-        height={iconSize.height}
+        width={iconMedium.width}
+        height={iconMedium.height}
         fill={Colors.dark}
       />
     ),
@@ -153,8 +154,8 @@ export const iconComponentArray: Array<any> = [
     name: 'cash-edit',
     icon: (
       <CashEdit
-        width={iconSize.width}
-        height={iconSize.height}
+        width={iconMedium.width}
+        height={iconMedium.height}
         fill={Colors.dark}
       />
     ),
@@ -163,8 +164,8 @@ export const iconComponentArray: Array<any> = [
     name: 'cash-multiple',
     icon: (
       <CashMultiple
-        width={iconSize.width}
-        height={iconSize.height}
+        width={iconMedium.width}
+        height={iconMedium.height}
         fill={Colors.dark}
       />
     ),
@@ -173,8 +174,8 @@ export const iconComponentArray: Array<any> = [
     name: 'cash-plus',
     icon: (
       <CashPlus
-        width={iconSize.width}
-        height={iconSize.height}
+        width={iconMedium.width}
+        height={iconMedium.height}
         fill={Colors.dark}
       />
     ),
@@ -183,8 +184,8 @@ export const iconComponentArray: Array<any> = [
     name: 'cash-register',
     icon: (
       <CashRegister
-        width={iconSize.width}
-        height={iconSize.height}
+        width={iconMedium.width}
+        height={iconMedium.height}
         fill={Colors.dark}
       />
     ),
@@ -193,8 +194,8 @@ export const iconComponentArray: Array<any> = [
     name: 'cash-remove',
     icon: (
       <CashRemove
-        width={iconSize.width}
-        height={iconSize.height}
+        width={iconMedium.width}
+        height={iconMedium.height}
         fill={Colors.dark}
       />
     ),
@@ -203,8 +204,8 @@ export const iconComponentArray: Array<any> = [
     name: 'cash-sync',
     icon: (
       <CashSync
-        width={iconSize.width}
-        height={iconSize.height}
+        width={iconMedium.width}
+        height={iconMedium.height}
         fill={Colors.dark}
       />
     ),
@@ -213,8 +214,8 @@ export const iconComponentArray: Array<any> = [
     name: 'cash-fast',
     icon: (
       <CashFast
-        width={iconSize.width}
-        height={iconSize.height}
+        width={iconMedium.width}
+        height={iconMedium.height}
         fill={Colors.dark}
       />
     ),
@@ -223,8 +224,8 @@ export const iconComponentArray: Array<any> = [
     name: 'cash-minus',
     icon: (
       <CashMinus
-        width={iconSize.width}
-        height={iconSize.height}
+        width={iconMedium.width}
+        height={iconMedium.height}
         fill={Colors.danger}
       />
     ),
@@ -233,8 +234,8 @@ export const iconComponentArray: Array<any> = [
     name: 'cash',
     icon: (
       <Cash
-        width={iconSize.width}
-        height={iconSize.height}
+        width={iconMedium.width}
+        height={iconMedium.height}
         fill={Colors.dark}
       />
     ),
@@ -243,8 +244,8 @@ export const iconComponentArray: Array<any> = [
     name: 'clock-outline',
     icon: (
       <ClockOutline
-        width={iconSize.width}
-        height={iconSize.height}
+        width={iconMedium.width}
+        height={iconMedium.height}
         fill={Colors.dark}
       />
     ),
@@ -253,8 +254,8 @@ export const iconComponentArray: Array<any> = [
     name: 'credit-card',
     icon: (
       <CreditCard
-        width={iconSize.width}
-        height={iconSize.height}
+        width={iconMedium.width}
+        height={iconMedium.height}
         fill={Colors.dark}
       />
     ),
