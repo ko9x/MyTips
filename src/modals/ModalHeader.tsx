@@ -23,7 +23,7 @@ export default function ViewTipModal({
           {titleText}
         </Text>
       </View>
-      <Pressable onPress={() => rightButtonFunction}>
+      <Pressable onPress={() => rightButtonFunction()}>
         <View style={styles.rightButtonContainer}>
           <Text style={[styles.modalHeaderButton, styles.textShadowStyle]}>
             {rightButtonText}
