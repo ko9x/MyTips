@@ -1,7 +1,19 @@
 import React from 'react';
-import {View, Text, Pressable, Modal, StyleSheet} from 'react-native';
+import {
+  View,
+  TextInput,
+  Text,
+  Pressable,
+  Modal,
+  StyleSheet,
+  Button,
+} from 'react-native';
+import {Formik} from 'formik';
 import ModalHeader from './ModalHeader';
 import Colors from '../global/Colors';
+import Cash from '../assets/SVG/cash.svg';
+import {iconSmall} from '../global/Variables';
+import TipItemInput from '../components/TipItemInput';
 
 export default function ViewTipModal({
   reservation,
@@ -27,6 +39,33 @@ export default function ViewTipModal({
             rightButtonFunction={() => {}}
           />
           <View style={styles.innerModalView}>
+            <Formik
+              initialValues={{email: ''}}
+              onSubmit={values => console.log(values)}>
+              {({handleChange, handleBlur, handleSubmit, values}) => (
+                <View>
+                  <View style={{paddingLeft: 10, paddingTop: 20}}>
+                    <Text
+                      style={[
+                        styles.agendaSectionTitle,
+                        styles.informationItemTitle,
+                      ]}>
+                      Tip Information
+                    </Text>
+                  </View>
+                  <TipItemInput
+                    handleChange={handleChange}
+                    handleBlur={handleBlur}
+                    values={values}
+                    inputTitle={'Cash'}
+                    iconColor={Colors.dark}
+                    textColor={Colors.dark}
+                    iconName={'cash'}
+                  />
+                  <Button onPress={() => handleSubmit} title="Submit" />
+                </View>
+              )}
+            </Formik>
             <View style={{paddingLeft: 10, paddingTop: 20}}>
               <Text
                 style={[
@@ -55,13 +94,11 @@ const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
   },
   modalView: {
     backgroundColor: Colors.primary,
     width: '100%',
     height: '90%',
-    alignItems: 'center',
   },
   innerModalView: {
     height: '100%',
