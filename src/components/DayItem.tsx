@@ -12,6 +12,7 @@ import {
   toPerHour,
 } from '../helpers/helpers';
 import CashMultiple from '../assets/SVG/cash-multiple.svg';
+import {iconSmall} from '../global/Variables';
 import ViewTipModal from '../modals/ViewTipModal';
 
 export default function DayItem({
@@ -86,7 +87,11 @@ export default function DayItem({
                 marginLeft: -20,
                 marginRight: -10,
               }}>
-              <CashMultiple width={60} height={20} fill={Colors.white} />
+              <CashMultiple
+                width={iconSmall.width}
+                height={iconSmall.height}
+                fill={Colors.white}
+              />
             </View>
             <Text style={{color: Colors.white, fontWeight: '600'}}>
               Add Tips
@@ -149,7 +154,7 @@ const styles = StyleSheet.create({
     height: 40,
     marginVertical: 20,
     borderRadius: 20,
-    backgroundColor: Colors.lightGrey,
+    backgroundColor: Colors.lighterGrey,
   },
   tipSummaryDivider: {color: Colors.lighterGrey},
   informationItemTitle: {paddingTop: 5},
