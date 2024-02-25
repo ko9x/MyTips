@@ -1,6 +1,16 @@
 # What to do next
 
 - Keep working on the modals
+  - Use formik to add inputs and data collection to the ManageTipModal
+    - Make the form scrollable and add a keyboard avoiding view
+    - Make sure we can use this modal for adding AND editing tips
+    - When we are collecting data the user will be entering amounts that we need to convert
+      - Hours and minutes to just minutes
+      - dollars and cents to just cents
+- Make an icon component for note-text-outline
+  - To use with the note property
+- Make a component for map-marker
+  - To use with the section property
 - Doublecheck that all the maths is being done correctly and displaying correctly!
 - We should probably go through and capitalize all the hard coded. Right now its a mix of lower and upper case
 - Transform any words the user enters to be capitalized also?
@@ -49,8 +59,6 @@
   - When the calendar is opens and closes I would like the MultiItemBar to have an animation like the calendar does
   - Add some icons to the DayItem component to give it a litle more character
   - See if we can add some shadow to the white `selectedDay` icon
-  - Try downloading the cash-clock SVG from material design icons and implement it that way
-    - Maybe we should do that will all the icons
 - Modal Styling
   - Make sure the modal looks good with and without the optional inputs (tip in, tip out, total sales, and hourly rate)
 
@@ -84,6 +92,10 @@
 - Make a custom icon to replace the marked day dot
 
 # Bugs
+- If you open the calendar and then close it, the top row shows the wrong days
+  - It looks like it went back to the correct week but if you click on a day it will show you what day was there when the calendar was open
+    - I don't think it did this before. 
+      - We need to add a simplified version to one of the other tabs and do some testing
 - Fix this error or at least figure out what it means and if it needs to be fixed
   - `VirtualizedList: You have a large list that is slow to update - make sure your renderItem function renders components that follow React performance best practices like PureComponent, shouldComponentUpdate, etc. {"contentLength": 4875, "dt": 105431, "prevDt": 108791}`
 
