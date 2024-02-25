@@ -11,9 +11,11 @@ export default function MultiItemBar({props}: any): React.JSX.Element {
       <View>
         <Text style={styles.tipSummaryDivider}>|</Text>
       </View>
-      <View>
-        <Text>{props.second}</Text>
-      </View>
+      <Text>
+        {props.second.hours} {props.second.hours > 1 ? 'hrs' : 'hr'}
+        <Text> </Text>
+        {props.second.minutes} {props.second.minutes > 1 ? 'mins' : 'min'}
+      </Text>
       <Text style={styles.tipSummaryDivider}>|</Text>
       <View>
         <Text>{props.third}</Text>
@@ -30,7 +32,7 @@ const styles = StyleSheet.create({
     padding: 10,
     height: 40,
     marginVertical: 20,
-    marginHorizontal: 10,
+    marginHorizontal: 5,
     borderRadius: 20,
     backgroundColor: Colors.lighterGrey,
   },

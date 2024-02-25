@@ -15,6 +15,7 @@ import CashMultiple from '../assets/SVG/cash-multiple.svg';
 import {iconSmall} from '../global/Variables';
 import ViewTipModal from '../modals/ViewTipModal';
 import ManageTipModal from '../modals/ManageTipModal';
+import MultiItemBar from './MultiItemBar';
 
 export default function DayItem({reservation}: any): React.JSX.Element {
   const totalTime = combineTime(reservation.data);
@@ -33,27 +34,16 @@ export default function DayItem({reservation}: any): React.JSX.Element {
   }
   return (
     <View style={styles.agendaItemContainer}>
-      <View style={styles.tipSummaryContainer}>
-        <View>
-          <Text>{toDollars(combineDayMoney(reservation.data))}</Text>
-        </View>
-        <View>
-          <Text style={styles.tipSummaryDivider}>|</Text>
-        </View>
-        <View>
-          <Text>
-            {toHoursAndMinutes(totalTime).hours}{' '}
-            {toHoursAndMinutes(totalTime).hours > 1 ? 'hrs' : 'hr'}
-            <Text> </Text>
-            {toHoursAndMinutes(totalTime).minutes}{' '}
-            {toHoursAndMinutes(totalTime).minutes > 1 ? 'mins' : 'min'}
-          </Text>
-        </View>
-        <Text style={styles.tipSummaryDivider}>|</Text>
-        <View>
-          <Text>{toPerHour(totalTime, combineDayMoney(reservation.data))}</Text>
-        </View>
-      </View>
+      <MultiItemBar
+        props={{
+          first: toDollars(combineDayMoney(reservation.data)),
+          second: {
+            hours: toHoursAndMinutes(totalTime).hours,
+            minutes: toHoursAndMinutes(totalTime).minutes,
+          },
+          third: toPerHour(totalTime, combineDayMoney(reservation.data)),
+        }}
+      />
       <View style={styles.agendaItemTopContainer}>
         <View>
           <Text style={styles.agendaSectionTitle}>
@@ -152,16 +142,6 @@ const styles = StyleSheet.create({
   },
   agendaSectionTitle: {fontSize: 16, fontWeight: '600'},
   agendaSubTitle: {fontSize: 12, fontWeight: '300'},
-  tipSummaryContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    padding: 10,
-    height: 40,
-    marginVertical: 20,
-    borderRadius: 20,
-    backgroundColor: Colors.lighterGrey,
-  },
   tipSummaryDivider: {color: Colors.lighterGrey},
   informationItemTitle: {paddingTop: 5},
 });

@@ -133,7 +133,10 @@ export default function HomeScreen() {
             <MultiItemBar
               props={{
                 first: monthTotals?.money,
-                second: `${monthTotals.time?.hours}h ${monthTotals.time?.minutes}m`,
+                second: {
+                  hours: monthTotals.time?.hours,
+                  minutes: monthTotals.time?.minutes,
+                },
                 third: monthTotals?.hourly,
               }}
             />

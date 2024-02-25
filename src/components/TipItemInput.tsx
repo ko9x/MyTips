@@ -21,7 +21,7 @@ export default function TipItemInput({
   textColor,
   iconColor,
   iconName,
-  keyboardType
+  keyboardType,
 }: any) {
   return (
     <View
