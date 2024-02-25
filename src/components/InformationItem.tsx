@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import {iconComponentArray} from '../helpers/helpers';
+import {iconMedium} from '../global/Variables';
+import {iconComponentArrayToSize} from '../helpers/helpers';
 
 interface InfoObj {
   iconName: string;
@@ -10,6 +11,10 @@ interface InfoObj {
 }
 
 export default function InformationItem(infoObj: InfoObj): React.JSX.Element {
+  const iconComponentArray = iconComponentArrayToSize(
+    iconMedium.width,
+    iconMedium.height,
+  );
   const cashIcon = iconComponentArray.find(
     obj => obj.name === infoObj.iconName,
   );

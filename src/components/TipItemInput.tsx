@@ -2,7 +2,9 @@ import React from 'react';
 import {View, TextInput, Text} from 'react-native';
 import Colors from '../global/Colors';
 import Cash from '../assets/SVG/cash.svg';
+import CreditCard from '../assets/SVG/credit-card.svg';
 import {iconSmall} from '../global/Variables';
+import {iconComponentArrayToSize} from '../helpers/helpers';
 
 export default function TipItemInput({
   handleChange,
@@ -27,6 +29,13 @@ export default function TipItemInput({
   } else {
     inputValue = value;
   }
+
+  const iconComponentArray = iconComponentArrayToSize(
+    iconSmall.width,
+    iconSmall.height,
+  );
+
+  const iconComponent = iconComponentArray.find(obj => obj.name === iconName);
 
   return (
     <View
@@ -53,11 +62,7 @@ export default function TipItemInput({
             marginRight: -50,
             zIndex: 1000,
           }}>
-          <Cash
-            width={iconSmall.width}
-            height={iconSmall.height}
-            fill={iconColor}
-          />
+          {iconComponent!.icon}
         </View>
         <TextInput
           style={{

@@ -14,7 +14,6 @@ import CashSync from '../assets/SVG/cash-sync.svg';
 import Cash from '../assets/SVG/cash.svg';
 import ClockOutline from '../assets/SVG/clock-outline.svg';
 import CreditCard from '../assets/SVG/credit-card.svg';
-import {iconMedium} from '../global/Variables';
 
 // FUNCTIONS //////////////////////////////////////////////////////////////////////////////////////////////
 export function getCurrentMonthTotals(
@@ -112,149 +111,68 @@ export function combineMonthMoney(dataArr: Array<any>) {
   return Number((Math.round(amount * 100) / 100).toFixed(0));
 }
 
+export function iconComponentArrayToSize(width: number, height: number) {
+  return [
+    {
+      name: 'cash-check',
+      icon: <CashCheck width={width} height={height} fill={Colors.dark} />,
+    },
+    {
+      name: 'book-outline',
+      icon: <BookOutline width={width} height={height} fill={Colors.dark} />,
+    },
+    {
+      name: 'cash-clock',
+      icon: <CashClock width={width} height={height} fill={Colors.dark} />,
+    },
+    {
+      name: 'cash-edit',
+      icon: <CashEdit width={width} height={height} fill={Colors.dark} />,
+    },
+    {
+      name: 'cash-multiple',
+      icon: <CashMultiple width={width} height={height} fill={Colors.dark} />,
+    },
+    {
+      name: 'cash-plus',
+      icon: <CashPlus width={width} height={height} fill={Colors.dark} />,
+    },
+    {
+      name: 'cash-register',
+      icon: <CashRegister width={width} height={height} fill={Colors.dark} />,
+    },
+    {
+      name: 'cash-remove',
+      icon: <CashRemove width={width} height={height} fill={Colors.dark} />,
+    },
+    {
+      name: 'cash-sync',
+      icon: <CashSync width={width} height={height} fill={Colors.dark} />,
+    },
+    {
+      name: 'cash-fast',
+      icon: <CashFast width={width} height={height} fill={Colors.dark} />,
+    },
+    {
+      name: 'cash-minus',
+      icon: <CashMinus width={width} height={height} fill={Colors.danger} />,
+    },
+    {
+      name: 'cash',
+      icon: <Cash width={width} height={height} fill={Colors.dark} />,
+    },
+    {
+      name: 'clock-outline',
+      icon: <ClockOutline width={width} height={height} fill={Colors.dark} />,
+    },
+    {
+      name: 'credit-card',
+      icon: <CreditCard width={width} height={height} fill={Colors.dark} />,
+    },
+  ];
+}
+
 // ARRAYS //////////////////////////////////////////////////////////////////////////////////////////////
-export const iconComponentArray: Array<any> = [
-  {
-    name: 'cash-check',
-    icon: (
-      <CashCheck
-        width={iconMedium.width}
-        height={iconMedium.height}
-        fill={Colors.dark}
-      />
-    ),
-  },
-  {
-    name: 'book-outline',
-    icon: (
-      <BookOutline
-        width={iconMedium.width}
-        height={iconMedium.height}
-        fill={Colors.dark}
-      />
-    ),
-  },
-  {
-    name: 'cash-clock',
-    icon: (
-      <CashClock
-        width={iconMedium.width}
-        height={iconMedium.height}
-        fill={Colors.dark}
-      />
-    ),
-  },
-  {
-    name: 'cash-edit',
-    icon: (
-      <CashEdit
-        width={iconMedium.width}
-        height={iconMedium.height}
-        fill={Colors.dark}
-      />
-    ),
-  },
-  {
-    name: 'cash-multiple',
-    icon: (
-      <CashMultiple
-        width={iconMedium.width}
-        height={iconMedium.height}
-        fill={Colors.dark}
-      />
-    ),
-  },
-  {
-    name: 'cash-plus',
-    icon: (
-      <CashPlus
-        width={iconMedium.width}
-        height={iconMedium.height}
-        fill={Colors.dark}
-      />
-    ),
-  },
-  {
-    name: 'cash-register',
-    icon: (
-      <CashRegister
-        width={iconMedium.width}
-        height={iconMedium.height}
-        fill={Colors.dark}
-      />
-    ),
-  },
-  {
-    name: 'cash-remove',
-    icon: (
-      <CashRemove
-        width={iconMedium.width}
-        height={iconMedium.height}
-        fill={Colors.dark}
-      />
-    ),
-  },
-  {
-    name: 'cash-sync',
-    icon: (
-      <CashSync
-        width={iconMedium.width}
-        height={iconMedium.height}
-        fill={Colors.dark}
-      />
-    ),
-  },
-  {
-    name: 'cash-fast',
-    icon: (
-      <CashFast
-        width={iconMedium.width}
-        height={iconMedium.height}
-        fill={Colors.dark}
-      />
-    ),
-  },
-  {
-    name: 'cash-minus',
-    icon: (
-      <CashMinus
-        width={iconMedium.width}
-        height={iconMedium.height}
-        fill={Colors.danger}
-      />
-    ),
-  },
-  {
-    name: 'cash',
-    icon: (
-      <Cash
-        width={iconMedium.width}
-        height={iconMedium.height}
-        fill={Colors.dark}
-      />
-    ),
-  },
-  {
-    name: 'clock-outline',
-    icon: (
-      <ClockOutline
-        width={iconMedium.width}
-        height={iconMedium.height}
-        fill={Colors.dark}
-      />
-    ),
-  },
-  {
-    name: 'credit-card',
-    icon: (
-      <CreditCard
-        width={iconMedium.width}
-        height={iconMedium.height}
-        fill={Colors.dark}
-      />
-    ),
-  },
-];
 
 export const jobInfoItemBuilderObjArr: Array<any> = [
   {
