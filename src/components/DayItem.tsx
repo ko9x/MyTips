@@ -14,13 +14,12 @@ import {
 import CashMultiple from '../assets/SVG/cash-multiple.svg';
 import {iconSmall} from '../global/Variables';
 import ViewTipModal from '../modals/ViewTipModal';
+import ManageTipModal from '../modals/ManageTipModal';
 
-export default function DayItem({
-  reservation,
-  handleSetShowManageTipModal,
-}: any): React.JSX.Element {
+export default function DayItem({reservation}: any): React.JSX.Element {
   const totalTime = combineTime(reservation.data);
   const [showViewTipModal, setShowViewTipModal] = useState(false);
+  const [showManageTipModal, setShowManageTipModal] = useState(false);
   const [pressedItemId, setPressedItemId] = useState(null);
   function handleListItemPressed(itemId: any) {
     setPressedItemId(itemId);
@@ -28,6 +27,9 @@ export default function DayItem({
   }
   function closeViewTipModal() {
     setShowViewTipModal(false);
+  }
+  function closeManageTipModal() {
+    setShowManageTipModal(false);
   }
   return (
     <View style={styles.agendaItemContainer}>
@@ -72,7 +74,7 @@ export default function DayItem({
             },
           ]}
           onPress={() => {
-            handleSetShowManageTipModal(true);
+            setShowManageTipModal(true);
           }}>
           <View
             style={{
@@ -125,6 +127,11 @@ export default function DayItem({
         itemId={pressedItemId}
         showViewTipModal={showViewTipModal}
         closeViewTipModal={closeViewTipModal}
+      />
+      <ManageTipModal
+        showManageTipModal={showManageTipModal}
+        closeManageTipModal={closeManageTipModal}
+        reservation={reservation}
       />
     </View>
   );
