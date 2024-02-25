@@ -49,6 +49,7 @@ export default function ManageTipModal({
             <Formik
               initialValues={{
                 cash: isEdit ? toDollars(resDataObj!.cash).slice(1) : '',
+                job: isEdit ? resDataObj!.job : '',
               }}
               innerRef={formRef}
               onSubmit={values => console.log(values)}>
@@ -88,7 +89,7 @@ export default function ManageTipModal({
                     handleBlur={handleBlur('job')}
                     value={values.job}
                     inputTitle={'Job Title'}
-                    placeholder={'Enter amount'}
+                    placeholder={'Enter job title'}
                     iconName={'book-outline'}
                     iconColor={Colors.dark}
                     textColor={Colors.dark}

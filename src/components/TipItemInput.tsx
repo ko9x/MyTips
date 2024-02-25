@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  View,
-  TextInput,
-  Text,
-  Pressable,
-  Modal,
-  StyleSheet,
-  Button,
-} from 'react-native';
+import {View, TextInput, Text} from 'react-native';
 import Colors from '../global/Colors';
 import Cash from '../assets/SVG/cash.svg';
 import {iconSmall} from '../global/Variables';
@@ -23,6 +15,19 @@ export default function TipItemInput({
   iconName,
   keyboardType,
 }: any) {
+  let inputValue;
+  if (value && keyboardType === 'numeric') {
+    if (value?.charAt(0) === '$') {
+      let tempVal;
+      tempVal = value.slice(1);
+      inputValue = `$${tempVal}`;
+    } else {
+      inputValue = `$${value}`;
+    }
+  } else {
+    inputValue = value;
+  }
+
   return (
     <View
       style={{
@@ -69,7 +74,7 @@ export default function TipItemInput({
           placeholder={placeholder}
           onChangeText={handleChange}
           onBlur={handleBlur}
-          value={value}
+          value={inputValue}
         />
       </View>
     </View>
