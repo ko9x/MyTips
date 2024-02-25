@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, Pressable, Modal, StyleSheet} from 'react-native';
 import Moment from 'moment';
 import Colors from '../global/Colors';
 import ModalHeader from './ModalHeader';
 import RenderJobInformationItems from '../components/RenderJobInformationItems';
 import RenderTipInformationItems from '../components/RenderTipInformationItems';
+import ManageTipModal from './ManageTipModal';
 
 export default function ViewTipModal({
   reservation,
@@ -12,6 +13,10 @@ export default function ViewTipModal({
   showViewTipModal,
   closeViewTipModal,
 }: any) {
+  const [showManageTipModal, setShowManageTipModal] = useState(false);
+  function closeManageTipModal() {
+    setShowManageTipModal(false);
+  }
   return (
     <Modal
       animationType="slide"
@@ -27,7 +32,7 @@ export default function ViewTipModal({
             titleText={Moment(reservation.day).format('MMMM Do, YYYY')}
             rightButtonText={'Edit'}
             leftButtonFunction={closeViewTipModal}
-            rightButtonFunction={() => {}}
+            rightButtonFunction={() => setShowManageTipModal(true)}
           />
           <View style={styles.innerModalView}>
             <View style={{paddingLeft: 10, paddingTop: 20}}>
@@ -60,6 +65,12 @@ export default function ViewTipModal({
           </View>
         </View>
       </View>
+      <ManageTipModal
+        showManageTipModal={showManageTipModal}
+        closeManageTipModal={closeManageTipModal}
+        itemId={itemId}
+        reservation={reservation}
+      />
     </Modal>
   );
 }

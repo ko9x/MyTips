@@ -131,7 +131,6 @@ export default function DayItem({reservation}: any): React.JSX.Element {
       <ManageTipModal
         showManageTipModal={showManageTipModal}
         closeManageTipModal={closeManageTipModal}
-        reservation={reservation}
       />
     </View>
   );

@@ -1,26 +1,29 @@
-import React from 'react';
-import {
-  View,
-  TextInput,
-  Text,
-  Pressable,
-  Modal,
-  StyleSheet,
-  Button,
-} from 'react-native';
-import {Formik} from 'formik';
+import React, {useRef, useState} from 'react';
+import {View, Text, Modal, StyleSheet} from 'react-native';
+import {Formik, FormikProps, FormikValues} from 'formik';
 import ModalHeader from './ModalHeader';
 import Colors from '../global/Colors';
-import Cash from '../assets/SVG/cash.svg';
-import {iconSmall} from '../global/Variables';
 import TipItemInput from '../components/TipItemInput';
 
-export default function ViewTipModal({
+export default function ManageTipModal({
   reservation,
   itemId,
   showManageTipModal,
   closeManageTipModal,
 }: any) {
+  const [reservationDataById, setReservationDataById] = useState(Array);
+  function handleFormikSubmit() {
+    console.log(formRef?.current?.values);
+  }
+  if (itemId && reservationDataById.length < 1) {
+    reservation.data.forEach((obj: {id: any}) => {
+      if (obj.id === itemId) {
+        setReservationDataById([obj]);
+      }
+    });
+  }
+
+  const formRef = useRef<FormikProps<FormikValues>>(null);
   return (
     <Modal
       animationType="slide"
@@ -36,11 +39,12 @@ export default function ViewTipModal({
             titleText={'Add Tips'}
             rightButtonText={'Save'}
             leftButtonFunction={closeManageTipModal}
-            rightButtonFunction={() => {}}
+            rightButtonFunction={() => handleFormikSubmit()}
           />
           <View style={styles.innerModalView}>
             <Formik
-              initialValues={{email: ''}}
+              initialValues={{cash: ''}}
+              innerRef={formRef}
               onSubmit={values => console.log(values)}>
               {({handleChange, handleBlur, handleSubmit, values}) => (
                 <View>
@@ -54,36 +58,27 @@ export default function ViewTipModal({
                     </Text>
                   </View>
                   <TipItemInput
-                    handleChange={handleChange}
-                    handleBlur={handleBlur}
-                    values={values}
+                    handleChange={handleChange('cash')}
+                    handleBlur={handleBlur('cash')}
+                    value={values.cash}
                     inputTitle={'Cash'}
+                    placeholder={'Enter amount'}
+                    iconName={'cash'}
                     iconColor={Colors.dark}
                     textColor={Colors.dark}
-                    iconName={'cash'}
                   />
-                  <Button onPress={() => handleSubmit} title="Submit" />
+                  <View style={{paddingLeft: 10, paddingTop: 20}}>
+                    <Text
+                      style={[
+                        styles.agendaSectionTitle,
+                        styles.informationItemTitle,
+                      ]}>
+                      Job Information
+                    </Text>
+                  </View>
                 </View>
               )}
             </Formik>
-            <View style={{paddingLeft: 10, paddingTop: 20}}>
-              <Text
-                style={[
-                  styles.agendaSectionTitle,
-                  styles.informationItemTitle,
-                ]}>
-                Tip Information
-              </Text>
-            </View>
-            <View style={{paddingLeft: 10, paddingTop: 20}}>
-              <Text
-                style={[
-                  styles.agendaSectionTitle,
-                  styles.informationItemTitle,
-                ]}>
-                Job Information
-              </Text>
-            </View>
           </View>
         </View>
       </View>

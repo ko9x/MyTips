@@ -15,8 +15,9 @@ import {iconSmall} from '../global/Variables';
 export default function TipItemInput({
   handleChange,
   handleBlur,
-  values,
+  value,
   inputTitle,
+  placeholder,
   textColor,
   iconColor,
   iconName,
@@ -34,7 +35,7 @@ export default function TipItemInput({
           marginRight: '80%',
           zIndex: 1000,
         }}>
-        <Text style={{color: textColor}}>{inputTitle}</Text>
+        <Text style={{color: textColor, fontWeight: '600'}}>{inputTitle}</Text>
       </View>
       <View
         style={{
@@ -60,11 +61,13 @@ export default function TipItemInput({
             height: 50,
             borderRadius: 15,
             marginLeft: -10,
+            color: 'black',
           }}
-          placeholder={'Enter amount'}
-          onChangeText={handleChange('email')}
-          onBlur={handleBlur('email')}
-          value={values.email}
+          placeholderTextColor={Colors.grey}
+          placeholder={placeholder}
+          onChangeText={handleChange}
+          onBlur={handleBlur}
+          value={value}
         />
       </View>
     </View>
