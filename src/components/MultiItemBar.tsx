@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     marginHorizontal: 10,
     borderRadius: 20,
-    backgroundColor: Colors.lightGrey,
+    backgroundColor: Colors.lighterGrey,
   },
-  tipSummaryDivider: {color: Colors.lighterGrey},
+  tipSummaryDivider: {color: Colors.lightGrey},
 });
