@@ -5,6 +5,7 @@ import ModalHeader from './ModalHeader';
 import Colors from '../global/Colors';
 import TipItemInput from '../components/TipItemInput';
 import {toDollars} from '../helpers/helpers';
+import {ResDataObj} from '../global/Interfaces';
 
 export default function ManageTipModal({
   reservation,
@@ -12,15 +13,15 @@ export default function ManageTipModal({
   showManageTipModal,
   closeManageTipModal,
 }: any) {
-  const [reservationDataById, setReservationDataById] = useState(Array<any>);
+  const [resDataObj, setResDataObj] = useState<ResDataObj | null>(null);
   const [isEdit, setIsEdit] = useState(false);
   function handleFormikSubmit() {
     console.log(formRef?.current?.values);
   }
-  if (itemId && reservationDataById.length < 1) {
-    reservation.data.forEach((obj: {id: any}) => {
+  if (itemId && resDataObj === null) {
+    reservation.data.forEach((obj: ResDataObj) => {
       if (obj.id === itemId) {
-        setReservationDataById([obj]);
+        setResDataObj(obj);
         setIsEdit(true);
       }
     });
@@ -47,9 +48,7 @@ export default function ManageTipModal({
           <View style={styles.innerModalView}>
             <Formik
               initialValues={{
-                cash: isEdit
-                  ? toDollars(reservationDataById[0].cash).slice(1)
-                  : '',
+                cash: isEdit ? toDollars(resDataObj!.cash).slice(1) : '',
               }}
               innerRef={formRef}
               onSubmit={values => console.log(values)}>
