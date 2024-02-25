@@ -4,6 +4,7 @@ import {Formik, FormikProps, FormikValues} from 'formik';
 import ModalHeader from './ModalHeader';
 import Colors from '../global/Colors';
 import TipItemInput from '../components/TipItemInput';
+import {toDollars} from '../helpers/helpers';
 
 export default function ManageTipModal({
   reservation,
@@ -11,7 +12,8 @@ export default function ManageTipModal({
   showManageTipModal,
   closeManageTipModal,
 }: any) {
-  const [reservationDataById, setReservationDataById] = useState(Array);
+  const [reservationDataById, setReservationDataById] = useState(Array<any>);
+  const [isEdit, setIsEdit] = useState(false);
   function handleFormikSubmit() {
     console.log(formRef?.current?.values);
   }
@@ -19,6 +21,7 @@ export default function ManageTipModal({
     reservation.data.forEach((obj: {id: any}) => {
       if (obj.id === itemId) {
         setReservationDataById([obj]);
+        setIsEdit(true);
       }
     });
   }
@@ -43,7 +46,11 @@ export default function ManageTipModal({
           />
           <View style={styles.innerModalView}>
             <Formik
-              initialValues={{cash: ''}}
+              initialValues={{
+                cash: isEdit
+                  ? toDollars(reservationDataById[0].cash).slice(1)
+                  : '',
+              }}
               innerRef={formRef}
               onSubmit={values => console.log(values)}>
               {({handleChange, handleBlur, handleSubmit, values}) => (
@@ -66,6 +73,7 @@ export default function ManageTipModal({
                     iconName={'cash'}
                     iconColor={Colors.dark}
                     textColor={Colors.dark}
+                    keyboardType={'numeric'}
                   />
                   <View style={{paddingLeft: 10, paddingTop: 20}}>
                     <Text
@@ -76,6 +84,17 @@ export default function ManageTipModal({
                       Job Information
                     </Text>
                   </View>
+                  <TipItemInput
+                    handleChange={handleChange('job')}
+                    handleBlur={handleBlur('job')}
+                    value={values.job}
+                    inputTitle={'Job Title'}
+                    placeholder={'Enter amount'}
+                    iconName={'book-outline'}
+                    iconColor={Colors.dark}
+                    textColor={Colors.dark}
+                    keyboardType={'default'}
+                  />
                 </View>
               )}
             </Formik>

@@ -21,6 +21,7 @@ export default function TipItemInput({
   textColor,
   iconColor,
   iconName,
+  keyboardType
 }: any) {
   return (
     <View
@@ -63,6 +64,7 @@ export default function TipItemInput({
             marginLeft: -10,
             color: 'black',
           }}
+          keyboardType={keyboardType}
           placeholderTextColor={Colors.grey}
           placeholder={placeholder}
           onChangeText={handleChange}
