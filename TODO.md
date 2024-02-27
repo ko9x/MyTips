@@ -2,7 +2,6 @@
 
 - Keep working on the modals
   - Use formik to add inputs and data collection to the ManageTipModal
-    - Make the form scrollable and add a keyboard avoiding view
     - Make sure we can use this modal for adding AND editing tips
     - When we are collecting data the user will be entering amounts that we need to convert
       - Hours and minutes to just minutes
@@ -18,6 +17,7 @@
     - But maybe there is a better way to address that issue
 
 # Database TODO
+- Once we are certain of the database columns we need to import the database into Xcode again because right now only the iPhone 12mini has access to the database where we made the new table
 - Edit an item or add a new item to test the total_sales informationItem
 - Add an item that has null for the hourly_wage and make sure that doesn't break anything
   - I think it will result in an informationItem coming from the renderJobInformationItems with a black value
@@ -61,7 +61,8 @@
   - See if we can add some shadow to the white `selectedDay` icon
 - Modal Styling
   - Make sure the modal looks good with and without the optional inputs (tip in, tip out, total sales, and hourly rate)
-
+- Modal Testing
+  - Make sure the modal looks good on multiple different devices for android and ios
 # StatsScreen TODO
 
 - Look into packages to display our data in some cool looking graphs
