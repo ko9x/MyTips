@@ -277,6 +277,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     borderRadius: 20,
+    overflow: 'hidden',
   },
   agendaSectionTitle: {fontSize: 16, fontWeight: '600'},
   informationItemTitle: {paddingTop: 5},
