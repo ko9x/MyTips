@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, Pressable, StyleSheet} from 'react-native';
 import Colors from '../global/Colors';
 
-export default function ViewTipModal({
+export default function ModalHeader({
   leftButtonText,
   titleText,
   rightButtonText,
