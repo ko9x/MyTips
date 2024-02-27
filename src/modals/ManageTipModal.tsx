@@ -237,6 +237,7 @@ export default function ManageTipModal({
                       iconName={'book-outline'}
                       textColor={Colors.dark}
                       keyboardType={'default'}
+                      multiline
                     />
                   </View>
                 </ScrollView>

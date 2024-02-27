@@ -14,6 +14,7 @@ export default function TipItemInput({
   iconName,
   keyboardType,
   money,
+  multiline,
 }: any) {
   if (value === null || value === '0.00') {
     console.log('null value for', inputTitle);
@@ -62,19 +63,21 @@ export default function TipItemInput({
         }}>
         <View
           style={{
-            marginRight: -50,
+            marginRight: multiline ? 0 : -50,
             zIndex: 1000,
           }}>
-          {iconComponent!.icon}
+          {multiline ? null : iconComponent!.icon}
         </View>
         <TextInput
           style={{
-            paddingLeft: 45,
+            paddingLeft: multiline ? 10 : 45,
+            paddingTop: multiline ? 10 : null,
+            paddingRight: multiline ? 5 : 0,
             backgroundColor: Colors.lighterGrey,
             width: '95%',
-            height: 50,
+            height: multiline ? 80 : 50,
             borderRadius: 15,
-            marginLeft: -10,
+            marginLeft: multiline ? 0 : -10,
             color: 'black',
           }}
           keyboardType={keyboardType}
@@ -83,6 +86,8 @@ export default function TipItemInput({
           onChangeText={handleChange}
           onBlur={handleBlur}
           value={inputValue.toString()}
+          multiline={multiline}
+          textAlignVertical={multiline ? 'top' : 'center'}
         />
       </View>
     </View>
