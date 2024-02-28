@@ -16,19 +16,21 @@ export default function TipItemInput({
   money,
   multiline,
 }: any) {
-  if (value === null || value === '0.00') {
-    console.log('null value for', inputTitle);
-
-    return;
-  }
   let inputValue;
+  // We are solving a couple problems here.
+  // 1st, if we don't remove the $ at char 0 the TextInput will add another every time the user enters a number
+  // 2nd, we want to make sure we only add $ to the input UI if the user has entered a number
   if (money) {
     if (value?.charAt(0) === '$') {
       let tempVal;
       tempVal = value.slice(1);
       inputValue = `$${tempVal}`;
     } else {
-      inputValue = `$${value}`;
+      if (value.length > 0) {
+        inputValue = `$${value}`;
+      } else {
+        inputValue = value;
+      }
     }
   } else {
     inputValue = value;
@@ -85,7 +87,7 @@ export default function TipItemInput({
           placeholder={placeholder}
           onChangeText={handleChange}
           onBlur={handleBlur}
-          value={inputValue.toString()}
+          value={inputValue?.toString()}
           multiline={multiline}
           textAlignVertical={multiline ? 'top' : 'center'}
         />
