@@ -1,5 +1,8 @@
 # What to do next
 
+- Fix the calendar bug
+  - Swapping the original index with our modified one fixed the date switch issue.
+    - So we can use that information to figure out the root cause and hoepfully still have the functionality we like
 - Keep working on the modals
   - Use formik to add inputs and data collection to the ManageTipModal
     - Make sure we can use this modal for adding AND editing tips
