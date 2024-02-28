@@ -95,7 +95,9 @@ export default function ManageTipModal({
                   : '',
                 tip_in: isEdit ? toDollars(resDataObj!.tip_in).slice(1) : '',
                 tip_out: isEdit ? toDollars(resDataObj!.tip_out).slice(1) : '',
-                total_sales: isEdit ? resDataObj!.total_sales : '',
+                total_sales: isEdit
+                  ? toDollars(resDataObj!.total_sales).slice(1)
+                  : '',
                 section: isEdit ? resDataObj!.section : '',
                 note: isEdit ? resDataObj!.note : '',
               }}
