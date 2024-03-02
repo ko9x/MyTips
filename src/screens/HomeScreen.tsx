@@ -1,5 +1,5 @@
 import React, {useRef, useState, useEffect, useCallback} from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View, Text, Animated} from 'react-native';
 import {Button} from 'react-native-paper';
 import {
   ExpandableCalendar,
@@ -23,6 +23,7 @@ const momentDate = Moment(offsetDate);
 const today = momentDate.toISOString().split('T')[0];
 const leftArrowIcon = require('../img/previous.png');
 const rightArrowIcon = require('../img/next.png');
+import MoneyBag from '../assets/SVG/money-bag.svg';
 
 export default function HomeScreen() {
   const [showTodayButton, setShowTodayButton] = useState(false);
@@ -35,6 +36,19 @@ export default function HomeScreen() {
   const [monthTotals, setMonthTotals] = useState(Object);
   const [showManageTipModal, setShowManageTipModal] = useState(false);
   const [calClosedTimer, setCalClosedTimer] = useState(false);
+  const [deltaY, setDeltaY] = useState(new Animated.Value(-260));
+  const [openY, setOpenY] = useState(new Animated.Value(150));
+
+  useEffect(() => {
+    setTimeout(() => {
+      Animated.spring(deltaY, {
+        toValue: openY,
+        tension: 1,
+        friction: 50,
+        useNativeDriver: true,
+      }).start();
+    }, 200);
+  }, [deltaY, openY]);
 
   interface MarkedItem {
     [key: string]: InnerObj;
@@ -88,6 +102,10 @@ export default function HomeScreen() {
       setTimeout(() => {
         setCalClosedTimer(false);
       }, 500);
+      setOpenY(new Animated.Value(150));
+    }
+    if (calOpen) {
+      setOpenY(new Animated.Value(0));
     }
   }, [calOpen]);
 
@@ -187,16 +205,25 @@ export default function HomeScreen() {
           selected={selectedDate}
           renderEmptyData={() => {
             return (
-              <View style={styles.agendaItemContainer}>
-                <Text>Hey add something here!</Text>
-                <Button
-                  onPress={() => {
-                    setShowManageTipModal(true);
-                  }}
-                  mode="contained">
-                  Open Modal
-                </Button>
-              </View>
+              <Animated.View style={{transform: [{translateY: deltaY}]}}>
+                <View style={{alignItems: 'center'}}>
+                  <MoneyBag width={150} height={150} color={Colors.dark} />
+                  <View style={{paddingBottom: 20, marginTop: -20}}>
+                    <Text style={{color: Colors.grey}}>
+                      No tips entered for today
+                    </Text>
+                  </View>
+                  <Button
+                    onPress={() => {
+                      setShowManageTipModal(true);
+                    }}
+                    style={{backgroundColor: Colors.primary}}
+                    textColor={'white'}
+                    mode="elevated">
+                    Add Tips
+                  </Button>
+                </View>
+              </Animated.View>
             );
           }}
           renderItem={(reservation: AgendaEntry) => {
