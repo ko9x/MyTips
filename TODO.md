@@ -1,8 +1,7 @@
 # What to do next
 
-- Fix the calendar bug
-  - Swapping the original index with our modified one fixed the date switch issue.
-    - So we can use that information to figure out the root cause and hoepfully still have the functionality we like
+- run patch package on react-native-calends once we are sure the calClosedTimer is working properly
+
 - Keep working on the modals
   - Use formik to add inputs and data collection to the ManageTipModal
     - Make sure we can use this modal for adding AND editing tips
@@ -96,10 +95,6 @@
 - Make a custom icon to replace the marked day dot
 
 # Bugs
-- If you open the calendar and then close it, the top row shows the wrong days
-  - It looks like it went back to the correct week but if you click on a day it will show you what day was there when the calendar was open
-    - I don't think it did this before. 
-      - We need to add a simplified version to one of the other tabs and do some testing
 - Fix this error or at least figure out what it means and if it needs to be fixed
   - `VirtualizedList: You have a large list that is slow to update - make sure your renderItem function renders components that follow React performance best practices like PureComponent, shouldComponentUpdate, etc. {"contentLength": 4875, "dt": 105431, "prevDt": 108791}`
 
@@ -118,3 +113,6 @@
   - Figure out how to download SVG files into the assets folder and use them instead of vector icons
     - There are too many vector icons that don't work and I don't know if the app needs to be online to use them
       - Having the SVGs local would solve both problems
+- Fix the calendar bug
+  - We added the calClosedTimer state and a useEffect to give the calendar time to update the week after cal is closed
+    - While calClosedTimer is true a we render a blank View with a high zIndex which prevents the user from pressing any buttons 
