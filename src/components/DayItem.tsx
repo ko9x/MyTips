@@ -11,7 +11,8 @@ import {
   toHoursAndMinutes,
   toPerHour,
 } from '../helpers/helpers';
-import CashMultiple from '../assets/SVG/cash-multiple.svg';
+// import CashMultiple from '../assets/SVG/cash-multiple.svg';
+import CashMultiple from '../assets/SVG/dollar-card.svg';
 import {iconSmall} from '../global/Variables';
 import ViewTipModal from '../modals/ViewTipModal';
 import ManageTipModal from '../modals/ManageTipModal';
@@ -61,6 +62,11 @@ export default function DayItem({reservation}: any): React.JSX.Element {
             {
               backgroundColor: pressed ? Colors.dark : Colors.primary,
               borderRadius: 20,
+              shadowColor: 'black',
+              shadowOpacity: 0.2,
+              shadowOffset: {width: 0, height: 3},
+              shadowRadius: 5,
+              elevation: 3,
             },
           ]}
           onPress={() => {
@@ -82,7 +88,7 @@ export default function DayItem({reservation}: any): React.JSX.Element {
               <CashMultiple
                 width={iconSmall.width}
                 height={iconSmall.height}
-                fill={Colors.white}
+                color={Colors.white}
               />
             </View>
             <Text style={{color: Colors.white, fontWeight: '600'}}>
