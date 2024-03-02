@@ -32,9 +32,7 @@
 
 # HomeScreen TODO
 - General
-  - The useEffect is mad because the getTipData function is not in the dependancy array
-    - Fixing this will require useCallback which I don't think I have ever been able to get working
-      - Maybve there is another way to fix the error. I just don't like having a red tab
+  
 - Main
   - If there are no tips for the selected day, Add an image of a pile of money or something and an "Add Tips" button
   - The "Add Tips" button will open a modal
@@ -115,4 +113,6 @@
       - Having the SVGs local would solve both problems
 - Fix the calendar bug
   - We added the calClosedTimer state and a useEffect to give the calendar time to update the week after cal is closed
-    - While calClosedTimer is true a we render a blank View with a high zIndex which prevents the user from pressing any buttons 
+    - While calClosedTimer is true a we render a blank View with a high zIndex which prevents the user from pressing any buttons
+- The useEffect is mad because the getTipData function is not in the dependancy array
+    - Fixing this will require adding some useCallbacks

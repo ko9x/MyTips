@@ -1,5 +1,5 @@
-import React, {useRef, useState, useEffect} from 'react';
-import {StyleSheet, View, Text, Modal, Pressable} from 'react-native';
+import React, {useRef, useState, useEffect, useCallback} from 'react';
+import {StyleSheet, View, Text} from 'react-native';
 import {Button} from 'react-native-paper';
 import {
   ExpandableCalendar,
@@ -50,32 +50,36 @@ export default function HomeScreen() {
     date?: string;
   }
 
-  // For the marked items we are going to want to get the current months marked items but also the month before and after
-  // That way if the calendar is showing a couple days from another month also we will still see the marked items
-  function createMarked(arr: Array<any>) {
-    const marked: MarkedItem = {};
-    arr.forEach((item: arrItem) => {
-      if (item.date) {
-        marked[item.date] = {marked: true, dotColor: 'white'};
-      }
-      if (item.date && item.date === selectedDate) {
-        marked[item.date] = {
-          selected: true,
-          marked: true,
-          dotColor: Colors.primary,
-        };
-      }
-    });
-    return marked;
-  }
+  const createMarked = useCallback(
+    (arr: Array<any>) => {
+      const marked: MarkedItem = {};
+      arr.forEach((item: arrItem) => {
+        if (item.date) {
+          marked[item.date] = {marked: true, dotColor: 'white'};
+        }
+        if (item.date && item.date === selectedDate) {
+          marked[item.date] = {
+            selected: true,
+            marked: true,
+            dotColor: Colors.primary,
+          };
+        }
+      });
+      return marked;
+    },
+    [selectedDate],
+  );
 
-  async function getTipData() {
-    const db = await connectToDatabase();
-    const tipData = await getCalendarData(db, selectedDate);
-    setDatabaseItems(tipData.itemObj);
-    setData(createMarked(tipData.itemArr));
-    setMonthTotals(getCurrentMonthTotals(tipData.itemArr, selectedDate));
-  }
+  const initializeApp = useCallback(() => {
+    async function getTipData() {
+      const db = await connectToDatabase();
+      const tipData = await getCalendarData(db, selectedDate);
+      setDatabaseItems(tipData.itemObj);
+      setData(createMarked(tipData.itemArr));
+      setMonthTotals(getCurrentMonthTotals(tipData.itemArr, selectedDate));
+    }
+    getTipData();
+  }, [selectedDate, createMarked]);
 
   // Gives the calendar a half second to update after the calendar is closed
   useEffect(() => {
@@ -87,11 +91,9 @@ export default function HomeScreen() {
     }
   }, [calOpen]);
 
-  // This useEffect is mad because we are not adding getTipData to the dependancy array.
-  // We could wrap getTipData in a useCallback but I haven't done that yet.
   useEffect(() => {
-    getTipData();
-  }, [selectedDate]);
+    initializeApp();
+  }, [selectedDate, initializeApp]);
 
   function timeToString(time: number) {
     const date = new Date(time);
@@ -125,8 +127,6 @@ export default function HomeScreen() {
   function closeManageTipModal() {
     setShowManageTipModal(false);
   }
-
-  function calCloseTimeout() {}
 
   return (
     <>
@@ -215,9 +215,6 @@ export default function HomeScreen() {
               );
             }
           }}
-          // Specify how empty date content with no items should be rendered.
-          // This should never happen
-          // renderEmptyDate={() => {}}
         />
       </CalendarProvider>
       <ManageTipModal
