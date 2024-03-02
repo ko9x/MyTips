@@ -34,6 +34,7 @@ export default function HomeScreen() {
   const [databaseItems, setDatabaseItems] = useState(Object);
   const [monthTotals, setMonthTotals] = useState(Object);
   const [showManageTipModal, setShowManageTipModal] = useState(false);
+  const [calClosedTimer, setCalClosedTimer] = useState(false);
 
   interface MarkedItem {
     [key: string]: InnerObj;
@@ -76,6 +77,16 @@ export default function HomeScreen() {
     setMonthTotals(getCurrentMonthTotals(tipData.itemArr, selectedDate));
   }
 
+  // Gives the calendar a half second to update after the calendar is closed
+  useEffect(() => {
+    if (!calOpen) {
+      setCalClosedTimer(true);
+      setTimeout(() => {
+        setCalClosedTimer(false);
+      }, 500);
+    }
+  }, [calOpen]);
+
   // This useEffect is mad because we are not adding getTipData to the dependancy array.
   // We could wrap getTipData in a useCallback but I haven't done that yet.
   useEffect(() => {
@@ -115,8 +126,20 @@ export default function HomeScreen() {
     setShowManageTipModal(false);
   }
 
+  function calCloseTimeout() {}
+
   return (
     <>
+      {calClosedTimer ? (
+        <View
+          style={{
+            position: 'absolute',
+            height: '100%',
+            width: '100%',
+            zIndex: 1000,
+          }}
+        />
+      ) : null}
       <CalendarProvider
         date={today}
         onDateChanged={date => handleDateChange(date)}
