@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, Modal, Pressable} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import Colors from '../global/Colors';
 import Moment from 'moment';
 import ListItems from './ListItems';
@@ -11,12 +11,10 @@ import {
   toHoursAndMinutes,
   toPerHour,
 } from '../helpers/helpers';
-// import CashMultiple from '../assets/SVG/cash-multiple.svg';
-import CashMultiple from '../assets/SVG/dollar-card.svg';
-import {iconSmall} from '../global/Variables';
 import ViewTipModal from '../modals/ViewTipModal';
 import ManageTipModal from '../modals/ManageTipModal';
 import MultiItemBar from './MultiItemBar';
+import AddTipButton from './AddTipButton';
 
 export default function DayItem({reservation}: any): React.JSX.Element {
   const totalTime = combineTime(reservation.data);
@@ -52,50 +50,7 @@ export default function DayItem({reservation}: any): React.JSX.Element {
           </Text>
           <Text style={styles.agendaSubTitle}>Tip size</Text>
         </View>
-        <Pressable
-          android_ripple={{
-            color: Colors.white,
-            borderless: false,
-            foreground: true,
-          }}
-          style={({pressed}) => [
-            {
-              backgroundColor: pressed ? Colors.dark : Colors.primary,
-              borderRadius: 20,
-              shadowColor: 'black',
-              shadowOpacity: 0.2,
-              shadowOffset: {width: 0, height: 3},
-              shadowRadius: 5,
-              elevation: 3,
-            },
-          ]}
-          onPress={() => {
-            setShowManageTipModal(true);
-          }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              paddingVertical: 10,
-              paddingHorizontal: 20,
-              borderRadius: 20,
-              alignItems: 'center',
-            }}>
-            <View
-              style={{
-                marginLeft: -20,
-                marginRight: -10,
-              }}>
-              <CashMultiple
-                width={iconSmall.width}
-                height={iconSmall.height}
-                color={Colors.white}
-              />
-            </View>
-            <Text style={{color: Colors.white, fontWeight: '600'}}>
-              Add Tips
-            </Text>
-          </View>
-        </Pressable>
+        <AddTipButton onPressFunc={setShowManageTipModal} />
       </View>
       <View
         style={{

@@ -1,5 +1,5 @@
 import React, {useRef, useState, useEffect, useCallback} from 'react';
-import {StyleSheet, View, Text, Pressable, Animated} from 'react-native';
+import {StyleSheet, View, Text, Animated} from 'react-native';
 import {
   ExpandableCalendar,
   CalendarProvider,
@@ -23,8 +23,7 @@ const today = momentDate.toISOString().split('T')[0];
 const leftArrowIcon = require('../img/previous.png');
 const rightArrowIcon = require('../img/next.png');
 import MoneyBag from '../assets/SVG/money-bag.svg';
-import DollarCard from '../assets/SVG/dollar-card.svg';
-import {iconSmall} from '../global/Variables';
+import AddTipButton from '../components/AddTipButton';
 
 export default function HomeScreen() {
   const [showTodayButton, setShowTodayButton] = useState(false);
@@ -214,50 +213,7 @@ export default function HomeScreen() {
                       No tips entered for today
                     </Text>
                   </View>
-                  <Pressable
-                    android_ripple={{
-                      color: Colors.white,
-                      borderless: false,
-                      foreground: true,
-                    }}
-                    style={({pressed}) => [
-                      {
-                        backgroundColor: pressed ? Colors.dark : Colors.primary,
-                        borderRadius: 20,
-                        shadowColor: 'black',
-                        shadowOpacity: 0.2,
-                        shadowOffset: {width: 0, height: 3},
-                        shadowRadius: 5,
-                        elevation: 3,
-                      },
-                    ]}
-                    onPress={() => {
-                      setShowManageTipModal(true);
-                    }}>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        paddingVertical: 10,
-                        paddingHorizontal: 20,
-                        borderRadius: 20,
-                        alignItems: 'center',
-                      }}>
-                      <View
-                        style={{
-                          marginLeft: -20,
-                          marginRight: -10,
-                        }}>
-                        <DollarCard
-                          width={iconSmall.width}
-                          height={iconSmall.height}
-                          color={Colors.white}
-                        />
-                      </View>
-                      <Text style={{color: Colors.white, fontWeight: '600'}}>
-                        Add Tips
-                      </Text>
-                    </View>
-                  </Pressable>
+                  <AddTipButton onPressFunc={setShowManageTipModal} />
                 </View>
               </Animated.View>
             );
