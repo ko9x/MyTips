@@ -230,7 +230,7 @@ export const jobInfoItemBuilderObjArr: Array<any> = [
     itemName: 'note',
     iconName: 'note',
     title: 'note',
-    color: Colors.dark,
+    color: Colors.grey,
     key: 5,
     itemFunction: (itemVal: string) => {
       return itemVal;

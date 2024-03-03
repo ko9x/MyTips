@@ -22,6 +22,11 @@ function informationItemsBuilder(
       itemVal = infoItemBuilderObj.itemFunction(
         item?.[infoItemBuilderObj.itemName],
       );
+      if (infoItemBuilderObj.itemName === 'note') {
+        if (itemVal === null) {
+          itemVal = 'No note entered...';
+        }
+      }
     }
   });
   const infoObj = {
