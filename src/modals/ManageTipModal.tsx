@@ -226,7 +226,7 @@ export default function ManageTipModal({
                       value={values.section}
                       inputTitle={'Section'}
                       placeholder={'Enter section (optional)'}
-                      iconName={'cash-sync'}
+                      iconName={'map-marker'}
                       textColor={Colors.dark}
                       keyboardType={'default'}
                     />
@@ -236,7 +236,7 @@ export default function ManageTipModal({
                       value={values.note}
                       inputTitle={'Note'}
                       placeholder={'Enter a note (optional)'}
-                      iconName={'book-outline'}
+                      iconName={'note'}
                       textColor={Colors.dark}
                       keyboardType={'default'}
                       multiline

@@ -14,6 +14,8 @@ import CashSync from '../assets/SVG/cash-sync.svg';
 import Cash from '../assets/SVG/cash.svg';
 import ClockOutline from '../assets/SVG/clock-outline.svg';
 import CreditCard from '../assets/SVG/credit-card.svg';
+import Note from '../assets/SVG/note-text-outline.svg';
+import MapMarker from '../assets/SVG/map-marker.svg';
 
 // FUNCTIONS //////////////////////////////////////////////////////////////////////////////////////////////
 export function getCurrentMonthTotals(
@@ -169,6 +171,14 @@ export function iconComponentArrayToSize(width: number, height: number) {
       name: 'credit-card',
       icon: <CreditCard width={width} height={height} fill={Colors.dark} />,
     },
+    {
+      name: 'note',
+      icon: <Note width={width} height={height} fill={Colors.dark} />,
+    },
+    {
+      name: 'map-marker',
+      icon: <MapMarker width={width} height={height} fill={Colors.dark} />,
+    },
   ];
 }
 
@@ -204,6 +214,26 @@ export const jobInfoItemBuilderObjArr: Array<any> = [
     key: 3,
     itemFunction: (itemNum: number) => {
       return toDollars(itemNum);
+    },
+  },
+  {
+    itemName: 'section',
+    iconName: 'map-marker',
+    title: 'section',
+    color: Colors.dark,
+    key: 4,
+    itemFunction: (itemVal: string) => {
+      return itemVal;
+    },
+  },
+  {
+    itemName: 'note',
+    iconName: 'note',
+    title: 'note',
+    color: Colors.dark,
+    key: 5,
+    itemFunction: (itemVal: string) => {
+      return itemVal;
     },
   },
 ];
