@@ -241,8 +241,6 @@ export const getSectionData = async (db: SQLiteDatabase, section: String) => {
 
 export const addTip = async (db: SQLiteDatabase, tipObject: TipDataObj) => {
   try {
-    console.log('just the tip', tipObject);
-
     const results = await db.executeSql(
       'INSERT into tip_2_tbl(date, job, time, cash, credit, tip_in, tip_out, total_sales, hourly_rate, note, section) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
       [
