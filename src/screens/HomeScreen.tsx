@@ -13,7 +13,11 @@ import Colors from '../global/Colors';
 import DayItem from '../components/DayItem';
 import ManageTipModal from '../modals/ManageTipModal';
 import MultiItemBar from '../components/MultiItemBar';
-import {connectToDatabase, getCalendarData} from '../providers/TipProvider';
+import {
+  connectToDatabase,
+  createDatabaseTable,
+  getCalendarData,
+} from '../providers/TipProvider';
 import {getCurrentMonthTotals} from '../helpers/helpers';
 const initialDate = new Date();
 const offsetAmount = initialDate.getTimezoneOffset() * 60000;
@@ -87,6 +91,7 @@ export default function HomeScreen() {
   const initializeApp = useCallback(() => {
     async function getTipData() {
       const db = await connectToDatabase();
+      await createDatabaseTable(db);
       const tipData = await getCalendarData(db, selectedDate);
       setDatabaseItems(tipData.itemObj);
       setData(createMarked(tipData.itemArr));

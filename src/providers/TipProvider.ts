@@ -21,6 +21,11 @@ export const connectToDatabase = async () => {
     },
   );
 };
+export const createDatabaseTable = async (db: SQLiteDatabase) => {
+  const query =
+    'CREATE TABLE IF NOT EXISTS tip_3_tbl (id INTEGER NOT NULL UNIQUE, date TEXT NOT NULL, job TEXT NOT NULL, time INTEGER NOT NULL, cash INTEGER, credit INTEGER, tip_in INTEGER, tip_out INTEGER, total_sales INTEGER, hourly_rate INTEGER, note TEXT, section TEXT, PRIMARY KEY(id AUTOINCREMENT)  );';
+  await db.executeSql(query);
+};
 // ********************************* GET DATA FROM DATABASE ***************************************************
 // Return all the data in the selected table and format it to our requirements
 export const getAllData = async (db: SQLiteDatabase) => {
@@ -29,7 +34,7 @@ export const getAllData = async (db: SQLiteDatabase) => {
   }
   try {
     const data: DataObj = {};
-    const results = await db.executeSql('Select * from tip_2_tbl');
+    const results = await db.executeSql('Select * from tip_3_tbl');
     results?.forEach(result => {
       for (let index = 0; index < result.rows.length; index++) {
         if (data[result.rows.item(index).date]) {
@@ -99,7 +104,7 @@ export const getCalendarData = async (
     const data: DataObj = {};
     const itemArr: Array<any> = [];
     const results = await db.executeSql(
-      'Select * from tip_2_tbl where (date between ? AND ?)',
+      'Select * from tip_3_tbl where (date between ? AND ?)',
       [startDate, endDate],
     );
     results?.forEach(result => {
@@ -159,7 +164,7 @@ export const getTodayData = async (db: SQLiteDatabase, today: String) => {
   try {
     const data: Array<any> = [];
     const results = await db.executeSql(
-      'Select * from tip_2_tbl where date = ?',
+      'Select * from tip_3_tbl where date = ?',
       [today],
     );
     results?.forEach(result => {
@@ -183,7 +188,7 @@ export const getCurrentMonthData = async (
   try {
     const data: Array<any> = [];
     const results = await db.executeSql(
-      "Select * from tip_2_tbl where strftime('%m', date) = ? and strftime('%Y', date) = ?",
+      "Select * from tip_3_tbl where strftime('%m', date) = ? and strftime('%Y', date) = ?",
       [month, year],
     );
     results?.forEach(result => {
@@ -203,7 +208,7 @@ export const getMonthData = async (db: SQLiteDatabase, month: String) => {
   try {
     const data: Array<any> = [];
     const results = await db.executeSql(
-      "Select * from tip_2_tbl where strftime('%m', date) = ?",
+      "Select * from tip_3_tbl where strftime('%m', date) = ?",
       [month],
     );
     results?.forEach(result => {
@@ -223,7 +228,7 @@ export const getSectionData = async (db: SQLiteDatabase, section: String) => {
   try {
     const data: Array<any> = [];
     const results = await db.executeSql(
-      'Select * from tip_2_tbl where section = ?',
+      'Select * from tip_3_tbl where section = ?',
       [section],
     );
     results?.forEach(result => {
@@ -242,7 +247,7 @@ export const getSectionData = async (db: SQLiteDatabase, section: String) => {
 export const addTip = async (db: SQLiteDatabase, tipObject: TipDataObj) => {
   try {
     const results = await db.executeSql(
-      'INSERT into tip_2_tbl(date, job, time, cash, credit, tip_in, tip_out, total_sales, hourly_rate, note, section) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      'INSERT into tip_3_tbl(date, job, time, cash, credit, tip_in, tip_out, total_sales, hourly_rate, note, section) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
       [
         tipObject.date,
         tipObject.job,
