@@ -55,8 +55,6 @@ export function toHoursAndMinutes(time: number) {
 
 export function toPerHour(time: number, cents: number) {
   const roughPerHr = ((cents / time) * 60) / 100;
-  console.log(roughPerHr);
-
   if (isNaN(roughPerHr)) {
     return '$0/hr';
   }

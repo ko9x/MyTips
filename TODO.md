@@ -3,16 +3,20 @@
 - run patch package on react-native-calends once we are sure the calClosedTimer is working properly
 
 - Keep working on the modals
-  - Use formik to add inputs and data collection to the ManageTipModal
-    - Make sure we can use this modal for adding AND editing tips
-    - When we are collecting data the user will be entering amounts that we need to convert
-      - Hours and minutes to just minutes
-      - dollars and cents to just cents
+  - Some of the input titles in the ManageTipModal don't have the correct padding
+    - It is different on 12 mini, iPhone 13 and android
+  - Add proper validation to each input
+  - Get edit functionality
+  - Add delete functionality
 - Doublecheck that all the maths is being done correctly and displaying correctly!
 - We should probably go through and capitalize all the hard coded. Right now its a mix of lower and upper case
 - Transform any words the user enters to be capitalized also?
   - I want to make sure when we do database queries for job title we don't get two different results for the same word
     - But maybe there is a better way to address that issue
+
+# General TODO
+- Create an app icon
+- Look at the app on an physical device and see what styling needs to be fixed
 
 # Database TODO
 - Once we are certain of the database columns we need to import the database into Xcode again because right now only the iPhone 12mini has access to the database where we made the new table
@@ -33,22 +37,33 @@
   - Find a better position for the "Today" button
     - It is currently commented out
 - Tip Modal
-  - Style the modal
   - Add a Tips Section with the following inputs
     - cash amount
+      - ensure at least one of cash or credit has an amount entered
     - credit amount
+      - ensure at least one of cash or credit has an amount entered
     - tip in
+      - optional
     - tip out
+      - optional
     - total sales
+      - optional
   - Add Job Section with the following inputs
     - Job title
+      - Job must have a value entered
       - Search the database for existing jobs and display a list. Also have an option to enter a new job title
     - Hours
+      - Make sure at least one of hours and minutes has a value entered
+      - Only allow whole numbers
     - Minutes
+    - Make sure at least one of hours and minutes has a value entered
+      - Only allow whole numbers
     - Hourly rate
-      - If the user has already selected a job, check the database to see if all the entries with that job title have the same hourly rate. If so, enter that into the hourly rate field but still allow the user to change it if they want to.
+      - optional
+      - If the user has already selected a job, check the database to see if all the entries with that job title have the   same hourly rate. If so, enter that into the hourly rate field but still allow the user to change it if they want to.
         - If 2 rates exist for the same job show the more common one, if more than 2 exist, don't auto fill the rate field
     - Note (text area type field)
+      - optional
 - Main Styling
   - Add a $ icon instead of the dot. Use the multidot option to show days with larger tips
   - Have a subtitle under the date in the DayItem that says the tip size
@@ -78,11 +93,10 @@
   - Tip In
   - Tip Out
   - Total Sales
+  - Section
 
 # What to do later
 
-- Get the android emulator working
-- use MultiItemBar component in the DayItem component
 - Add a fade transition which you switch tabs
 - Don't allow user to go into landscape view
 - Check if the user settings for large text breaks the styling (we disabled large text in NoteWorthy for this reason)
