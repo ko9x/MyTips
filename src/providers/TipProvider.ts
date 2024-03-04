@@ -4,11 +4,12 @@ import {
   SQLiteDatabase,
 } from 'react-native-sqlite-storage';
 import Moment from 'moment';
+import {TipDataObj} from '../global/Interfaces';
 
 // This breaks the database call in StatsScreen for some reason.
 // But without it the data from the database doesn't render
 enablePromise(true);
-
+// ********************************* CONNECT TO DATABASE ***************************************************
 // Initial call to the database to we can create a database object in the HomeScreen
 export const connectToDatabase = async () => {
   return openDatabase(
@@ -20,6 +21,7 @@ export const connectToDatabase = async () => {
     },
   );
 };
+// ********************************* GET DATA FROM DATABASE ***************************************************
 // Return all the data in the selected table and format it to our requirements
 export const getAllData = async (db: SQLiteDatabase) => {
   interface DataObj {
@@ -74,7 +76,7 @@ export const getAllData = async (db: SQLiteDatabase) => {
     throw Error('failed to get current month data from database');
   }
 };
-// Get all the data for the selected month as well as the prior month and future month
+// Get all the data for the selected month as well as the prior month and next month
 // This way the calendar will always show the days that have data
 export const getCalendarData = async (
   db: SQLiteDatabase,
@@ -233,5 +235,35 @@ export const getSectionData = async (db: SQLiteDatabase, section: String) => {
   } catch (error) {
     console.error(error);
     throw Error('failed to get section data from database');
+  }
+};
+// ********************************* ADD DATA TO DATABASE ***************************************************
+
+export const addTip = async (db: SQLiteDatabase, tipObject: TipDataObj) => {
+  try {
+    console.log('just the tip', tipObject);
+
+    const results = await db.executeSql(
+      'INSERT into tip_2_tbl(date, job, time, cash, credit, tip_in, tip_out, total_sales, hourly_rate, note, section) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [
+        tipObject.date,
+        tipObject.job,
+        tipObject.time,
+        tipObject.cash,
+        tipObject.credit,
+        tipObject.tip_in,
+        tipObject.tip_out,
+        tipObject.total_sales,
+        tipObject.hourly_rate,
+        tipObject.note,
+        tipObject.section,
+      ],
+    );
+    if (results) {
+      console.log(results);
+    }
+  } catch (error) {
+    console.error(error);
+    throw Error('failed to add tipObject data to database');
   }
 };

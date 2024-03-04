@@ -14,10 +14,13 @@ import TipItemInput from '../components/TipItemInput';
 import {toDollars, toHoursAndMinutes} from '../helpers/helpers';
 import {ResDataObj} from '../global/Interfaces';
 import {useKeyboard} from '@react-native-community/hooks';
+import {connectToDatabase, addTip} from '../providers/TipProvider';
+import {TipDataObj} from '../global/Interfaces';
 
 export default function ManageTipModal({
   reservation,
   itemId,
+  date,
   showManageTipModal,
   closeManageTipModal,
 }: any) {
@@ -26,8 +29,42 @@ export default function ManageTipModal({
   const keyBoard = useKeyboard();
   const formRef = useRef<FormikProps<FormikValues>>(null);
 
-  function handleFormikSubmit() {
-    console.log(formRef?.current?.values);
+  function toCentNumber(strVal: string) {
+    let tempVal = '';
+    if (strVal.charAt(0) === '$') {
+      tempVal = strVal.slice(1);
+    }
+    let numVal = Number(tempVal);
+    return Math.round((Math.abs(numVal) / 100) * 10000);
+  }
+
+  function toMinuteNumber(hours: string, minutes: string) {
+    let hourNum = Number(hours);
+    let minNum = Number(minutes);
+
+    return hourNum * 60 + minNum;
+  }
+
+  async function handleFormikSubmit() {
+    const tipDataObj: TipDataObj = {
+      date: date,
+      job: formRef?.current?.values?.job,
+      time: toMinuteNumber(
+        formRef?.current?.values?.hours,
+        formRef?.current?.values?.minutes,
+      ),
+      cash: toCentNumber(formRef?.current?.values?.cash),
+      credit: toCentNumber(formRef?.current?.values?.credit),
+      tip_in: toCentNumber(formRef?.current?.values?.tip_in),
+      tip_out: toCentNumber(formRef?.current?.values?.tip_out),
+      total_sales: toCentNumber(formRef?.current?.values?.total_sales),
+      hourly_rate: toCentNumber(formRef?.current?.values?.hourly_rate),
+      note: formRef?.current?.values?.note,
+      section: formRef?.current?.values?.section,
+    };
+
+    const db = await connectToDatabase();
+    addTip(db, tipDataObj);
   }
 
   // If modal is being used for editing an existing tip we find the correct tip object within the reservation array

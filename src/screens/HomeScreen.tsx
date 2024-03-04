@@ -237,6 +237,7 @@ export default function HomeScreen() {
         />
       </CalendarProvider>
       <ManageTipModal
+        date={selectedDate}
         showManageTipModal={showManageTipModal}
         closeManageTipModal={closeManageTipModal}
       />
