@@ -234,8 +234,8 @@ export default function HomeScreen() {
             if (reservation.day === selectedDate) {
               return (
                 <DayItem
-                  handleSetShowManageTipModal={setShowManageTipModal}
                   reservation={reservation}
+                  setUserSaved={setUserSaved}
                 />
               );
             } else {

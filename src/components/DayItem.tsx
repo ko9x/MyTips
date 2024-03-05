@@ -16,11 +16,19 @@ import ManageTipModal from '../modals/ManageTipModal';
 import MultiItemBar from './MultiItemBar';
 import AddTipButton from './AddTipButton';
 
-export default function DayItem({reservation}: any): React.JSX.Element {
+export default function DayItem({
+  reservation,
+  setUserSaved,
+}: any): React.JSX.Element {
   const totalTime = combineTime(reservation.data);
   const [showViewTipModal, setShowViewTipModal] = useState(false);
   const [showManageTipModal, setShowManageTipModal] = useState(false);
   const [pressedItemId, setPressedItemId] = useState(null);
+
+  function handleUserSaved(boolVal: boolean) {
+    setUserSaved(boolVal);
+    setShowManageTipModal(false);
+  }
   function handleListItemPressed(itemId: any) {
     setPressedItemId(itemId);
     setShowViewTipModal(true);
@@ -83,6 +91,7 @@ export default function DayItem({reservation}: any): React.JSX.Element {
         date={reservation.day}
         showManageTipModal={showManageTipModal}
         closeManageTipModal={closeManageTipModal}
+        setUserSaved={handleUserSaved}
       />
     </View>
   );

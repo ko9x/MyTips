@@ -30,6 +30,16 @@ export default function ManageTipModal({
   const keyBoard = useKeyboard();
   const formRef = useRef<FormikProps<FormikValues>>(null);
 
+  // If modal is being used for editing an existing tip we find the correct tip object within the reservation array
+  if (itemId && resDataObj === null) {
+    reservation.data.forEach((obj: ResDataObj) => {
+      if (obj.id === itemId) {
+        setResDataObj(obj);
+        setIsEdit(true);
+      }
+    });
+  }
+
   function toCentNumber(strVal: string) {
     let tempVal = '';
     if (strVal.charAt(0) === '$') {
@@ -65,18 +75,8 @@ export default function ManageTipModal({
     };
 
     const db = await connectToDatabase();
-    addTip(db, tipDataObj);
+    await addTip(db, tipDataObj);
     setUserSaved(true);
-  }
-
-  // If modal is being used for editing an existing tip we find the correct tip object within the reservation array
-  if (itemId && resDataObj === null) {
-    reservation.data.forEach((obj: ResDataObj) => {
-      if (obj.id === itemId) {
-        setResDataObj(obj);
-        setIsEdit(true);
-      }
-    });
   }
 
   // Different padding is needed for ios android for when the keyboard is open and when it is closed
