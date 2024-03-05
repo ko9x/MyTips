@@ -26,21 +26,30 @@ export default function ListItems({
       <Pressable onPress={() => pressHandler(item.id)}>
         <View style={styles.listItemContainer}>
           <View style={styles.listItemTopSectionContainer}>
-            <Text>job: {item.job}</Text>
-            <Text>section: {item.section}</Text>
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: '600',
+                paddingRight: 5,
+                color: Colors.dark,
+              }}>
+              {item.job}
+            </Text>
           </View>
           <View style={styles.listItemHorizontalDivider} />
           <View style={styles.listItemBottomSectionContainer}>
             <View style={styles.bottomSectionItemContainer}>
               <Text>tips</Text>
-              <Text>{toDollars(findCorrectItem(totalMoney, item.id))}</Text>
+              <Text style={{color: Colors.dark}}>
+                {toDollars(findCorrectItem(totalMoney, item.id))}
+              </Text>
             </View>
             <View>
               <Text style={styles.tipSummaryDivider}>|</Text>
             </View>
             <View style={styles.bottomSectionItemContainer}>
               <Text>time worked</Text>
-              <Text>
+              <Text style={{color: Colors.dark}}>
                 {toHoursAndMinutes(item.time).hours}{' '}
                 {toHoursAndMinutes(item.time).hours > 1 ? 'hrs' : 'hr'}
                 <Text> </Text>
@@ -53,7 +62,7 @@ export default function ListItems({
             </View>
             <View style={styles.bottomSectionItemContainer}>
               <Text>per hour</Text>
-              <Text>
+              <Text style={{color: Colors.dark}}>
                 {toPerHour(item.time, findCorrectItem(totalMoney, item.id))}
               </Text>
             </View>
