@@ -3,11 +3,17 @@
 - run patch package on react-native-calends once we are sure the calClosedTimer is working properly
 
 - Keep working on the modals
+- Keep working on edit functionality
+  - We are passing the updated object from the ManageTipModal back into the ViewTipModal and clsoing the ManageTipModal
+    - Now we need to update the ViewTipModal with the new information
+        - We still need to use the userSaved state and pass that back to the HomeScreen when the user closes the ViewTipModal
+          - This way the HomeScreen will refresh with the current database data and we won't have any stale data
+    - Add an alert asking the user if they are sure they want to update the tip
   - Some of the input titles in the ManageTipModal don't have the correct padding
     - It is different on 12 mini, iPhone 13 and android
   - Add proper validation to each input
-  - Get edit functionality
   - Add delete functionality
+    - Add an alert asking the user if they are sure they want to delete the tip
 - Doublecheck that all the maths is being done correctly and displaying correctly!
 - We should probably go through and capitalize all the hard coded. Right now its a mix of lower and upper case
 - Transform any words the user enters to be capitalized also?
@@ -60,6 +66,9 @@
       - Only allow whole numbers
     - Hourly rate
       - optional
+        - If a value is entered it must follow a pattern of either a whole number or a number with one decimal point
+          - Android gives the user a keyboard that includes a coma, a dash and a space key
+            - We need to make sure a user can't send a value with one of those characters to the database
       - If the user has already selected a job, check the database to see if all the entries with that job title have the   same hourly rate. If so, enter that into the hourly rate field but still allow the user to change it if they want to.
         - If 2 rates exist for the same job show the more common one, if more than 2 exist, don't auto fill the rate field
     - Note (text area type field)
