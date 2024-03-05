@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, Pressable, Modal, StyleSheet} from 'react-native';
+import {View, Text, Modal, StyleSheet} from 'react-native';
 import Moment from 'moment';
 import Colors from '../global/Colors';
 import ModalHeader from './ModalHeader';
@@ -13,14 +13,17 @@ export default function ViewTipModal({
   showViewTipModal,
   closeViewTipModal,
 }: any) {
+  const [reservationProp, setReservationProp] = useState(reservation);
   const [showManageTipModal, setShowManageTipModal] = useState(false);
-  const [updatedDataObj, setUpdatedDataObj] = useState();
+  const [updatedDataObj, setUpdatedDataObj] = useState<any>();
   function closeManageTipModal() {
     setShowManageTipModal(false);
   }
   useEffect(() => {
-    console.log(updatedDataObj);
-    setShowManageTipModal(false);
+    if (updatedDataObj) {
+      setReservationProp({data: [updatedDataObj], day: updatedDataObj.date});
+      setShowManageTipModal(false);
+    }
   }, [updatedDataObj]);
   return (
     <Modal
@@ -34,7 +37,7 @@ export default function ViewTipModal({
         <View style={styles.modalView}>
           <ModalHeader
             leftButtonText={'Back'}
-            titleText={Moment(reservation.day).format('MMMM Do, YYYY')}
+            titleText={Moment(reservationProp.day).format('MMMM Do, YYYY')}
             rightButtonText={'Edit'}
             leftButtonFunction={closeViewTipModal}
             rightButtonFunction={() => setShowManageTipModal(true)}
@@ -50,7 +53,7 @@ export default function ViewTipModal({
               </Text>
             </View>
             <RenderTipInformationItems
-              reservationData={reservation.data}
+              reservationData={reservationProp.data}
               itemId={itemId}
               showTotalPerHr={true}
             />
@@ -64,7 +67,7 @@ export default function ViewTipModal({
               </Text>
             </View>
             <RenderJobInformationItems
-              reservationData={reservation.data}
+              reservationData={reservationProp.data}
               itemId={itemId}
             />
           </View>
@@ -74,8 +77,8 @@ export default function ViewTipModal({
         showManageTipModal={showManageTipModal}
         closeManageTipModal={closeManageTipModal}
         itemId={itemId}
-        reservation={reservation}
-        date={reservation.day}
+        reservation={reservationProp}
+        date={reservationProp.day}
         handleUpdatedDataObj={setUpdatedDataObj}
       />
     </Modal>
