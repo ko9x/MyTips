@@ -46,6 +46,9 @@ export default function ManageTipModal({
     if (strVal.charAt(0) === '$') {
       tempVal = strVal.slice(1);
     }
+    if (strVal.charAt(0) !== '$') {
+      tempVal = strVal;
+    }
     let numVal = Number(tempVal);
     return Math.round((Math.abs(numVal) / 100) * 10000);
   }
