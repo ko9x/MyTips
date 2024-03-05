@@ -14,7 +14,7 @@ import TipItemInput from '../components/TipItemInput';
 import {toDollars, toHoursAndMinutes} from '../helpers/helpers';
 import {ResDataObj} from '../global/Interfaces';
 import {useKeyboard} from '@react-native-community/hooks';
-import {connectToDatabase, addTip} from '../providers/TipProvider';
+import {connectToDatabase, addTip, editTip} from '../providers/TipProvider';
 import {TipDataObj} from '../global/Interfaces';
 
 export default function ManageTipModal({
@@ -75,8 +75,14 @@ export default function ManageTipModal({
     };
 
     const db = await connectToDatabase();
-    await addTip(db, tipDataObj);
-    setUserSaved(true);
+
+    if (isEdit) {
+      await editTip(db, tipDataObj, itemId);
+    }
+    if (!isEdit) {
+      await addTip(db, tipDataObj);
+      setUserSaved(true);
+    }
   }
 
   // Different padding is needed for ios android for when the keyboard is open and when it is closed

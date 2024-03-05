@@ -70,6 +70,7 @@ export default function ViewTipModal({
         closeManageTipModal={closeManageTipModal}
         itemId={itemId}
         reservation={reservation}
+        date={reservation.day}
       />
     </Modal>
   );

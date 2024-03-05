@@ -270,3 +270,34 @@ export const addTip = async (db: SQLiteDatabase, tipObject: TipDataObj) => {
     throw Error('failed to add tipObject data to database');
   }
 };
+
+export const editTip = async (
+  db: SQLiteDatabase,
+  tipObject: TipDataObj,
+  id: number,
+) => {
+  const query =
+    'UPDATE tip_3_tbl SET date=?, job=?, time=?, cash=?, credit=?, tip_in=?, tip_out=?, total_sales=?, hourly_rate=?, note=?, section=? WHERE id = ?';
+  try {
+    const results = await db.executeSql(query, [
+      tipObject.date,
+      tipObject.job,
+      tipObject.time,
+      tipObject.cash,
+      tipObject.credit,
+      tipObject.tip_in,
+      tipObject.tip_out,
+      tipObject.total_sales,
+      tipObject.hourly_rate,
+      tipObject.note,
+      tipObject.section,
+      id,
+    ]);
+    if (results) {
+      console.log(results);
+    }
+  } catch (error) {
+    console.error(error);
+    throw Error('failed to add tipObject data to database');
+  }
+};
