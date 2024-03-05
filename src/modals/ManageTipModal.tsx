@@ -23,6 +23,7 @@ export default function ManageTipModal({
   date,
   showManageTipModal,
   closeManageTipModal,
+  setUserSaved,
 }: any) {
   const [resDataObj, setResDataObj] = useState<ResDataObj | null>(null);
   const [isEdit, setIsEdit] = useState(false);
@@ -65,6 +66,7 @@ export default function ManageTipModal({
 
     const db = await connectToDatabase();
     addTip(db, tipDataObj);
+    setUserSaved(true);
   }
 
   // If modal is being used for editing an existing tip we find the correct tip object within the reservation array
