@@ -24,6 +24,7 @@ export default function ManageTipModal({
   showManageTipModal,
   closeManageTipModal,
   setUserSaved,
+  handleUpdatedDataObj,
 }: any) {
   const [resDataObj, setResDataObj] = useState<ResDataObj | null>(null);
   const [isEdit, setIsEdit] = useState(false);
@@ -77,7 +78,8 @@ export default function ManageTipModal({
     const db = await connectToDatabase();
 
     if (isEdit) {
-      await editTip(db, tipDataObj, itemId);
+      let updatedDataObj = await editTip(db, tipDataObj, itemId);
+      handleUpdatedDataObj(updatedDataObj);
     }
     if (!isEdit) {
       await addTip(db, tipDataObj);
@@ -120,8 +122,8 @@ export default function ManageTipModal({
           }>
           <ModalHeader
             leftButtonText={'Back'}
-            titleText={'Add Tips'}
-            rightButtonText={'Save'}
+            titleText={isEdit ? 'Edit Tip' : 'Add Tip'}
+            rightButtonText={isEdit ? 'Update' : 'Save'}
             leftButtonFunction={closeManageTipModal}
             rightButtonFunction={() => handleFormikSubmit()}
           />

@@ -277,7 +277,7 @@ export const editTip = async (
   id: number,
 ) => {
   const query =
-    'UPDATE tip_3_tbl SET date=?, job=?, time=?, cash=?, credit=?, tip_in=?, tip_out=?, total_sales=?, hourly_rate=?, note=?, section=? WHERE id = ?';
+    'UPDATE tip_3_tbl SET date=?, job=?, time=?, cash=?, credit=?, tip_in=?, tip_out=?, total_sales=?, hourly_rate=?, note=?, section=? WHERE id = ? RETURNING *';
   try {
     const results = await db.executeSql(query, [
       tipObject.date,
@@ -294,7 +294,7 @@ export const editTip = async (
       id,
     ]);
     if (results) {
-      console.log(results);
+      return results[0].rows.item(0);
     }
   } catch (error) {
     console.error(error);

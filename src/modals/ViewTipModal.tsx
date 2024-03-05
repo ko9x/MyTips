@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, Pressable, Modal, StyleSheet} from 'react-native';
 import Moment from 'moment';
 import Colors from '../global/Colors';
@@ -14,9 +14,14 @@ export default function ViewTipModal({
   closeViewTipModal,
 }: any) {
   const [showManageTipModal, setShowManageTipModal] = useState(false);
+  const [updatedDataObj, setUpdatedDataObj] = useState();
   function closeManageTipModal() {
     setShowManageTipModal(false);
   }
+  useEffect(() => {
+    console.log(updatedDataObj);
+    setShowManageTipModal(false);
+  }, [updatedDataObj]);
   return (
     <Modal
       animationType="slide"
@@ -71,6 +76,7 @@ export default function ViewTipModal({
         itemId={itemId}
         reservation={reservation}
         date={reservation.day}
+        handleUpdatedDataObj={setUpdatedDataObj}
       />
     </Modal>
   );
