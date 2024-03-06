@@ -6,11 +6,11 @@ import {
 import Moment from 'moment';
 import {TipDataObj} from '../global/Interfaces';
 
-// This breaks the database call in StatsScreen for some reason.
-// But without it the data from the database doesn't render
+// enablePromise(true) is required for react-native-sqlite-storage to work
 enablePromise(true);
+
 // ********************************* CONNECT TO DATABASE ***************************************************
-// Initial call to the database to we can create a database object in the HomeScreen
+// Initial call to the database to create the database object to call db.executeSql
 export const connectToDatabase = async () => {
   return openDatabase(
     {name: 'tip.db', createFromLocation: 1},
@@ -21,6 +21,7 @@ export const connectToDatabase = async () => {
     },
   );
 };
+// Create the database table (currently tip_3_tbl) if it does not already exist.
 export const createDatabaseTable = async (db: SQLiteDatabase) => {
   const query =
     'CREATE TABLE IF NOT EXISTS tip_3_tbl (id INTEGER NOT NULL UNIQUE, date TEXT NOT NULL, job TEXT NOT NULL, time INTEGER NOT NULL, cash INTEGER, credit INTEGER, tip_in INTEGER, tip_out INTEGER, total_sales INTEGER, hourly_rate INTEGER, note TEXT, section TEXT, PRIMARY KEY(id AUTOINCREMENT)  );';
@@ -295,6 +296,21 @@ export const editTip = async (
     ]);
     if (results) {
       return results[0].rows.item(0);
+    }
+  } catch (error) {
+    console.error(error);
+    throw Error('failed to add tipObject data to database');
+  }
+};
+
+// ********************************* DELETE DATA FROM DATABASE ***************************************************
+
+export const removeTip = async (db: SQLiteDatabase, id: number) => {
+  const query = 'DELETE FROM tip_3_tbl WHERE id = ?';
+  try {
+    const results = await db.executeSql(query, [id]);
+    if (results) {
+      console.log(`Row with id ${id} removed from the database`);
     }
   } catch (error) {
     console.error(error);

@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, Modal, StyleSheet} from 'react-native';
+import {View, Text, Modal, StyleSheet, Alert} from 'react-native';
 import Moment from 'moment';
 import Colors from '../global/Colors';
 import ModalHeader from './ModalHeader';
 import RenderJobInformationItems from '../components/RenderJobInformationItems';
 import RenderTipInformationItems from '../components/RenderTipInformationItems';
 import ManageTipModal from './ManageTipModal';
+import {connectToDatabase, removeTip} from '../providers/TipProvider';
 
 export default function ViewTipModal({
   reservation,
@@ -32,6 +33,48 @@ export default function ViewTipModal({
       setUserSaved(true);
     }
   }, [updatedDataObj, setUserSaved]);
+
+  async function deleteTip() {
+    const db = await connectToDatabase();
+    await removeTip(db, itemId);
+    setUserSaved(true);
+    closeViewTipModal();
+  }
+
+  async function handleRemoveTip() {
+    Alert.alert('Delete tips?', 'This action cannot be undone', [
+      {
+        text: 'Delete',
+        onPress: () => deleteTip(),
+        style: 'destructive',
+      },
+      {
+        text: 'Cancel',
+        onPress: () => {},
+        style: 'cancel',
+      },
+    ]);
+    const db = await connectToDatabase();
+  }
+
+  function handleEditButtonPress() {
+    Alert.alert('', '', [
+      {
+        text: 'Update',
+        onPress: () => setShowManageTipModal(true),
+      },
+      {
+        text: 'Delete',
+        onPress: () => handleRemoveTip(),
+        style: 'destructive',
+      },
+      {
+        text: 'Cancel',
+        onPress: () => {},
+        style: 'cancel',
+      },
+    ]);
+  }
   return (
     <Modal
       animationType="slide"
@@ -47,7 +90,7 @@ export default function ViewTipModal({
             titleText={Moment(reservationProp.day).format('MMMM Do, YYYY')}
             rightButtonText={'Edit'}
             leftButtonFunction={closeViewTipModal}
-            rightButtonFunction={() => setShowManageTipModal(true)}
+            rightButtonFunction={() => handleEditButtonPress()}
           />
           <View style={styles.innerModalView}>
             <View style={{paddingLeft: 10, paddingTop: 20}}>
