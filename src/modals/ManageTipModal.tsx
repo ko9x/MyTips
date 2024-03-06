@@ -86,7 +86,22 @@ export default function ManageTipModal({
     return hourNum * 60 + minNum;
   }
 
+  function validateMoneyValues(dataObj: any) {
+    const moneyArr = [
+      'cash',
+      'credit',
+      'tip_in',
+      'tip_out',
+      'total_sales',
+      'hourly_rate',
+    ];
+  }
+
   async function handleFormikSubmit() {
+    // console.log(
+    //   formRef.current?.values?.cash.search(/^\$?\d+(,\d{3})*(\.\d*)?$/) >= 0,
+    // );
+    console.log(formRef.current?.values);
     const tipDataObj: TipDataObj = {
       date: date,
       job: formRef?.current?.values?.job,
@@ -104,16 +119,16 @@ export default function ManageTipModal({
       section: formRef?.current?.values?.section,
     };
 
-    const db = await connectToDatabase();
+    // const db = await connectToDatabase();
 
-    if (isEdit) {
-      let updatedDataObj = await editTip(db, tipDataObj, itemId);
-      handleUpdatedDataObj(updatedDataObj);
-    }
-    if (!isEdit) {
-      await addTip(db, tipDataObj);
-      setUserSaved(true);
-    }
+    // if (isEdit) {
+    //   let updatedDataObj = await editTip(db, tipDataObj, itemId);
+    //   handleUpdatedDataObj(updatedDataObj);
+    // }
+    // if (!isEdit) {
+    //   await addTip(db, tipDataObj);
+    //   setUserSaved(true);
+    // }
   }
 
   // Different padding is needed for ios android for when the keyboard is open and when it is closed

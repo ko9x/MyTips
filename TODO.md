@@ -3,17 +3,11 @@
 - run patch package on react-native-calends once we are sure the calClosedTimer is working properly
 
 - Keep working on the modals
-- Keep working on edit functionality
-  - We are passing the updated object from the ManageTipModal back into the ViewTipModal and clsoing the ManageTipModal
-    - Now we need to update the ViewTipModal with the new information
-        - We still need to use the userSaved state and pass that back to the HomeScreen when the user closes the ViewTipModal
-          - This way the HomeScreen will refresh with the current database data and we won't have any stale data
-    - Add an alert asking the user if they are sure they want to update the tip
+  - Continue working on validation for the money inputs
+    - The validation just needs to check if the money values follows the regex pattern we found for currency
+  - Test all the different elements of the edit functionality 
   - Some of the input titles in the ManageTipModal don't have the correct padding
     - It is different on 12 mini, iPhone 13 and android
-  - Add proper validation to each input
-  - Add delete functionality
-    - Add an alert asking the user if they are sure they want to delete the tip
 - Doublecheck that all the maths is being done correctly and displaying correctly!
 - We should probably go through and capitalize all the hard coded. Right now its a mix of lower and upper case
 - Transform any words the user enters to be capitalized also?
@@ -22,15 +16,9 @@
 
 # General TODO
 - Create an app icon
-- Look at the app on an physical device and see what styling needs to be fixed
+- Look at the app on a physical device and see what styling needs to be fixed
 
 # Database TODO
-- Once we are certain of the database columns we need to import the database into Xcode again because right now only the iPhone 12mini has access to the database where we made the new table
-- Edit an item or add a new item to test the total_sales informationItem
-- Add an item that has null for the hourly_wage and make sure that doesn't break anything
-  - I think it will result in an informationItem coming from the renderJobInformationItems with a black value
-    - We can do the same thing we did in the renderTipInformationItems component if an amount is 0 we don't add it
-      - Then we filter out undefined items later in the code
 
 # TipProvider TODO
 
