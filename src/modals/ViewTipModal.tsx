@@ -19,6 +19,11 @@ export default function ViewTipModal({
   function closeManageTipModal() {
     setShowManageTipModal(false);
   }
+
+  useEffect(() => {
+    setReservationProp(reservation);
+  }, [reservation]);
+
   useEffect(() => {
     if (updatedDataObj) {
       setReservationProp({data: [updatedDataObj], day: updatedDataObj.date});
