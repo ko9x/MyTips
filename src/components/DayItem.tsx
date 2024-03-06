@@ -86,6 +86,7 @@ export default function DayItem({
         itemId={pressedItemId}
         showViewTipModal={showViewTipModal}
         closeViewTipModal={closeViewTipModal}
+        setUserSaved={setUserSaved}
       />
       <ManageTipModal
         date={reservation.day}

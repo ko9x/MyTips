@@ -12,6 +12,7 @@ export default function ViewTipModal({
   itemId,
   showViewTipModal,
   closeViewTipModal,
+  setUserSaved,
 }: any) {
   const [reservationProp, setReservationProp] = useState(reservation);
   const [showManageTipModal, setShowManageTipModal] = useState(false);
@@ -28,8 +29,9 @@ export default function ViewTipModal({
     if (updatedDataObj) {
       setReservationProp({data: [updatedDataObj], day: updatedDataObj.date});
       setShowManageTipModal(false);
+      setUserSaved(true);
     }
-  }, [updatedDataObj]);
+  }, [updatedDataObj, setUserSaved]);
   return (
     <Modal
       animationType="slide"
