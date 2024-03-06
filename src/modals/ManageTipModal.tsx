@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -17,6 +17,23 @@ import {useKeyboard} from '@react-native-community/hooks';
 import {connectToDatabase, addTip, editTip} from '../providers/TipProvider';
 import {TipDataObj} from '../global/Interfaces';
 
+function compareResObjects(
+  resObjArr: Array<any>,
+  resObj: any,
+  itemId: number,
+  func: Function,
+) {
+  resObjArr?.forEach((obj: any) => {
+    if (obj && obj.id === itemId) {
+      let objA = JSON.stringify(obj);
+      let objB = JSON.stringify(resObj);
+      if (objA !== objB) {
+        func(obj);
+      }
+    }
+  });
+}
+
 export default function ManageTipModal({
   reservation,
   itemId,
@@ -27,18 +44,27 @@ export default function ManageTipModal({
   handleUpdatedDataObj,
 }: any) {
   const [resDataObj, setResDataObj] = useState<ResDataObj | null>(null);
+  const [reservationProp, setReservationProp] = useState<any>();
   const [isEdit, setIsEdit] = useState(false);
   const keyBoard = useKeyboard();
   const formRef = useRef<FormikProps<FormikValues>>(null);
 
+  useEffect(() => {
+    setReservationProp(reservation);
+  }, [reservation]);
+
   // If modal is being used for editing an existing tip we find the correct tip object within the reservation array
   if (itemId && resDataObj === null) {
-    reservation.data.forEach((obj: ResDataObj) => {
+    reservationProp?.data.forEach((obj: ResDataObj) => {
       if (obj.id === itemId) {
         setResDataObj(obj);
         setIsEdit(true);
       }
     });
+  }
+
+  if (itemId && resDataObj) {
+    compareResObjects(reservation?.data, resDataObj, itemId, setResDataObj);
   }
 
   function toCentNumber(strVal: string) {
