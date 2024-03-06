@@ -6,6 +6,7 @@ import {
   StyleSheet,
   ScrollView,
   Platform,
+  Alert,
 } from 'react-native';
 import {Formik, FormikProps, FormikValues} from 'formik';
 import ModalHeader from './ModalHeader';
@@ -95,13 +96,29 @@ export default function ManageTipModal({
       'total_sales',
       'hourly_rate',
     ];
+    let boolVal = true;
+    moneyArr.forEach(prop => {
+      if (dataObj[prop].length && dataObj[prop] !== '$') {
+        if (prop && dataObj[prop].search(/^\$?\d+(,\d{3})*(\.\d*)?$/) >= 0) {
+        } else {
+          boolVal = false;
+        }
+      } else {
+      }
+    });
+    return boolVal;
   }
 
   async function handleFormikSubmit() {
-    // console.log(
-    //   formRef.current?.values?.cash.search(/^\$?\d+(,\d{3})*(\.\d*)?$/) >= 0,
-    // );
-    console.log(formRef.current?.values);
+    if (!validateMoneyValues(formRef.current?.values)) {
+      Alert.alert('Invalid entry', 'Please enter a monetary value', [
+        {
+          text: 'Okay',
+          onPress: () => {},
+        },
+      ]);
+      return;
+    }
     const tipDataObj: TipDataObj = {
       date: date,
       job: formRef?.current?.values?.job,
@@ -119,16 +136,16 @@ export default function ManageTipModal({
       section: formRef?.current?.values?.section,
     };
 
-    // const db = await connectToDatabase();
+    const db = await connectToDatabase();
 
-    // if (isEdit) {
-    //   let updatedDataObj = await editTip(db, tipDataObj, itemId);
-    //   handleUpdatedDataObj(updatedDataObj);
-    // }
-    // if (!isEdit) {
-    //   await addTip(db, tipDataObj);
-    //   setUserSaved(true);
-    // }
+    if (isEdit) {
+      let updatedDataObj = await editTip(db, tipDataObj, itemId);
+      handleUpdatedDataObj(updatedDataObj);
+    }
+    if (!isEdit) {
+      await addTip(db, tipDataObj);
+      setUserSaved(true);
+    }
   }
 
   // Different padding is needed for ios android for when the keyboard is open and when it is closed
