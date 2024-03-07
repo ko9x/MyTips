@@ -87,6 +87,11 @@ export default function ManageTipModal({
     return hourNum * 60 + minNum;
   }
 
+  function validateRequiredMoneyFields(cash: number, credit: number) {
+    console.log('cash', cash);
+    console.log('credit', credit);
+  }
+
   function validateMoneyValues(dataObj: any) {
     const moneyArr = [
       'cash',
@@ -136,16 +141,18 @@ export default function ManageTipModal({
       section: formRef?.current?.values?.section,
     };
 
-    const db = await connectToDatabase();
+    validateRequiredMoneyFields(tipDataObj.cash, tipDataObj.credit);
 
-    if (isEdit) {
-      let updatedDataObj = await editTip(db, tipDataObj, itemId);
-      handleUpdatedDataObj(updatedDataObj);
-    }
-    if (!isEdit) {
-      await addTip(db, tipDataObj);
-      setUserSaved(true);
-    }
+    // const db = await connectToDatabase();
+
+    // if (isEdit) {
+    //   let updatedDataObj = await editTip(db, tipDataObj, itemId);
+    //   handleUpdatedDataObj(updatedDataObj);
+    // }
+    // if (!isEdit) {
+    //   await addTip(db, tipDataObj);
+    //   setUserSaved(true);
+    // }
   }
 
   // Different padding is needed for ios android for when the keyboard is open and when it is closed
@@ -333,7 +340,7 @@ export default function ManageTipModal({
                       handleBlur={handleBlur('section')}
                       value={values.section}
                       inputTitle={'Section'}
-                      placeholder={'Enter section (optional)'}
+                      placeholder={'Enter section'}
                       iconName={'map-marker'}
                       textColor={Colors.dark}
                       keyboardType={'default'}
@@ -343,7 +350,7 @@ export default function ManageTipModal({
                       handleBlur={handleBlur('note')}
                       value={values.note}
                       inputTitle={'Note'}
-                      placeholder={'Enter a note (optional)'}
+                      placeholder={'Enter a note'}
                       iconName={'note'}
                       textColor={Colors.dark}
                       keyboardType={'default'}
