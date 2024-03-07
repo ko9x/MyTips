@@ -87,7 +87,11 @@ export default function TipItemInput({
           placeholder={placeholder}
           onChangeText={handleChange}
           onBlur={handleBlur}
-          value={inputValue?.toString()}
+          value={
+            money
+              ? inputValue?.toString().split(',').join('')
+              : inputValue?.toString()
+          }
           multiline={multiline}
           textAlignVertical={multiline ? 'top' : 'center'}
         />
