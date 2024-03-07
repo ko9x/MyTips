@@ -3,8 +3,10 @@
 - run patch package on react-native-calends once we are sure the calClosedTimer is working properly
 
 - Keep working on the modals
-  - Continue working on validation for the money inputs
-    - The validation just needs to check if the money values follows the regex pattern we found for currency
+  - Continue validation for required inputs
+    - At least one of cash or credit needs to have a valid dollar amount
+    - At least one of hours or minutes needs to have a valid number amount
+      - Add a regex that doesn't allow any on of the android buttons like . , - and space
   - Test all the different elements of the edit functionality 
   - Some of the input titles in the ManageTipModal don't have the correct padding
     - It is different on 12 mini, iPhone 13 and android
