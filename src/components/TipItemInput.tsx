@@ -36,6 +36,22 @@ export default function TipItemInput({
     inputValue = value;
   }
 
+  // Here we are removing the $ if the user deletes the dollar amount
+  function handleValueProp(val: any) {
+    let strVal = val.toString();
+    let goodVal = '';
+    if (money) {
+      if (strVal === '$') {
+        goodVal = '';
+      } else {
+        goodVal = strVal?.toString().split(',').join('');
+      }
+    } else {
+      goodVal = strVal?.toString();
+    }
+    return goodVal;
+  }
+
   const iconComponentArray = iconComponentArrayToSize(
     iconSmall.width,
     iconSmall.height,
@@ -87,11 +103,7 @@ export default function TipItemInput({
           placeholder={placeholder}
           onChangeText={handleChange}
           onBlur={handleBlur}
-          value={
-            money
-              ? inputValue?.toString().split(',').join('')
-              : inputValue?.toString()
-          }
+          value={handleValueProp(inputValue)}
           multiline={multiline}
           textAlignVertical={multiline ? 'top' : 'center'}
         />
