@@ -3,10 +3,6 @@
 - run patch package on react-native-calends once we are sure the calClosedTimer is working properly
 
 - Keep working on the modals
-  - Continue validation for required inputs
-    - At least one of cash or credit needs to have a valid dollar amount
-    - At least one of hours or minutes needs to have a valid number amount
-      - Add a regex that doesn't allow any on of the android buttons like . , - and space
   - Test all the different elements of the edit functionality 
   - Some of the input titles in the ManageTipModal don't have the correct padding
     - It is different on 12 mini, iPhone 13 and android
@@ -18,7 +14,9 @@
 
 # General TODO
 - Create an app icon
-- Look at the app on a physical device and see what styling needs to be fixed
+- Deploy app to physical device and see what styling needs to be fixed
+- Don't allow user to go into landscape view
+- Check if the user settings for large text breaks the styling (we disabled large text in NoteWorthy for this reason)
 
 # Database TODO
 
@@ -97,8 +95,6 @@
 # What to do later
 
 - Add a fade transition which you switch tabs
-- Don't allow user to go into landscape view
-- Check if the user settings for large text breaks the styling (we disabled large text in NoteWorthy for this reason)
 - Make a custom icon to replace the marked day dot
 
 # Bugs
@@ -127,3 +123,7 @@
     - Fixing this will require adding some useCallbacks
 - If there are no tips for the selected day, Add an image of a pile of money or something and an "Add Tips" button
   - The "Add Tips" button will open a modal
+- Continue validation for required inputs
+  - At least one of cash or credit needs to have a valid dollar amount
+  - At least one of hours or minutes needs to have a valid number amount
+    - Add a regex that doesn't allow any on of the android buttons like . , - and space
