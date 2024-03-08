@@ -18,6 +18,7 @@ import {useKeyboard} from '@react-native-community/hooks';
 import {connectToDatabase, addTip, editTip} from '../providers/TipProvider';
 import {TipDataObj} from '../global/Interfaces';
 
+// Functions ********************************************************************************
 function compareResObjects(
   resObjArr: Array<any>,
   resObj: any,
@@ -35,6 +36,52 @@ function compareResObjects(
   });
 }
 
+function validateMoneyValues(dataObj: any) {
+  const propArr = [
+    'cash',
+    'credit',
+    'tip_in',
+    'tip_out',
+    'total_sales',
+    'hourly_rate',
+  ];
+  let boolVal = true;
+  propArr.forEach(prop => {
+    if (dataObj[prop].length && dataObj[prop] !== '$') {
+      if (prop && dataObj[prop].search(/^\$?\d+(,\d{3})*(\.\d*)?$/) >= 0) {
+      } else {
+        boolVal = false;
+      }
+    } else {
+    }
+  });
+  return boolVal;
+}
+function validateTimeValues(dataObj: any) {
+  const propArr = ['hours', 'minutes'];
+  let boolVal = true;
+  propArr.forEach(prop => {
+    if (dataObj[prop].length && dataObj[prop] !== '$') {
+      if (prop && dataObj[prop].search(/^\d+$/) >= 0) {
+      } else {
+        boolVal = false;
+      }
+    } else {
+    }
+  });
+  return boolVal;
+}
+
+function validateRequiredFields(valA: number, valB: number) {
+  let isValid = true;
+  if (valA || valB) {
+  } else {
+    isValid = false;
+  }
+  return isValid;
+}
+
+// Component Start ********************************************************************************
 export default function ManageTipModal({
   reservation,
   itemId,
@@ -64,6 +111,7 @@ export default function ManageTipModal({
     });
   }
 
+  // If the user made a change, update the resDataObj state
   if (itemId && resDataObj) {
     compareResObjects(reservation?.data, resDataObj, itemId, setResDataObj);
   }
@@ -87,33 +135,7 @@ export default function ManageTipModal({
     return hourNum * 60 + minNum;
   }
 
-  function validateRequiredMoneyFields(cash: number, credit: number) {
-    console.log('cash', cash);
-    console.log('credit', credit);
-  }
-
-  function validateMoneyValues(dataObj: any) {
-    const moneyArr = [
-      'cash',
-      'credit',
-      'tip_in',
-      'tip_out',
-      'total_sales',
-      'hourly_rate',
-    ];
-    let boolVal = true;
-    moneyArr.forEach(prop => {
-      if (dataObj[prop].length && dataObj[prop] !== '$') {
-        if (prop && dataObj[prop].search(/^\$?\d+(,\d{3})*(\.\d*)?$/) >= 0) {
-        } else {
-          boolVal = false;
-        }
-      } else {
-      }
-    });
-    return boolVal;
-  }
-
+  // ****** Submit Function ****************************************************************
   async function handleFormikSubmit() {
     if (!validateMoneyValues(formRef.current?.values)) {
       Alert.alert('Invalid entry', 'Please enter a monetary value', [
@@ -124,6 +146,20 @@ export default function ManageTipModal({
       ]);
       return;
     }
+    if (!validateTimeValues(formRef.current?.values)) {
+      Alert.alert(
+        'Invalid entry',
+        'Please enter a whole number of hours or minutes',
+        [
+          {
+            text: 'Okay',
+            onPress: () => {},
+          },
+        ],
+      );
+      return;
+    }
+
     const tipDataObj: TipDataObj = {
       date: date,
       job: formRef?.current?.values?.job,
@@ -141,7 +177,41 @@ export default function ManageTipModal({
       section: formRef?.current?.values?.section,
     };
 
-    validateRequiredMoneyFields(tipDataObj.cash, tipDataObj.credit);
+    if (!validateRequiredFields(tipDataObj.cash, tipDataObj.credit)) {
+      Alert.alert('Invalid entry', 'Please enter a cash and/or credit value', [
+        {
+          text: 'Okay',
+          onPress: () => {},
+        },
+      ]);
+      return;
+    }
+
+    if (!tipDataObj.job) {
+      Alert.alert('Invalid entry', 'Please enter a job title', [
+        {
+          text: 'Okay',
+          onPress: () => {},
+        },
+      ]);
+      return;
+    }
+
+    if (!tipDataObj.time) {
+      Alert.alert(
+        'Invalid entry',
+        'Please enter an hours and/or minutes value',
+        [
+          {
+            text: 'Okay',
+            onPress: () => {},
+          },
+        ],
+      );
+      return;
+    }
+
+    console.log('was good');
 
     // const db = await connectToDatabase();
 
