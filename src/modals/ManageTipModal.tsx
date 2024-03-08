@@ -18,7 +18,7 @@ import {useKeyboard} from '@react-native-community/hooks';
 import {connectToDatabase, addTip, editTip} from '../providers/TipProvider';
 import {TipDataObj} from '../global/Interfaces';
 
-// Functions ********************************************************************************
+// *********** Functions ********************************************************************************
 function compareResObjects(
   resObjArr: Array<any>,
   resObj: any,
@@ -36,33 +36,12 @@ function compareResObjects(
   });
 }
 
-function validateMoneyValues(dataObj: any) {
-  const propArr = [
-    'cash',
-    'credit',
-    'tip_in',
-    'tip_out',
-    'total_sales',
-    'hourly_rate',
-  ];
+function validatePattern(arr: Array<string>, pattern: RegExp, dataObj: any) {
   let boolVal = true;
-  propArr.forEach(prop => {
-    if (dataObj[prop].length && dataObj[prop] !== '$') {
-      if (prop && dataObj[prop].search(/^\$?\d+(,\d{3})*(\.\d*)?$/) >= 0) {
-      } else {
-        boolVal = false;
-      }
-    } else {
-    }
-  });
-  return boolVal;
-}
-function validateTimeValues(dataObj: any) {
-  const propArr = ['hours', 'minutes'];
-  let boolVal = true;
-  propArr.forEach(prop => {
-    if (dataObj[prop].length && dataObj[prop] !== '$') {
-      if (prop && dataObj[prop].search(/^\d+$/) >= 0) {
+  arr.forEach(prop => {
+    let trimmedProp = dataObj[prop].trim();
+    if (trimmedProp.length) {
+      if (prop && trimmedProp.search(pattern) >= 0) {
       } else {
         boolVal = false;
       }
@@ -81,7 +60,7 @@ function validateRequiredFields(valA: number, valB: number) {
   return isValid;
 }
 
-// Component Start ********************************************************************************
+// *********** Component Start ********************************************************************************
 export default function ManageTipModal({
   reservation,
   itemId,
@@ -137,7 +116,16 @@ export default function ManageTipModal({
 
   // ****** Submit Function ****************************************************************
   async function handleFormikSubmit() {
-    if (!validateMoneyValues(formRef.current?.values)) {
+    let moneyArr = [
+      'cash',
+      'credit',
+      'tip_in',
+      'tip_out',
+      'total_sales',
+      'hourly_rate',
+    ];
+    let moneyPattern = /^\$?\d+(,\d{3})*(\.\d*)?$/;
+    if (!validatePattern(moneyArr, moneyPattern, formRef.current?.values)) {
       Alert.alert('Invalid entry', 'Please enter a monetary value', [
         {
           text: 'Okay',
@@ -146,7 +134,9 @@ export default function ManageTipModal({
       ]);
       return;
     }
-    if (!validateTimeValues(formRef.current?.values)) {
+    let timeArr = ['hours', 'minutes'];
+    let timePattern = /^\d+$/;
+    if (!validatePattern(timeArr, timePattern, formRef.current?.values)) {
       Alert.alert(
         'Invalid entry',
         'Please enter a whole number of hours or minutes',
@@ -210,8 +200,6 @@ export default function ManageTipModal({
       );
       return;
     }
-
-    console.log('was good');
 
     // const db = await connectToDatabase();
 
