@@ -39,8 +39,8 @@ function compareResObjects(
 function validatePattern(arr: Array<string>, pattern: RegExp, dataObj: any) {
   let boolVal = true;
   arr.forEach(prop => {
-    let trimmedProp = dataObj[prop].trim();
-    if (trimmedProp.length) {
+    if (dataObj[prop].length) {
+      let trimmedProp = dataObj[prop].trim();
       if (prop && trimmedProp.search(pattern) >= 0) {
       } else {
         boolVal = false;
@@ -125,7 +125,7 @@ export default function ManageTipModal({
       'hourly_rate',
     ];
     let moneyPattern = /^\$?\d+(,\d{3})*(\.\d*)?$/;
-    if (!validatePattern(moneyArr, moneyPattern, formRef.current?.values)) {
+    if (!validatePattern(moneyArr, moneyPattern, formRef?.current?.values)) {
       Alert.alert('Invalid entry', 'Please enter a monetary value', [
         {
           text: 'Okay',
@@ -136,7 +136,7 @@ export default function ManageTipModal({
     }
     let timeArr = ['hours', 'minutes'];
     let timePattern = /^\d+$/;
-    if (!validatePattern(timeArr, timePattern, formRef.current?.values)) {
+    if (!validatePattern(timeArr, timePattern, formRef?.current?.values)) {
       Alert.alert(
         'Invalid entry',
         'Please enter a whole number of hours or minutes',
@@ -201,16 +201,16 @@ export default function ManageTipModal({
       return;
     }
 
-    // const db = await connectToDatabase();
+    const db = await connectToDatabase();
 
-    // if (isEdit) {
-    //   let updatedDataObj = await editTip(db, tipDataObj, itemId);
-    //   handleUpdatedDataObj(updatedDataObj);
-    // }
-    // if (!isEdit) {
-    //   await addTip(db, tipDataObj);
-    //   setUserSaved(true);
-    // }
+    if (isEdit) {
+      let updatedDataObj = await editTip(db, tipDataObj, itemId);
+      handleUpdatedDataObj(updatedDataObj);
+    }
+    if (!isEdit) {
+      await addTip(db, tipDataObj);
+      setUserSaved(true);
+    }
   }
 
   // Different padding is needed for ios android for when the keyboard is open and when it is closed
