@@ -71,6 +71,9 @@ export default function TipItemInput({
           marginBottom: -1,
           marginRight: '80%',
           zIndex: 1000,
+          alignSelf: 'flex-start',
+          width: 200,
+          paddingLeft: 20,
         }}>
         <Text style={{color: textColor, fontWeight: '600'}}>{inputTitle}</Text>
       </View>
