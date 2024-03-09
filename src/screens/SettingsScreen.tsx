@@ -4,7 +4,7 @@ import {View, Text} from 'react-native';
 export default function SettingsScreen(): React.JSX.Element {
   return (
     <View>
-      <Text>Hello from Settings!</Text>
+      <Text>Setting functionality coming soon!</Text>
     </View>
   );
 }
