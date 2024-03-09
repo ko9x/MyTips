@@ -79,6 +79,19 @@ index bc1e2c0..47138f9 100644
          <View style={this.style.innerContainer}>{content}</View>
        </View>);
      }
+diff --git a/node_modules/react-native-calendars/src/calendar/index.js b/node_modules/react-native-calendars/src/calendar/index.js
+index 6f46e8a..cf030dd 100644
+--- a/node_modules/react-native-calendars/src/calendar/index.js
++++ b/node_modules/react-native-calendars/src/calendar/index.js
+@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
+ import XDate from 'xdate';
+ import isEmpty from 'lodash/isEmpty';
+ import React, { useRef, useState, useEffect, useCallback, useMemo } from 'react';
+-import { View } from 'react-native';
++import { View, Text } from 'react-native';
+ // @ts-expect-error
+ import GestureRecognizer, { swipeDirections } from 'react-native-swipe-gestures';
+ import constants from '../commons/constants';
 diff --git a/node_modules/react-native-calendars/src/calendar/style.js b/node_modules/react-native-calendars/src/calendar/style.js
 index 735afb5..73ba076 100644
 --- a/node_modules/react-native-calendars/src/calendar/style.js
@@ -146,7 +159,7 @@ index 80a7348..504bb6c 100644
            {today.current}
          </Animated.Text>
 diff --git a/node_modules/react-native-calendars/src/expandableCalendar/index.js b/node_modules/react-native-calendars/src/expandableCalendar/index.js
-index 4fb12b0..1d9b19b 100644
+index 4fb12b0..2caa906 100644
 --- a/node_modules/react-native-calendars/src/expandableCalendar/index.js
 +++ b/node_modules/react-native-calendars/src/expandableCalendar/index.js
 @@ -16,13 +16,14 @@ import WeekCalendar from './WeekCalendar';
@@ -161,7 +174,7 @@ index 4fb12b0..1d9b19b 100644
  })(Positions || (Positions = {}));
 -const SPEED = 20;
 -const BOUNCINESS = 6;
-+const SPEED = 2;
++const SPEED = 8;
 +const BOUNCINESS = 1;
  const CLOSED_HEIGHT = 120; // header + 1 week
  const WEEK_HEIGHT = 46;
@@ -184,11 +197,12 @@ index 4fb12b0..1d9b19b 100644
      /** Date */
      const getYear = (date) => {
          const d = new XDate(date);
-@@ -236,26 +248,28 @@ const ExpandableCalendar = (props) => {
+@@ -236,26 +248,30 @@ const ExpandableCalendar = (props) => {
          return gestureState.dy > 5 || gestureState.dy < -5;
      };
      const handlePanResponderMove = (_, gestureState) => {
-+        // REMOVED THIS FUNCTION BECAUSE IT DOESN'T WORK VERY WELL
++        // REMOVED THIS FUNCTION BECAUSE WE DON'T WANT THE PAN FUNCTIONALITY WHERE THE USER NEEDS TO PULL THE CALENDAR OPEN
++        // ALSO THE PAN FEATURE DID NOT WORK WELL
          // limit min height to closed height and max to open height
 -        _wrapperStyles.current.style.height = Math.min(Math.max(closedHeight, _height.current + gestureState.dy), openHeight.current);
 -        if (!horizontal) {
@@ -224,21 +238,39 @@ index 4fb12b0..1d9b19b 100644
      const handlePanResponderEnd = () => {
 -        _height.current = Number(_wrapperStyles.current.style.height);
 -        bounceToPosition();
-+        // REMOVED THIS FUNCTION BECAUSE IT DOESN'T WORK VERY WELL
++        // REMOVED THIS FUNCTION BECAUSE WE DON'T WANT THE PAN FUNCTIONALITY WHERE THE USER NEEDS TO PULL THE CALENDAR OPEN
++        // ALSO THE PAN FEATURE DID NOT WORK WELL
 +        // _height.current = Number(_wrapperStyles.current.style.height);
 +        // bounceToPosition();
      };
      const numberOfDaysCondition = useMemo(() => {
          return !numberOfDays || numberOfDays && numberOfDays <= 1;
-@@ -280,12 +294,14 @@ const ExpandableCalendar = (props) => {
-                 speed: SPEED,
-                 bounciness: BOUNCINESS,
+@@ -277,15 +293,30 @@ const ExpandableCalendar = (props) => {
+             _isOpen = _height.current >= threshold; // re-check after _height.current was set
+             Animated.spring(deltaY, {
+                 toValue: _height.current,
+-                speed: SPEED,
+-                bounciness: BOUNCINESS,
++                speed: 5,
++                bounciness: 1,
                  useNativeDriver: false
--            }).start();
-+                // Moved the setPosition function to inside the .start so it happens at the right time
-+                // It was previously at the bottom of this bounceToPosition function but was getting called too early
-+            }).start(() => setPosition(() => _height.current === closedHeight ? Positions.CLOSED : Positions.OPEN));
++            // This is the original code. The Animated.spring doesn't run because setPosition is called too fast
++            // }).start();
++            // toggleKnobIcon();
++            // setPosition(() => _height.current === closedHeight ? Positions.CLOSED : Positions.OPEN);
++            // onCalendarToggled?.(_isOpen);
++            // closeHeader(_isOpen);
++            // resetWeekCalendarOpacity(_isOpen);
++            // }
++            // Moved setPosition into a timeout so the calendar open/close animation has time to run
++            // But it causes a bug where if a day is selected too soon after closing calendar wrong day gets selected
++                // We resolve this bug in the HomeScreen with the calClosedTimer state and a useEffect
++                    // See the done section of the todo for more information on how the bug was resolved
+             }).start();
 +            toggleKnobIcon();
++            setTimeout(() => {
++                setPosition(() => _height.current === closedHeight ? Positions.CLOSED : Positions.OPEN);
++            }, 500)
              onCalendarToggled?.(_isOpen);
 -            setPosition(() => _height.current === closedHeight ? Positions.CLOSED : Positions.OPEN);
              closeHeader(_isOpen);
@@ -248,27 +280,9 @@ index 4fb12b0..1d9b19b 100644
      };
      const resetWeekCalendarOpacity = (isOpen) => {
          _weekCalendarStyles.style.opacity = isOpen ? 0 : 1;
-@@ -383,8 +399,27 @@ const ExpandableCalendar = (props) => {
-       </Animated.View>);
+@@ -384,7 +415,9 @@ const ExpandableCalendar = (props) => {
      };
      const renderKnob = () => {
-+        // function toggleKnobIcon() {
-+        //     if (isOpen) {
-+
-+        //     }
-+        // }
-+        // function determineKnobIcon(): React.JSX.Element {
-+        //     let iconName = '';
-+        //     if (isOpen) {
-+        //       iconName = 'chevron-up';
-+        //     } else {
-+        //       iconName = 'chevron-down';
-+        //     }
-+        //     return (
-+        //       <MaterialCommunityIcons name={iconName} size={25} color='white' />
-+        //     );
-+        //   }
-+        //   determineKnobIcon();
          return (<View style={style.current.knobContainer} pointerEvents={'box-none'}>
 -        <TouchableOpacity style={style.current.knob} testID={`${testID}.knob`} onPress={toggleCalendarPosition} hitSlop={knobHitSlop} /* activeOpacity={isOpen ? undefined : 1} *//>
 +        <TouchableOpacity testID={`${testID}.knob`} onPress={toggleCalendarPosition} hitSlop={knobHitSlop} /* activeOpacity={isOpen ? undefined : 1} */>
@@ -337,24 +351,22 @@ index 5efb8bd..6549e4a 100644
  const AGENDA_TEXT_COLOR = '#7a92a5';
  const AGENDA_BG_COLOR = '#f2F4f5';
 diff --git a/node_modules/react-native-calendars/src/types.d.ts b/node_modules/react-native-calendars/src/types.d.ts
-index 9ae91c9..6de01ea 100644
+index 9ae91c9..9ff8049 100644
 --- a/node_modules/react-native-calendars/src/types.d.ts
 +++ b/node_modules/react-native-calendars/src/types.d.ts
-@@ -98,9 +98,11 @@ export interface Theme {
+@@ -98,9 +98,9 @@ export interface Theme {
      };
  }
  export declare type AgendaEntry = {
 -    name: string;
 -    height: number;
      day: string;
-+    name: string;
-+    amount: number;
-+    hours: number;
-+    section: string
++    data: array;
++    
  };
  export declare type AgendaSchedule = {
      [date: string]: AgendaEntry[];
-@@ -109,3 +111,8 @@ export interface DayAgenda {
+@@ -109,3 +109,8 @@ export interface DayAgenda {
      reservation?: AgendaEntry;
      date?: XDate;
  }
