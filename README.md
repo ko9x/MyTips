@@ -4,6 +4,10 @@
 
 ### open a new tab and run `npm run iPhone13` or `npm run 12mini` to run the simulator for the desired device
 
+### Getting the app to install a production build on my iPhone
+- I made some changes to the Podfile and ran some commands I found in this thread `https://github.com/facebook/react-native/issues/39378`
+  - But what I think actually got it to work was adding `'react-native-flipper': {platforms: {ios: null}},` to the dependencies of react-native.config.js
+
 ### Cocoapods and pod install
 
 - When you install a package you generally need to run pod install afterward. To do so run `npx pod-install ios`
