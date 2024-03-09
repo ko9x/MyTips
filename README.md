@@ -5,6 +5,8 @@
 ### open a new tab and run `npm run iPhone13` or `npm run 12mini` to run the simulator for the desired device
 
 ### Getting the app to install a production build on my iPhone
+- After changing the scheme to produciton in Xcode I was getting this error at the end of the build: 
+`Undefined symbol: _OBJC_CLASS_$_FlipperClient`
 - I made some changes to the Podfile and ran some commands I found in this thread `https://github.com/facebook/react-native/issues/39378`
   - But what I think actually got it to work was adding `'react-native-flipper': {platforms: {ios: null}},` to the dependencies of react-native.config.js
 

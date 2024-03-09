@@ -1,22 +1,23 @@
 # What to do next
 
-- run patch package on react-native-calends once we are sure the calClosedTimer is working properly
-
 - Keep working on the modals
   - Test all the different elements of the edit functionality 
-  - Some of the input titles in the ManageTipModal don't have the correct padding
-    - It is different on 12 mini, iPhone 13 and android
 - Doublecheck that all the maths is being done correctly and displaying correctly!
 - We should probably go through and capitalize all the hard coded. Right now its a mix of lower and upper case
 - Transform any words the user enters to be capitalized also?
   - I want to make sure when we do database queries for job title we don't get two different results for the same word
     - But maybe there is a better way to address that issue
+- Once we are happy with the functionality of the HomeScreen 
+  - Decide which screen to work on next
+    - Export
+    - Stats
+    - Settings
+      - I don't think there is going to be much in here because I don't think I am going to add the filters
+        - I already have the validation to allow the user to just not enter data into the fields they don't use
 
 # General TODO
 - Create an app icon
 - Deploy app to physical device and see what styling needs to be fixed
-- Don't allow user to go into landscape view
-- Check if the user settings for large text breaks the styling (we disabled large text in NoteWorthy for this reason)
 
 # Database TODO
 
