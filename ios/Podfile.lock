@@ -944,8 +944,6 @@ PODS:
   - React-Mapbuffer (0.73.2):
     - glog
     - React-debug
-  - react-native-flipper (0.212.0):
-    - React-Core
   - react-native-safe-area-context (4.8.2):
     - React-Core
   - react-native-sqlite-storage (6.0.1):
@@ -1179,7 +1177,6 @@ DEPENDENCIES:
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector-modern`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
-  - react-native-flipper (from `../node_modules/react-native-flipper`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-sqlite-storage (from `../node_modules/react-native-sqlite-storage`)
   - React-nativeconfig (from `../node_modules/react-native/ReactCommon`)
@@ -1278,8 +1275,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/logger"
   React-Mapbuffer:
     :path: "../node_modules/react-native/ReactCommon"
-  react-native-flipper:
-    :path: "../node_modules/react-native-flipper"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-sqlite-storage:
@@ -1371,7 +1366,6 @@ SPEC CHECKSUMS:
   React-jsinspector: 03644c063fc3621c9a4e8bf263a8150909129618
   React-logger: 66b168e2b2bee57bd8ce9e69f739d805732a5570
   React-Mapbuffer: 9ee041e1d7be96da6d76a251f92e72b711c651d6
-  react-native-flipper: 9c1957af24b76493ba74f46d000a5c1d485e7731
   react-native-safe-area-context: 0ee144a6170530ccc37a0fd9388e28d06f516a89
   react-native-sqlite-storage: f6d515e1c446d1e6d026aa5352908a25d4de3261
   React-nativeconfig: d753fbbc8cecc8ae413d615599ac378bbf6999bb
@@ -1399,6 +1393,6 @@ SPEC CHECKSUMS:
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: 13c8ef87792450193e117976337b8527b49e8c03
 
-PODFILE CHECKSUM: d6b108c7908920d57c9494ab0913e85a7771d712
+PODFILE CHECKSUM: 1a103132aea0b69d997a7e5f5d86da27a16edbcf
 
 COCOAPODS: 1.14.3
