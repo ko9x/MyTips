@@ -167,7 +167,7 @@ export default function ManageTipModal({
     };
 
     if (!validateRequiredFields(tipDataObj.cash, tipDataObj.credit)) {
-      Alert.alert('Invalid cash or credit entry', 'Please enter your tips', [
+      Alert.alert('Tip entry required', 'Please enter your tips', [
         {
           text: 'Okay',
           onPress: () => {},
@@ -177,7 +177,7 @@ export default function ManageTipModal({
     }
 
     if (!tipDataObj.job) {
-      Alert.alert('Invalid job title', 'Please enter a job title', [
+      Alert.alert('Job title required', 'Please enter a job title', [
         {
           text: 'Okay',
           onPress: () => {},
@@ -187,7 +187,7 @@ export default function ManageTipModal({
     }
 
     if (!tipDataObj.time) {
-      Alert.alert('Invalid time entry', 'Please enter your time', [
+      Alert.alert('Time entry required', 'Please enter your time', [
         {
           text: 'Okay',
           onPress: () => {},
