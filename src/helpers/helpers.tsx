@@ -63,10 +63,14 @@ export function toPerHour(time: number, cents: number) {
 }
 
 export function toDollars(cents: number) {
-  const dollars = (cents / 100).toLocaleString('en-US', {
-    style: 'currency',
-    currency: 'USD',
-  });
+  let dollars: string = '';
+
+  if (cents !== 0) {
+    dollars = (cents / 100).toLocaleString('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    });
+  }
   return dollars;
 }
 
