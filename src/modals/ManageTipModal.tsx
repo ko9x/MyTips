@@ -39,13 +39,16 @@ function compareResObjects(
 function validatePattern(arr: Array<string>, pattern: RegExp, dataObj: any) {
   let boolVal = true;
   arr.forEach(prop => {
-    if (dataObj[prop].length) {
+    if (dataObj[prop].length > 0 && dataObj[prop] !== '$') {
+      console.log('more than', boolVal, dataObj[prop]);
       let trimmedProp = dataObj[prop].trim();
       if (prop && trimmedProp.search(pattern) >= 0) {
       } else {
         boolVal = false;
       }
-    } else {
+    }
+    if (dataObj[prop].length <= 0) {
+      console.log('less than or equal', boolVal, dataObj[prop]);
     }
   });
   return boolVal;
@@ -126,7 +129,7 @@ export default function ManageTipModal({
     ];
     let moneyPattern = /^\$?\d+(,\d{3})*(\.\d*)?$/;
     if (!validatePattern(moneyArr, moneyPattern, formRef?.current?.values)) {
-      Alert.alert('Invalid entry', 'Please enter a monetary value', [
+      Alert.alert('Invalid dollar amount', 'Please enter a monetary value', [
         {
           text: 'Okay',
           onPress: () => {},
@@ -138,7 +141,7 @@ export default function ManageTipModal({
     let timePattern = /^\d+$/;
     if (!validatePattern(timeArr, timePattern, formRef?.current?.values)) {
       Alert.alert(
-        'Invalid entry',
+        'Invalid time entry',
         'Please enter a whole number of hours or minutes',
         [
           {
@@ -168,7 +171,7 @@ export default function ManageTipModal({
     };
 
     if (!validateRequiredFields(tipDataObj.cash, tipDataObj.credit)) {
-      Alert.alert('Invalid entry', 'Please enter a cash and/or credit value', [
+      Alert.alert('Invalid cash or credit entry', 'Please enter your tips', [
         {
           text: 'Okay',
           onPress: () => {},
@@ -178,7 +181,7 @@ export default function ManageTipModal({
     }
 
     if (!tipDataObj.job) {
-      Alert.alert('Invalid entry', 'Please enter a job title', [
+      Alert.alert('Invalid job title', 'Please enter a job title', [
         {
           text: 'Okay',
           onPress: () => {},
@@ -188,16 +191,12 @@ export default function ManageTipModal({
     }
 
     if (!tipDataObj.time) {
-      Alert.alert(
-        'Invalid entry',
-        'Please enter an hours and/or minutes value',
-        [
-          {
-            text: 'Okay',
-            onPress: () => {},
-          },
-        ],
-      );
+      Alert.alert('Invalid time entry', 'Please enter your time', [
+        {
+          text: 'Okay',
+          onPress: () => {},
+        },
+      ]);
       return;
     }
 
