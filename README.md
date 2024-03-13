@@ -5,7 +5,8 @@
 ### open a new tab and run `npm run iPhone13` or `npm run 12mini` to run the simulator for the desired device
 
 ### Stesp to convert from Debug build to Release build and deploy to iPhone
-- In react-native.config uncomment this line `'react-native-flipper': {platforms: {ios: null}},`
+- Kill Xcode and Simulator if they are running (Because we want to launch them clean later)
+- In react-native.config add this line `'react-native-flipper': {platforms: {ios: null}},`
 - In PodFile comment out this code:
     post_install do |installer|
       react_native_post_install(
@@ -25,7 +26,8 @@
   end
   end
   end
-- Run `npx react-native log-ios`
+- (This step may not be required) cd into ios and run `pod deintegrate`
+- Run `npx pod-install ios` in the root of MyApps (not in the ios folder)
 - Double click the MyTips.xcworkspace file
 - Once xCode has launched go to Product -> Scheme -> Edit Scheme
 - Change the Build Configuration to Release and hit Close
@@ -33,6 +35,7 @@
 - Hit the build button and it should install the release version to the iPhone (release doesn't try to find/use Metro)
 
 ### Steps to convert from Release build to Debug build and get the run 12mini command to launch MyTips in simulator
+- Kill Xcode and Simulator if they are running (Because we want to launch them clean later)
 - In react-native.config comment out this line `'react-native-flipper': {platforms: {ios: null}},`
 - In PodFile add this code:
     post_install do |installer|
@@ -53,19 +56,14 @@
   end
   end
   end
-- Run `npx react-native log-ios`
+- Run `npx pod-install ios` in the root of MyApps (not in the ios folder)
 - Double click the MyTips.xcworkspace file
 - Once xCode has launched go to Product -> Scheme -> Edit Scheme
 - Change the Build Configuration to Debug and hit Close
 - Disconnect iPhone if connected and select a simulator device (usually iPhone 12 mini)
 - Hit the build button and it should launch the simulator and start MyApps
-- Once it has fully launched MyApp, kill xCode
-- In terminal you should now be able to launch the app with the command: npm run 12mini
-### Getting the app to install a production build on my iPhone
-- After changing the scheme to produciton in Xcode I was getting this error at the end of the build: 
-`Undefined symbol: _OBJC_CLASS_$_FlipperClient`
-- I made some changes to the Podfile and ran some commands I found in this thread `https://github.com/facebook/react-native/issues/39378`
-  - But what I think actually got it to work was adding `'react-native-flipper': {platforms: {ios: null}},` to the dependencies of react-native.config.js
+- Once it gives the Build Succeeded let the app finish launching in the simulator
+- If the app doesn't fully build you should still be able to use the `npm run 12mini` command and launch the app
 
 ### Cocoapods and pod install
 
@@ -148,6 +146,13 @@
 
 - I think all we need to do if this happens again is double click the xcworkspace file and let xcode launch that simulator.
   - After that the icons started working again with the normal metro and npm run 12mini commands
+
+### Getting the app to install a production build on my iPhone
+### This info was used in the section about switching the app between Debug and Release builds
+- After changing the scheme to produciton in Xcode I was getting this error at the end of the build: 
+`Undefined symbol: _OBJC_CLASS_$_FlipperClient`
+- I made some changes to the Podfile and ran some commands I found in this thread `https://github.com/facebook/react-native/issues/39378`
+  - But what I think actually got it to work was adding `'react-native-flipper': {platforms: {ios: null}},` to the dependencies of react-native.config.js
 
 # Database Info
 

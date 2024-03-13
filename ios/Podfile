@@ -44,7 +44,8 @@ target 'MyTips' do
     # Pods for testing
   end
 
-  # Changed this part to get the app to install a production build. See below
+  # The post_install function below is used for Debug Builds. Comment out for Release/Prod Builds
+
   post_install do |installer|
     react_native_post_install(
       installer,
@@ -54,6 +55,7 @@ target 'MyTips' do
   end
 end
 
+  # The post_install function below is used for Release/Prod Builds. Comment out for Debug Builds
 # use_flipper!()
 
 # post_install do |installer|
