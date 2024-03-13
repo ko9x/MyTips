@@ -40,15 +40,11 @@ function validatePattern(arr: Array<string>, pattern: RegExp, dataObj: any) {
   let boolVal = true;
   arr.forEach(prop => {
     if (dataObj[prop].length > 0 && dataObj[prop] !== '$') {
-      console.log('more than', boolVal, dataObj[prop]);
       let trimmedProp = dataObj[prop].trim();
       if (prop && trimmedProp.search(pattern) >= 0) {
       } else {
         boolVal = false;
       }
-    }
-    if (dataObj[prop].length <= 0) {
-      console.log('less than or equal', boolVal, dataObj[prop]);
     }
   });
   return boolVal;
