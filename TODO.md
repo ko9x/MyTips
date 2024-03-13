@@ -1,6 +1,5 @@
 # What to do next
 
-- Create an app icon
 - Get the app on Stephanie's iPhone
   - Have her test it and tell me what she likes and doesn't like
     - Is it annoying not having the filters to remove stuff like tip-in and total-sales?
@@ -133,3 +132,4 @@
   - At least one of cash or credit needs to have a valid dollar amount
   - At least one of hours or minutes needs to have a valid number amount
     - Add a regex that doesn't allow any on of the android buttons like . , - and space
+- Create an app icon
