@@ -4,6 +4,63 @@
 
 ### open a new tab and run `npm run iPhone13` or `npm run 12mini` to run the simulator for the desired device
 
+### Stesp to convert from Debug build to Release build and deploy to iPhone
+- In react-native.config uncomment this line `'react-native-flipper': {platforms: {ios: null}},`
+- In PodFile comment out this code:
+    post_install do |installer|
+      react_native_post_install(
+        installer,
+        config[:reactNativePath],
+        :mac_catalyst_enabled => false
+      )
+    end
+    end
+- Add this code: 
+  use_flipper!()
+
+  post_install do |installer|
+    react_native_post_install(installer)
+    installer.pods_project.build_configurations.each do |config|
+    config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
+  end
+  end
+  end
+- Run `npx react-native log-ios`
+- Double click the MyTips.xcworkspace file
+- Once xCode has launched go to Product -> Scheme -> Edit Scheme
+- Change the Build Configuration to Release and hit Close
+- Connect iPhone if not connected already and select it as the build device
+- Hit the build button and it should install the release version to the iPhone (release doesn't try to find/use Metro)
+
+### Steps to convert from Release build to Debug build and get the run 12mini command to launch MyTips in simulator
+- In react-native.config comment out this line `'react-native-flipper': {platforms: {ios: null}},`
+- In PodFile add this code:
+    post_install do |installer|
+      react_native_post_install(
+        installer,
+        config[:reactNativePath],
+        :mac_catalyst_enabled => false
+      )
+    end
+    end
+- Comment out this code: 
+  use_flipper!()
+
+  post_install do |installer|
+    react_native_post_install(installer)
+    installer.pods_project.build_configurations.each do |config|
+    config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
+  end
+  end
+  end
+- Run `npx react-native log-ios`
+- Double click the MyTips.xcworkspace file
+- Once xCode has launched go to Product -> Scheme -> Edit Scheme
+- Change the Build Configuration to Debug and hit Close
+- Disconnect iPhone if connected and select a simulator device (usually iPhone 12 mini)
+- Hit the build button and it should launch the simulator and start MyApps
+- Once it has fully launched MyApp, kill xCode
+- In terminal you should now be able to launch the app with the command: npm run 12mini
 ### Getting the app to install a production build on my iPhone
 - After changing the scheme to produciton in Xcode I was getting this error at the end of the build: 
 `Undefined symbol: _OBJC_CLASS_$_FlipperClient`
