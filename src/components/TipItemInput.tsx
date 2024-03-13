@@ -35,6 +35,12 @@ export default function TipItemInput({
   } else {
     inputValue = value;
   }
+  // In the edit screen if the time value is 0 for minutes or hours we just want to leave the input blank
+  if (!money) {
+    if (value === 0) {
+      inputValue = '';
+    }
+  }
 
   // Here we are removing the $ if the user deletes the dollar amount
   function handleValueProp(val: any) {
