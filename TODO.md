@@ -1,23 +1,27 @@
 # What to do next
 
-- Keep working on the modals
-  - Test all the different elements of the edit functionality 
-- Doublecheck that all the maths is being done correctly and displaying correctly!
-- We should probably go through and capitalize all the hard coded. Right now its a mix of lower and upper case
-- Transform any words the user enters to be capitalized also?
-  - I want to make sure when we do database queries for job title we don't get two different results for the same word
-    - But maybe there is a better way to address that issue
+- Create an app icon
+- Get the app on Stephanie's iPhone
+  - Have her test it and tell me what she likes and doesn't like
+    - Is it annoying not having the filters to remove stuff like tip-in and total-sales?
+  - Have her enter the same data into her other app and see if anything doesn't match up math wise
 - Once we are happy with the functionality of the HomeScreen 
   - Decide which screen to work on next
     - Export
+      - Find a library that lets me turn an SQLite database into an excel sheet and import/export them
     - Stats
+      - Find a library that can turn our data into graphs and other displays to vizualize the data
     - Settings
-      - I don't think there is going to be much in here because I don't think I am going to add the filters
-        - I already have the validation to allow the user to just not enter data into the fields they don't use
+      - This will pretty much just be the filters 
 
 # General TODO
-- Create an app icon
-- Deploy app to physical device and see what styling needs to be fixed
+- See what styling needs to be fixed when viewing on a physical device
+- Doublecheck that all the maths is being done correctly and displaying correctly!
+  - Stephanie is going to help with this
+- We should decide if we want everything capitalized or not. Right now it is a mixture of both
+  - Transform any words the user enters to be capitalized also if we decide to capitalize?
+    - I want to make sure when we do database queries for job title we don't get two different results for the same word
+      - But maybe there is a better way to address that issue like text transform when grabbing the data
 
 # Database TODO
 
@@ -79,6 +83,7 @@
 # ExportScreen TODO
 
 - Look into packages that will allow us to export our database in an excel or csv file.
+  - Also want to be able to import the data
 
 # SettingsScreen TODO
 
