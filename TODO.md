@@ -10,8 +10,32 @@
       - Find a library that lets me turn an SQLite database into an excel sheet and import/export them
     - Stats
       - Find a library that can turn our data into graphs and other displays to vizualize the data
+        - Graphs
+          - Total income
+          - Let the use choose any metric like wages, tip-in tip-out and see a graph for it
+          - If the user tracks sections have a graph with a different color line for each section
+          - If the user has multiple jobs have a graph with a different color line for each job
+          - Have a graph with a different color line for each day of the week
+        - Info Boxes
+          - Which Day of the week makes the most money
+            - Show the days of the week graph when the user taps this info box
+          - Which Month makes the most money
+            - Show a graph with a different color line for each month when the user taps this box
+          - Which section makes the most money (if the user has section data in the database)
+            - Show the sections graph when the user taps this info box
+              - If the user isn't tracking sections maybe have a note saying they should
+
+        - Talk to Stephanie and see which stats she would like to see
     - Settings
-      - This will pretty much just be the filters 
+      - This will pretty much just be the filters
+        - Decide which filters should be created
+          - Cash and Credit
+          - Tip in
+          - Tip out
+          - Total Sales
+          - Hourly Rate
+          - Section
+        - Use local storage to store what filters the user has turned on or off
 
 # General TODO
 - See what styling needs to be fixed when viewing on a physical device
