@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, TextInput, Text} from 'react-native';
+import {View, TextInput, Text, Alert} from 'react-native';
 import Colors from '../global/Colors';
 import {iconSmall} from '../global/Variables';
 import {iconComponentArrayToSize} from '../helpers/helpers';
@@ -56,6 +56,38 @@ export default function TipItemInput({
       goodVal = strVal?.toString();
     }
     return goodVal;
+  }
+
+  const alertArr = [
+    {
+      text: 'Server',
+      onPress: () => {
+        handleChange('Server');
+      },
+    },
+    {
+      text: 'Bar Tender',
+      onPress: () => {
+        handleChange('Bar Tender');
+      },
+    },
+    {
+      text: 'Hostess',
+      onPress: () => {
+        handleChange('Hostess');
+      },
+    },
+  ];
+
+  function handleJobPressed() {
+    Alert.alert(
+      'Please select a job',
+      'Or add a new job',
+      alertArr.concat({
+        text: 'add new Job',
+        onPress: () => {},
+      }),
+    );
   }
 
   const iconComponentArray = iconComponentArrayToSize(
@@ -115,6 +147,9 @@ export default function TipItemInput({
           value={handleValueProp(inputValue)}
           multiline={multiline}
           textAlignVertical={multiline ? 'top' : 'center'}
+          onFocus={() =>
+            inputTitle === 'Job Title' ? handleJobPressed() : null
+          }
         />
       </View>
     </View>
