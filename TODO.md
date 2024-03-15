@@ -1,5 +1,7 @@
 # What to do next
 
+- Figure out why checkForLocalStorage in TipItemInput is not passing the local storage property to handleValueProp
+
 - Get the app on Stephanie's iPhone
   - Have her test it and tell me what she likes and doesn't like
     - Is it annoying not having the filters to remove stuff like tip-in and total-sales?

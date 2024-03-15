@@ -3,6 +3,7 @@ import {View, TextInput, Text, Alert} from 'react-native';
 import Colors from '../global/Colors';
 import {iconSmall} from '../global/Variables';
 import {iconComponentArrayToSize} from '../helpers/helpers';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function TipItemInput({
   handleChange,
@@ -45,6 +46,8 @@ export default function TipItemInput({
 
   // Here we are removing the $ if the user deletes the dollar amount
   function handleValueProp(val: any) {
+    console.log(val, 'upupu');
+
     let strVal = val.toString();
     let goodVal = '';
     if (money) {
@@ -59,31 +62,69 @@ export default function TipItemInput({
     return goodVal;
   }
 
-  // Add a function that checks local storage if for job title and hourly wage
-  // Pass that value to handleValueProp if present
+  const storeData = async (propName: string, propVal: string) => {
+    try {
+      await AsyncStorage.setItem(propName, propVal);
+    } catch (e) {
+      // saving error
+    }
+  };
 
-  function handleChangeHandler(str: string) {
-    // if the value of str is not the same as the local storage value show the popup
-    // Else just run handleChange with str
-    Alert.alert(
-      'Set as default?',
-      'Default option can be turned off in settings',
-      [
-        {
-          text: 'Yes',
-          onPress: () => {
-            // Save to local storage here
-            handleChange(str);
+  const getData = async (propName: string) => {
+    try {
+      const propVal = await AsyncStorage.getItem(propName);
+      if (propVal !== null) {
+        return propVal;
+      }
+    } catch (e) {
+      // error reading value
+    }
+  };
+
+  async function checkForLocalStorage() {
+    if (inputTitle === 'Job Title' || inputTitle === 'Hourly Rate') {
+      const propVal = await getData(inputTitle);
+
+      if (propVal) {
+        console.log('in hererere', propVal);
+
+        inputValue = handleValueProp(propVal);
+      }
+
+      // if (handleValueProp(getData(inputTitle)) !== '[object Object]') {
+      //   console.log(handleValueProp(getData(inputTitle)));
+      //   // inputValue = handleValueProp(getData(inputTitle));
+      // }
+    }
+  }
+
+  checkForLocalStorage();
+
+  async function handleChangeHandler(str: string) {
+    if (str !== (await getData(inputTitle))) {
+      Alert.alert(
+        'Set as default?',
+        'Default option can be turned off in settings',
+        [
+          {
+            text: 'Yes',
+            onPress: () => {
+              // Save to local storage here
+              storeData(inputTitle, str);
+              handleChange(str);
+            },
           },
-        },
-        {
-          text: 'No',
-          onPress: () => {
-            handleChange(str);
+          {
+            text: 'No',
+            onPress: () => {
+              handleChange(str);
+            },
           },
-        },
-      ],
-    );
+        ],
+      );
+    } else {
+      handleChange(str);
+    }
   }
 
   function createAlertButtonArr() {
