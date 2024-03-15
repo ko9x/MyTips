@@ -124,7 +124,7 @@ export default function ManageTipModal({
     return hourNum * 60 + minNum;
   }
 
-  // ****** Submit Function ****************************************************************
+  // ****** Submit Function Start ****************************************************************
   async function handleFormikSubmit() {
     let moneyArr = [
       'cash',
@@ -218,6 +218,9 @@ export default function ManageTipModal({
       setUserSaved(true);
     }
   }
+  // ****** Submit Function End ****************************************************************
+
+  // Make a call to the db to get the existing jobs and hourly rates for the user to choose from
   async function fetchExistingJobs() {
     const db = await connectToDatabase();
     const jobArr = await getExistingJobs(db);
