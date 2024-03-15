@@ -59,13 +59,40 @@ export default function TipItemInput({
     return goodVal;
   }
 
+  // Add a function that checks local storage if for job title and hourly wage
+  // Pass that value to handleValueProp if present
+
+  function handleChangeHandler(str: string) {
+    // if the value of str is not the same as the local storage value show the popup
+    // Else just run handleChange with str
+    Alert.alert(
+      'Set as default?',
+      'Default option can be turned off in settings',
+      [
+        {
+          text: 'Yes',
+          onPress: () => {
+            // Save to local storage here
+            handleChange(str);
+          },
+        },
+        {
+          text: 'No',
+          onPress: () => {
+            handleChange(str);
+          },
+        },
+      ],
+    );
+  }
+
   function createAlertButtonArr() {
     // Instantiate the array with the Add new and Cancel options
     let alertButtonArr: Array<any> = [
       {
         text: `Add new ${inputTitle}`,
         onPress: () => {
-          handleChange('');
+          handleChangeHandler('');
         },
       },
       {
@@ -78,7 +105,7 @@ export default function TipItemInput({
         alertButtonArr.unshift({
           text: element,
           onPress: () => {
-            handleChange(element);
+            handleChangeHandler(element);
           },
         });
       });
@@ -88,7 +115,7 @@ export default function TipItemInput({
         alertButtonArr.unshift({
           text: element,
           onPress: () => {
-            handleChange(element);
+            handleChangeHandler(element);
           },
         });
       });
