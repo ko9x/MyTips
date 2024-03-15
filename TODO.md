@@ -4,6 +4,12 @@
   - Have her test it and tell me what she likes and doesn't like
     - Is it annoying not having the filters to remove stuff like tip-in and total-sales?
   - Have her enter the same data into her other app and see if anything doesn't match up math wise
+- Finish adding the existing values functionality for job and hourly wage
+  - Update the list if the user adds a new job or hourly rate
+  - We need toLowerCase on everything we save to the database to prevent duplicate job name entries in the database
+    - We can decide later to leave them lower case or capitalize them when they are presented to the user
+  - Set up the set as default functionality
+    - Add a setting to turn off the set as default option
 - Once we are happy with the functionality of the HomeScreen 
   - Decide which screen to work on next
     - Export
@@ -35,7 +41,9 @@
           - Total Sales
           - Hourly Rate
           - Section
+          - Set as default for job and hourly wage needs to be added so the user can turn that off if they don't want it
         - Use local storage to store what filters the user has turned on or off
+          - We can just remove each specified TipItemInput with a ternary expression 
 
 # General TODO
 - See what styling needs to be fixed when viewing on a physical device
