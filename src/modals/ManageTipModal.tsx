@@ -15,7 +15,12 @@ import TipItemInput from '../components/TipItemInput';
 import {toDollars, toHoursAndMinutes} from '../helpers/helpers';
 import {ResDataObj} from '../global/Interfaces';
 import {useKeyboard} from '@react-native-community/hooks';
-import {connectToDatabase, addTip, editTip} from '../providers/TipProvider';
+import {
+  connectToDatabase,
+  addTip,
+  editTip,
+  getExistingJobs,
+} from '../providers/TipProvider';
 import {TipDataObj} from '../global/Interfaces';
 
 // *********** Functions ********************************************************************************
@@ -74,6 +79,12 @@ export default function ManageTipModal({
   const [isEdit, setIsEdit] = useState(false);
   const keyBoard = useKeyboard();
   const formRef = useRef<FormikProps<FormikValues>>(null);
+  const [jobArray, setJobArray] = useState<StringArrayObj>();
+
+  interface StringArrayObj {
+    jobs: Array<string>;
+    wages: Array<string>;
+  }
 
   useEffect(() => {
     setReservationProp(reservation);
@@ -207,6 +218,16 @@ export default function ManageTipModal({
       setUserSaved(true);
     }
   }
+  async function fetchExistingJobs() {
+    const db = await connectToDatabase();
+    const jobArr = await getExistingJobs(db);
+    setJobArray(jobArr);
+    return jobArr;
+  }
+
+  useEffect(() => {
+    fetchExistingJobs();
+  }, []);
 
   // Different padding is needed for ios android for when the keyboard is open and when it is closed
   function determineKBOpenPadding() {
@@ -356,6 +377,7 @@ export default function ManageTipModal({
                       iconName={'book-outline'}
                       textColor={Colors.dark}
                       keyboardType={'default'}
+                      jobArr={jobArray}
                     />
                     <TipItemInput
                       handleChange={handleChange('hours')}
@@ -387,6 +409,7 @@ export default function ManageTipModal({
                       textColor={Colors.dark}
                       keyboardType={'numeric'}
                       money
+                      jobArr={jobArray}
                     />
                     <TipItemInput
                       handleChange={handleChange('section')}

@@ -15,6 +15,7 @@ export default function TipItemInput({
   keyboardType,
   money,
   multiline,
+  jobArr,
 }: any) {
   let inputValue;
   // We are solving a couple problems here.
@@ -58,35 +59,50 @@ export default function TipItemInput({
     return goodVal;
   }
 
-  const alertArr = [
-    {
-      text: 'Server',
-      onPress: () => {
-        handleChange('Server');
+  function createAlertButtonArr() {
+    // Instantiate the array with the Add new and Cancel options
+    let alertButtonArr: Array<any> = [
+      {
+        text: `Add new ${inputTitle}`,
+        onPress: () => {
+          handleChange('');
+        },
       },
-    },
-    {
-      text: 'Bar Tender',
-      onPress: () => {
-        handleChange('Bar Tender');
-      },
-    },
-    {
-      text: 'Hostess',
-      onPress: () => {
-        handleChange('Hostess');
-      },
-    },
-  ];
-
-  function handleJobPressed() {
-    Alert.alert(
-      'Please select a job',
-      'Or add a new job',
-      alertArr.concat({
-        text: 'add new Job',
+      {
+        text: 'Cancel',
         onPress: () => {},
-      }),
+      },
+    ];
+    if (inputTitle === 'Job Title') {
+      jobArr?.jobs.forEach((element: string) => {
+        alertButtonArr.unshift({
+          text: element,
+          onPress: () => {
+            handleChange(element);
+          },
+        });
+      });
+    }
+    if (inputTitle === 'Hourly Rate') {
+      jobArr?.wages.forEach((element: string) => {
+        alertButtonArr.unshift({
+          text: element,
+          onPress: () => {
+            handleChange(element);
+          },
+        });
+      });
+    }
+    return alertButtonArr;
+  }
+
+  const alertArr = createAlertButtonArr();
+
+  function handleSelectablePressed() {
+    Alert.alert(
+      `Please select a ${inputTitle}`,
+      `Or add a new ${inputTitle}`,
+      alertArr,
     );
   }
 
@@ -148,7 +164,9 @@ export default function TipItemInput({
           multiline={multiline}
           textAlignVertical={multiline ? 'top' : 'center'}
           onFocus={() =>
-            inputTitle === 'Job Title' ? handleJobPressed() : null
+            inputTitle === 'Job Title' || inputTitle === 'Hourly Rate'
+              ? handleSelectablePressed()
+              : null
           }
         />
       </View>

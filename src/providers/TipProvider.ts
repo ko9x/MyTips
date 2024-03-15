@@ -5,6 +5,7 @@ import {
 } from 'react-native-sqlite-storage';
 import Moment from 'moment';
 import {TipDataObj} from '../global/Interfaces';
+import {toDollars} from '../helpers/helpers';
 
 // enablePromise(true) is required for react-native-sqlite-storage to work
 enablePromise(true);
@@ -241,6 +242,36 @@ export const getSectionData = async (db: SQLiteDatabase, section: String) => {
   } catch (error) {
     console.error(error);
     throw Error('failed to get section data from database');
+  }
+};
+export const getExistingJobs = async (db: SQLiteDatabase) => {
+  try {
+    const jobArr: Array<any> = [];
+    const rawWageArr: Array<any> = [];
+    let wageArr: Array<any> = [];
+    const results = await db.executeSql(
+      'Select job, hourly_rate from tip_3_tbl',
+    );
+    results?.forEach(result => {
+      for (let index = 0; index < result.rows.length; index++) {
+        if (!jobArr.find(element => element === result.rows.item(index).job)) {
+          jobArr.push(result.rows.item(index).job);
+        }
+        if (
+          result.rows.item(index).hourly_rate &&
+          !rawWageArr.find(
+            element => element === result.rows.item(index).hourly_rate,
+          )
+        ) {
+          rawWageArr.push(result.rows.item(index).hourly_rate);
+        }
+      }
+    });
+    rawWageArr.forEach(element => wageArr.push(toDollars(element)));
+    return {jobs: jobArr, wages: wageArr};
+  } catch (error) {
+    console.error(error);
+    throw Error('failed to get existing jobs data from database');
   }
 };
 // ********************************* ADD DATA TO DATABASE ***************************************************
