@@ -46,8 +46,6 @@ export default function TipItemInput({
 
   // Here we are removing the $ if the user deletes the dollar amount
   function handleValueProp(val: any) {
-    console.log(val, 'upupu');
-
     let strVal = val.toString();
     let goodVal = '';
     if (money) {
@@ -70,6 +68,7 @@ export default function TipItemInput({
     }
   };
 
+  // We use this function in handleChangeHandler to see if the user has selected a Job or Rate that is not the default
   const getData = async (propName: string) => {
     try {
       const propVal = await AsyncStorage.getItem(propName);
@@ -81,47 +80,25 @@ export default function TipItemInput({
     }
   };
 
-  async function checkForLocalStorage() {
-    if (inputTitle === 'Job Title' || inputTitle === 'Hourly Rate') {
-      const propVal = await getData(inputTitle);
-
-      if (propVal) {
-        console.log('in hererere', propVal);
-
-        inputValue = handleValueProp(propVal);
-      }
-
-      // if (handleValueProp(getData(inputTitle)) !== '[object Object]') {
-      //   console.log(handleValueProp(getData(inputTitle)));
-      //   // inputValue = handleValueProp(getData(inputTitle));
-      // }
-    }
-  }
-
-  checkForLocalStorage();
-
   async function handleChangeHandler(str: string) {
-    if (str !== (await getData(inputTitle))) {
-      Alert.alert(
-        'Set as default?',
-        'Default option can be turned off in settings',
-        [
-          {
-            text: 'Yes',
-            onPress: () => {
-              // Save to local storage here
-              storeData(inputTitle, str);
-              handleChange(str);
-            },
+    // Check if the user has selected the current default
+    if (str && str !== (await getData(inputTitle))) {
+      Alert.alert(`Set ${str} as the default ${inputTitle}?`, '', [
+        {
+          text: 'Yes',
+          onPress: () => {
+            // Save to local storage here
+            storeData(inputTitle, str);
+            handleChange(str);
           },
-          {
-            text: 'No',
-            onPress: () => {
-              handleChange(str);
-            },
+        },
+        {
+          text: 'No',
+          onPress: () => {
+            handleChange(str);
           },
-        ],
-      );
+        },
+      ]);
     } else {
       handleChange(str);
     }

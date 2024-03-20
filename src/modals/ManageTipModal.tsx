@@ -220,6 +220,7 @@ export default function ManageTipModal({
       await addTip(db, tipDataObj);
       setUserSaved(true);
     }
+    fetchExistingJobs();
   }
   // ****** Submit Function End ****************************************************************
 
@@ -292,7 +293,7 @@ export default function ManageTipModal({
                 credit: isEdit ? toDollars(resDataObj!.credit).slice(1) : '',
                 hourly_rate: isEdit
                   ? toDollars(resDataObj!.hourly_rate).slice(1)
-                  : '',
+                  : ASRate,
                 job: isEdit ? resDataObj!.job : ASJob,
                 hours: isEdit ? toHoursAndMinutes(resDataObj!.time).hours : '',
                 minutes: isEdit

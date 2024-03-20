@@ -39,7 +39,7 @@ export default function ListItems({
           <View style={styles.listItemHorizontalDivider} />
           <View style={styles.listItemBottomSectionContainer}>
             <View style={styles.bottomSectionItemContainer}>
-              <Text>tips</Text>
+              <Text>money</Text>
               <Text style={{color: Colors.dark}}>
                 {toDollars(findCorrectItem(totalMoney, item.id))}
               </Text>
