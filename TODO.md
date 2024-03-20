@@ -1,19 +1,32 @@
 # What to do next
 
-- Figure out why checkForLocalStorage in TipItemInput is not passing the local storage property to handleValueProp
-
 - Get the app on Stephanie's iPhone
   - Have her test it and tell me what she likes and doesn't like
     - Is it annoying not having the filters to remove stuff like tip-in and total-sales?
   - Have her enter the same data into her other app and see if anything doesn't match up math wise
-- Finish adding the existing values functionality for job and hourly wage
-  - Update the list if the user adds a new job or hourly rate
-  - We need toLowerCase on everything we save to the database to prevent duplicate job name entries in the database
-    - We can decide later to leave them lower case or capitalize them when they are presented to the user
-  - Set up the set as default functionality
-    - Add a setting to turn off the set as default option
 - Once we are happy with the functionality of the HomeScreen 
   - Decide which screen to work on next
+  - Settings
+      - This will pretty much just be the filters
+        - Decide which filters should be created
+          - Cash and Credit
+            - On by default and turning off will just show a field that says money and we will store it under credit
+          - Tip in
+           - Off by default
+          - Tip out
+            - Off by default
+          - Total Sales
+            - Off by default
+          - Section
+            - Off by default
+          - Hourly Rate
+            - On by default and turning off will prevent the field from showing so we don't actually need to worry about turing off the default hourly rate functionality
+          - Default Hourly Rate
+            - On by default and turning off will clear local storage and no longer ask the user to set as default
+          - Default job title
+            - On by default and turning off will clear local storage and no longer ask the user to set as default
+        - Use local storage to store what filters the user has turned on or off
+          - We can just remove each specified TipItemInput with a ternary expression
     - Export
       - Find a library that lets me turn an SQLite database into an excel sheet and import/export them
     - Stats
@@ -34,18 +47,6 @@
               - If the user isn't tracking sections maybe have a note saying they should
 
         - Talk to Stephanie and see which stats she would like to see
-    - Settings
-      - This will pretty much just be the filters
-        - Decide which filters should be created
-          - Cash and Credit
-          - Tip in
-          - Tip out
-          - Total Sales
-          - Hourly Rate
-          - Section
-          - Set as default for job and hourly wage needs to be added so the user can turn that off if they don't want it
-        - Use local storage to store what filters the user has turned on or off
-          - We can just remove each specified TipItemInput with a ternary expression 
 
 # General TODO
 - See what styling needs to be fixed when viewing on a physical device
@@ -53,8 +54,8 @@
   - Stephanie is going to help with this
 - We should decide if we want everything capitalized or not. Right now it is a mixture of both
   - Transform any words the user enters to be capitalized also if we decide to capitalize?
-    - I want to make sure when we do database queries for job title we don't get two different results for the same word
-      - But maybe there is a better way to address that issue like text transform when grabbing the data
+    - If we don't then the user could end up with duplicate job titles
+      - But maybe we should leave it as is and see if people complain
 
 # Database TODO
 
@@ -167,3 +168,5 @@
   - At least one of hours or minutes needs to have a valid number amount
     - Add a regex that doesn't allow any on of the android buttons like . , - and space
 - Create an app icon
+- Finish adding the existing values functionality for job and hourly wage
+  - Update the list if the user adds a new job or hourly rate
