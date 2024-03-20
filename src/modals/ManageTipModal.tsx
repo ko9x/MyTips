@@ -22,6 +22,7 @@ import {
   getExistingJobs,
 } from '../providers/TipProvider';
 import {TipDataObj} from '../global/Interfaces';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // *********** Functions ********************************************************************************
 function compareResObjects(
@@ -80,6 +81,8 @@ export default function ManageTipModal({
   const keyBoard = useKeyboard();
   const formRef = useRef<FormikProps<FormikValues>>(null);
   const [jobArray, setJobArray] = useState<StringArrayObj>();
+  const [ASJob, setASJob] = useState<string>('');
+  const [ASRate, setASRate] = useState<string>('');
 
   interface StringArrayObj {
     jobs: Array<string>;
@@ -250,6 +253,16 @@ export default function ManageTipModal({
     }
   }
 
+  async function checkLocalStorage(propName: string, setterFunc: Function) {
+    let storedItem = await AsyncStorage.getItem(propName);
+    if (storedItem !== null) {
+      setterFunc(storedItem);
+    }
+  }
+
+  checkLocalStorage('Job Title', setASJob);
+  checkLocalStorage('Hourly Rate', setASRate);
+
   return (
     <Modal
       animationType="slide"
@@ -280,7 +293,7 @@ export default function ManageTipModal({
                 hourly_rate: isEdit
                   ? toDollars(resDataObj!.hourly_rate).slice(1)
                   : '',
-                job: isEdit ? resDataObj!.job : '',
+                job: isEdit ? resDataObj!.job : ASJob,
                 hours: isEdit ? toHoursAndMinutes(resDataObj!.time).hours : '',
                 minutes: isEdit
                   ? toHoursAndMinutes(resDataObj!.time).minutes
