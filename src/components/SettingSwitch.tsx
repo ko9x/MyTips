@@ -1,17 +1,50 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {Switch} from 'react-native-paper';
 import Colors from '../global/Colors';
 import {iconSmall} from '../global/Variables';
 import {iconComponentArrayToSize} from '../helpers/helpers';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function SettingSwitch({
   iconName,
   titleText,
+  currentState,
 }: any): React.JSX.Element {
-  const [isSwitchOn, setIsSwitchOn] = useState(false);
+  const storeData = async (propName: string, propVal: string) => {
+    try {
+      await AsyncStorage.setItem(propName, propVal);
+    } catch (e) {
+      // saving error
+    }
+  };
+  const getData = async (propName: string) => {
+    try {
+      const propVal = await AsyncStorage.getItem(propName);
+      if (propVal !== null) {
+        return propVal;
+      }
+    } catch (e) {
+      // error reading value
+    }
+  };
+  useEffect(() => {
+    if (currentState === 'On') {
+      setIsSwitchOn(true);
+    }
+    if (currentState === 'Off') {
+      setIsSwitchOn(false);
+    }
+  }, [currentState]);
 
-  function onToggleSwitch() {
+  const [isSwitchOn, setIsSwitchOn] = useState<boolean>();
+
+  async function onToggleSwitch() {
+    if ((await getData(titleText)) === 'On') {
+      await storeData(titleText, 'Off');
+    } else {
+      await storeData(titleText, 'On');
+    }
     setIsSwitchOn(!isSwitchOn);
   }
 
