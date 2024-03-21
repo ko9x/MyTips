@@ -14,6 +14,7 @@ import CashSync from '../assets/SVG/cash-sync.svg';
 import Cash from '../assets/SVG/cash.svg';
 import ClockOutline from '../assets/SVG/clock-outline.svg';
 import CreditCard from '../assets/SVG/credit-card.svg';
+import DollarCard from '../assets/SVG/dollar-card.svg';
 import Note from '../assets/SVG/note-text-outline.svg';
 import MapMarker from '../assets/SVG/map-marker.svg';
 
@@ -177,6 +178,10 @@ export function iconComponentArrayToSize(width: number, height: number) {
     {
       name: 'credit-card',
       icon: <CreditCard width={width} height={height} fill={Colors.dark} />,
+    },
+    {
+      name: 'dollar-card',
+      icon: <DollarCard width={width} height={height} fill={Colors.dark} />,
     },
     {
       name: 'note',
