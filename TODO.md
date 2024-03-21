@@ -1,52 +1,49 @@
 # What to do next
-
+- Continue work on the SettingsScreen
+- Settings
+    - This will pretty much just be the filters
+      - Decide which filters should be created
+        - Cash and Credit
+          - On by default and turning off will just show a field that says money and we will store it under credit
+        - Tip in
+          - Off by default
+        - Tip out
+          - Off by default
+        - Total Sales
+          - Off by default
+        - Section
+          - Off by default
+        - Hourly Rate
+          - On by default and turning off will prevent the field from showing so we don't actually need to worry about turing off the default hourly rate functionality
+        - Default Hourly Rate
+          - On by default and turning off will clear local storage and no longer ask the user to set as default
+        - Default job title
+          - On by default and turning off will clear local storage and no longer ask the user to set as default
+      - Use local storage to store what filters the user has turned on or off
+        - We can just remove each specified TipItemInput with a ternary expression
 - Get the app on Stephanie's iPhone
   - Have her test it and tell me what she likes and doesn't like
-    - Is it annoying not having the filters to remove stuff like tip-in and total-sales?
-  - Have her enter the same data into her other app and see if anything doesn't match up math wise
-- Once we are happy with the functionality of the HomeScreen 
-  - Decide which screen to work on next
-  - Settings
-      - This will pretty much just be the filters
-        - Decide which filters should be created
-          - Cash and Credit
-            - On by default and turning off will just show a field that says money and we will store it under credit
-          - Tip in
-           - Off by default
-          - Tip out
-            - Off by default
-          - Total Sales
-            - Off by default
-          - Section
-            - Off by default
-          - Hourly Rate
-            - On by default and turning off will prevent the field from showing so we don't actually need to worry about turing off the default hourly rate functionality
-          - Default Hourly Rate
-            - On by default and turning off will clear local storage and no longer ask the user to set as default
-          - Default job title
-            - On by default and turning off will clear local storage and no longer ask the user to set as default
-        - Use local storage to store what filters the user has turned on or off
-          - We can just remove each specified TipItemInput with a ternary expression
-    - Export
-      - Find a library that lets me turn an SQLite database into an excel sheet and import/export them
-    - Stats
-      - Find a library that can turn our data into graphs and other displays to vizualize the data
-        - Graphs
-          - Total income
-          - Let the use choose any metric like wages, tip-in tip-out and see a graph for it
-          - If the user tracks sections have a graph with a different color line for each section
-          - If the user has multiple jobs have a graph with a different color line for each job
-          - Have a graph with a different color line for each day of the week
-        - Info Boxes
-          - Which Day of the week makes the most money
-            - Show the days of the week graph when the user taps this info box
-          - Which Month makes the most money
-            - Show a graph with a different color line for each month when the user taps this box
-          - Which section makes the most money (if the user has section data in the database)
-            - Show the sections graph when the user taps this info box
-              - If the user isn't tracking sections maybe have a note saying they should
+    - Have her enter the same data into her other app and see if anything doesn't match up math wise
+- Export
+  - Find a library that lets me turn an SQLite database into an excel sheet and import/export them
+- Stats
+  - Find a library that can turn our data into graphs and other displays to vizualize the data
+    - Graphs
+      - Total income
+      - Let the use choose any metric like wages, tip-in tip-out and see a graph for it
+      - If the user tracks sections have a graph with a different color line for each section
+      - If the user has multiple jobs have a graph with a different color line for each job
+      - Have a graph with a different color line for each day of the week
+    - Info Boxes
+      - Which Day of the week makes the most money
+        - Show the days of the week graph when the user taps this info box
+      - Which Month makes the most money
+        - Show a graph with a different color line for each month when the user taps this box
+      - Which section makes the most money (if the user has section data in the database)
+        - Show the sections graph when the user taps this info box
+          - If the user isn't tracking sections maybe have a note saying they should
 
-        - Talk to Stephanie and see which stats she would like to see
+    - Talk to Stephanie and see which stats she would like to see
 
 # General TODO
 - See what styling needs to be fixed when viewing on a physical device
