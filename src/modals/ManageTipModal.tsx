@@ -1,4 +1,4 @@
-import React, {useRef, useState, useEffect} from 'react';
+import React, {useRef, useState, useEffect, useContext} from 'react';
 import {
   View,
   Text,
@@ -23,6 +23,7 @@ import {
 } from '../providers/TipProvider';
 import {TipDataObj} from '../global/Interfaces';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {OptionsContext} from '../providers/OptionsProvider';
 
 // *********** Functions ********************************************************************************
 function compareResObjects(
@@ -83,6 +84,18 @@ export default function ManageTipModal({
   const [jobArray, setJobArray] = useState<StringArrayObj>();
   const [ASJob, setASJob] = useState<string>('');
   const [ASRate, setASRate] = useState<string>('');
+  const {
+    ASCashAndCredit,
+    ASTipIn,
+    ASTipOut,
+    ASTotalSales,
+    ASSection,
+    ASHourlyRate,
+  } = useContext(OptionsContext);
+
+  useEffect(() => {
+    console.log('in manage', ASCashAndCredit);
+  }, [ASCashAndCredit]);
 
   interface StringArrayObj {
     jobs: Array<string>;
