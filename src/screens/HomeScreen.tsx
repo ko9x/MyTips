@@ -1,4 +1,10 @@
-import React, {useRef, useState, useEffect, useCallback} from 'react';
+import React, {
+  useRef,
+  useState,
+  useEffect,
+  useCallback,
+  useContext,
+} from 'react';
 import {StyleSheet, View, Text, Animated} from 'react-native';
 import {
   ExpandableCalendar,
@@ -28,6 +34,7 @@ const leftArrowIcon = require('../img/previous.png');
 const rightArrowIcon = require('../img/next.png');
 import MoneyBag from '../assets/SVG/money-bag.svg';
 import AddTipButton from '../components/AddTipButton';
+import {OptionsContext} from '../providers/OptionsProvider';
 
 export default function HomeScreen() {
   const [showTodayButton, setShowTodayButton] = useState(false);
@@ -43,6 +50,9 @@ export default function HomeScreen() {
   const [deltaY, setDeltaY] = useState(new Animated.Value(-260));
   const [openY, setOpenY] = useState(new Animated.Value(150));
   const [userSaved, setUserSaved] = useState(false);
+  const {ASCashAndCredit} = useContext(OptionsContext);
+
+  console.log('here is it', ASCashAndCredit);
 
   useEffect(() => {
     setTimeout(() => {
