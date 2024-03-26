@@ -12,45 +12,45 @@ export default function SettingsScreen(): React.JSX.Element {
   const [ASHourlyRate, setASHourlyRate] = useState();
   const storageObjectArray: Array<any> = [
     {
-      name: 'Cash and Credit',
+      name: 'Cash and Credit Option',
       defaultState: 'On',
       setterFunc: setASCashAndCredit,
     },
     {
-      name: 'Tip In',
+      name: 'Tip In Option',
       defaultState: 'Off',
       setterFunc: setASTipIn,
     },
     {
-      name: 'Tip Out',
+      name: 'Tip Out Option',
       defaultState: 'Off',
       setterFunc: setASTipOut,
     },
     {
-      name: 'Total Sales',
+      name: 'Total Sales Option',
       defaultState: 'Off',
       setterFunc: setASTotalSales,
     },
     {
-      name: 'Section',
+      name: 'Section Option',
       defaultState: 'Off',
       setterFunc: setASSection,
     },
     {
-      name: 'Hourly Rate',
+      name: 'Hourly Rate Option',
       defaultState: 'On',
       setterFunc: setASHourlyRate,
     },
   ];
   async function createDefaultStorageState() {
     // If this is not the first time the app is being launched, grab the stored state for each switch
-    if ((await getData('Cash and Credit')) !== undefined) {
+    if ((await getData('Cash and Credit Option')) !== undefined) {
       storageObjectArray.forEach(element => {
         getAndSetData(element.name, element.setterFunc);
       });
     }
     // If this is the first time the app is being launched set the defaults for each switch
-    if ((await getData('Cash and Credit')) === undefined) {
+    if ((await getData('Cash and Credit Option')) === undefined) {
       storageObjectArray.forEach(element => {
         storeData(element.name, element.defaultState);
         element.setterFunc(element.defaultState);
@@ -92,7 +92,7 @@ export default function SettingsScreen(): React.JSX.Element {
     <View>
       <SettingSwitch
         iconName={'dollar-card'}
-        titleText={'Cash and Credit'}
+        titleText={'Cash and Credit Option'}
         currentState={ASCashAndCredit}
       />
     </View>
