@@ -61,7 +61,11 @@ export default function SettingSwitch({
         {iconComponent!.icon}
         <Text>{titleText}</Text>
       </View>
-      <Switch value={isSwitchOn} onValueChange={onToggleSwitch} />
+      <Switch
+        color={Colors.dark}
+        value={isSwitchOn}
+        onValueChange={onToggleSwitch}
+      />
     </View>
   );
 }

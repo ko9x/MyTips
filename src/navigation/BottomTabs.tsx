@@ -12,12 +12,6 @@ const Tab = createBottomTabNavigator();
 
 const tabs = [
   {
-    title: 'Settings',
-    name: 'Settings',
-    screen: SettingsScreen,
-    icon: 'cog',
-  },
-  {
     title: 'Home',
     name: 'MyTips',
     screen: HomeScreen,
@@ -34,6 +28,12 @@ const tabs = [
     name: 'Export',
     screen: ExportScreen,
     icon: 'file-export-outline',
+  },
+  {
+    title: 'Settings',
+    name: 'Settings',
+    screen: SettingsScreen,
+    icon: 'cog',
   },
 ];
 

@@ -50,9 +50,7 @@ export default function HomeScreen() {
   const [deltaY, setDeltaY] = useState(new Animated.Value(-260));
   const [openY, setOpenY] = useState(new Animated.Value(150));
   const [userSaved, setUserSaved] = useState(false);
-  const {ASCashAndCredit} = useContext(OptionsContext);
-
-  console.log('here is it', ASCashAndCredit);
+  const {createDefaultStorageState} = useContext(OptionsContext);
 
   useEffect(() => {
     setTimeout(() => {
@@ -101,6 +99,7 @@ export default function HomeScreen() {
 
   const initializeApp = useCallback(() => {
     async function getTipData() {
+      await createDefaultStorageState();
       const db = await connectToDatabase();
       await createDatabaseTable(db);
       const tipData = await getCalendarData(db, selectedDate);
@@ -109,7 +108,7 @@ export default function HomeScreen() {
       setMonthTotals(getCurrentMonthTotals(tipData.itemArr, selectedDate));
     }
     getTipData();
-  }, [selectedDate, createMarked]);
+  }, [selectedDate, createMarked, createDefaultStorageState]);
 
   // Gives the calendar a half second to update after the calendar is closed
   useEffect(() => {
