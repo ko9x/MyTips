@@ -93,10 +93,6 @@ export default function ManageTipModal({
     ASHourlyRate,
   } = useContext(OptionsContext);
 
-  useEffect(() => {
-    console.log('in manage', ASCashAndCredit);
-  }, [ASCashAndCredit]);
-
   interface StringArrayObj {
     jobs: Array<string>;
     wages: Array<string>;
@@ -275,7 +271,23 @@ export default function ManageTipModal({
   }
 
   checkLocalStorage('Job Title', setASJob);
-  checkLocalStorage('Hourly Rate', setASRate);
+  if (ASHourlyRate === 'On') {
+    checkLocalStorage('Hourly Rate', setASRate);
+  }
+
+  function renderTipItemInput(optionName: any, resDataVal: string) {
+    let showInput = false;
+    if (!isEdit) {
+      if (optionName === 'On') {
+        showInput = true;
+      }
+    } else {
+      if (resDataVal) {
+        showInput = true;
+      }
+    }
+    return showInput;
+  }
 
   return (
     <Modal
@@ -338,57 +350,77 @@ export default function ManageTipModal({
                       handleChange={handleChange('cash')}
                       handleBlur={handleBlur('cash')}
                       value={values.cash}
-                      inputTitle={'Cash'}
+                      inputTitle={ASCashAndCredit === 'On' ? 'Cash' : 'Tips'}
                       placeholder={'Enter amount'}
                       iconName={'cash'}
                       textColor={Colors.dark}
                       keyboardType={'numeric'}
                       money
                     />
-                    <TipItemInput
-                      handleChange={handleChange('credit')}
-                      handleBlur={handleBlur('credit')}
-                      value={values.credit}
-                      inputTitle={'Credit'}
-                      placeholder={'Enter amount'}
-                      iconName={'credit-card'}
-                      textColor={Colors.dark}
-                      keyboardType={'numeric'}
-                      money
-                    />
-                    <TipItemInput
-                      handleChange={handleChange('tip_in')}
-                      handleBlur={handleBlur('tip_in')}
-                      value={values.tip_in}
-                      inputTitle={'Tip In'}
-                      placeholder={'Enter amount'}
-                      iconName={'cash-plus'}
-                      textColor={Colors.dark}
-                      keyboardType={'numeric'}
-                      money
-                    />
-                    <TipItemInput
-                      handleChange={handleChange('tip_out')}
-                      handleBlur={handleBlur('tip_out')}
-                      value={values.tip_out}
-                      inputTitle={'Tip Out'}
-                      placeholder={'Enter amount'}
-                      iconName={'cash-minus'}
-                      textColor={Colors.danger}
-                      keyboardType={'numeric'}
-                      money
-                    />
-                    <TipItemInput
-                      handleChange={handleChange('total_sales')}
-                      handleBlur={handleBlur('total_sales')}
-                      value={values.total_sales}
-                      inputTitle={'Total Sales'}
-                      placeholder={'Enter amount'}
-                      iconName={'cash-register'}
-                      textColor={Colors.dark}
-                      keyboardType={'numeric'}
-                      money
-                    />
+                    {renderTipItemInput(
+                      ASCashAndCredit,
+                      toDollars(resDataObj!?.credit).slice(1),
+                    ) ? (
+                      <TipItemInput
+                        handleChange={handleChange('credit')}
+                        handleBlur={handleBlur('credit')}
+                        value={values.credit}
+                        inputTitle={'Credit'}
+                        placeholder={'Enter amount'}
+                        iconName={'credit-card'}
+                        textColor={Colors.dark}
+                        keyboardType={'numeric'}
+                        money
+                      />
+                    ) : null}
+                    {renderTipItemInput(
+                      ASTipIn,
+                      toDollars(resDataObj!?.tip_in).slice(1),
+                    ) ? (
+                      <TipItemInput
+                        handleChange={handleChange('tip_in')}
+                        handleBlur={handleBlur('tip_in')}
+                        value={values.tip_in}
+                        inputTitle={'Tip In'}
+                        placeholder={'Enter amount'}
+                        iconName={'cash-plus'}
+                        textColor={Colors.dark}
+                        keyboardType={'numeric'}
+                        money
+                      />
+                    ) : null}
+                    {renderTipItemInput(
+                      ASTipOut,
+                      toDollars(resDataObj!?.tip_out).slice(1),
+                    ) ? (
+                      <TipItemInput
+                        handleChange={handleChange('tip_out')}
+                        handleBlur={handleBlur('tip_out')}
+                        value={values.tip_out}
+                        inputTitle={'Tip Out'}
+                        placeholder={'Enter amount'}
+                        iconName={'cash-minus'}
+                        textColor={Colors.danger}
+                        keyboardType={'numeric'}
+                        money
+                      />
+                    ) : null}
+                    {renderTipItemInput(
+                      ASTotalSales,
+                      toDollars(resDataObj!?.total_sales).slice(1),
+                    ) ? (
+                      <TipItemInput
+                        handleChange={handleChange('total_sales')}
+                        handleBlur={handleBlur('total_sales')}
+                        value={values.total_sales}
+                        inputTitle={'Total Sales'}
+                        placeholder={'Enter amount'}
+                        iconName={'cash-register'}
+                        textColor={Colors.dark}
+                        keyboardType={'numeric'}
+                        money
+                      />
+                    ) : null}
                     <View style={{paddingLeft: 10, paddingTop: 20}}>
                       <Text
                         style={[
@@ -429,28 +461,35 @@ export default function ManageTipModal({
                       textColor={Colors.dark}
                       keyboardType={'numeric'}
                     />
-                    <TipItemInput
-                      handleChange={handleChange('hourly_rate')}
-                      handleBlur={handleBlur('hourly_rate')}
-                      value={values.hourly_rate}
-                      inputTitle={'Hourly Rate'}
-                      placeholder={'Enter hourly rate'}
-                      iconName={'cash-clock'}
-                      textColor={Colors.dark}
-                      keyboardType={'numeric'}
-                      money
-                      jobArr={jobArray}
-                    />
-                    <TipItemInput
-                      handleChange={handleChange('section')}
-                      handleBlur={handleBlur('section')}
-                      value={values.section}
-                      inputTitle={'Section'}
-                      placeholder={'Enter section'}
-                      iconName={'map-marker'}
-                      textColor={Colors.dark}
-                      keyboardType={'default'}
-                    />
+                    {renderTipItemInput(
+                      ASHourlyRate,
+                      toDollars(resDataObj!?.hourly_rate).slice(1),
+                    ) ? (
+                      <TipItemInput
+                        handleChange={handleChange('hourly_rate')}
+                        handleBlur={handleBlur('hourly_rate')}
+                        value={values.hourly_rate}
+                        inputTitle={'Hourly Rate'}
+                        placeholder={'Enter hourly rate'}
+                        iconName={'cash-clock'}
+                        textColor={Colors.dark}
+                        keyboardType={'numeric'}
+                        money
+                        jobArr={jobArray}
+                      />
+                    ) : null}
+                    {renderTipItemInput(ASSection, resDataObj!?.section) ? (
+                      <TipItemInput
+                        handleChange={handleChange('section')}
+                        handleBlur={handleBlur('section')}
+                        value={values.section}
+                        inputTitle={'Section'}
+                        placeholder={'Enter section'}
+                        iconName={'map-marker'}
+                        textColor={Colors.dark}
+                        keyboardType={'default'}
+                      />
+                    ) : null}
                     <TipItemInput
                       handleChange={handleChange('note')}
                       handleBlur={handleBlur('note')}
