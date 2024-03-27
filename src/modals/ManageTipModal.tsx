@@ -282,7 +282,7 @@ export default function ManageTipModal({
         showInput = true;
       }
     } else {
-      if (resDataVal) {
+      if (resDataVal || optionName === 'On') {
         showInput = true;
       }
     }
