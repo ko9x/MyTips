@@ -1,26 +1,4 @@
 # What to do next
-- Continue work on the SettingsScreen
-- Settings
-    - This will pretty much just be the filters
-      - Decide which filters should be created
-        - Cash and Credit
-          - On by default and turning off will just show a field that says money and we will store it under credit
-        - Tip in
-          - Off by default
-        - Tip out
-          - Off by default
-        - Total Sales
-          - Off by default
-        - Section
-          - Off by default
-        - Hourly Rate
-          - On by default and turning off will prevent the field from showing so we don't actually need to worry about turing off the default hourly rate functionality
-        - Default Hourly Rate
-          - On by default and turning off will clear local storage and no longer ask the user to set as default
-        - Default job title
-          - On by default and turning off will clear local storage and no longer ask the user to set as default
-      - Use local storage to store what filters the user has turned on or off
-        - We can just remove each specified TipItemInput with a ternary expression
 - Get the app on Stephanie's iPhone
   - Have her test it and tell me what she likes and doesn't like
     - Have her enter the same data into her other app and see if anything doesn't match up math wise
@@ -167,3 +145,24 @@
 - Create an app icon
 - Finish adding the existing values functionality for job and hourly wage
   - Update the list if the user adds a new job or hourly rate
+- Settings
+    - This will pretty much just be the filters
+      - Decide which filters should be created
+        - Cash and Credit
+          - On by default and turning off will just show a field that says money and we will store it under credit
+        - Tip in
+          - Off by default
+        - Tip out
+          - Off by default
+        - Total Sales
+          - Off by default
+        - Section
+          - Off by default
+        - Hourly Rate
+          - On by default and turning off will prevent the field from showing so we don't actually need to worry about turing off the default hourly rate functionality
+        - Default Hourly Rate
+          - On by default and turning off will clear local storage and no longer ask the user to set as default
+        - Default job title
+          - On by default and turning off will clear local storage and no longer ask the user to set as default
+      - Use local storage to store what filters the user has turned on or off
+        - We can just remove each specified TipItemInput with a ternary expression
