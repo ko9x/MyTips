@@ -1,4 +1,4 @@
-package com.mytips
+package com.mytips.bsproductions
 
 import android.app.Application
 import com.facebook.react.PackageList

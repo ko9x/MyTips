@@ -1,4 +1,4 @@
-package com.mytips
+package com.mytips.bsproductions
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
