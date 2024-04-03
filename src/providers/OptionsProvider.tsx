@@ -31,52 +31,52 @@ export const OptionsProvider = ({children}: any) => {
   const [ASHourlyRateDefault, setASHourlyRateDefault] = useState('');
   const storageObjectArray: Array<any> = [
     {
-      name: 'Cash and Credit Option',
+      name: 'Cash and Credit Field',
       defaultState: 'On',
       setterFunc: setASCashAndCredit,
     },
     {
-      name: 'Tip In Option',
+      name: 'Tip In Field',
       defaultState: 'Off',
       setterFunc: setASTipIn,
     },
     {
-      name: 'Tip Out Option',
+      name: 'Tip Out Field',
       defaultState: 'Off',
       setterFunc: setASTipOut,
     },
     {
-      name: 'Total Sales Option',
+      name: 'Total Sales Field',
       defaultState: 'Off',
       setterFunc: setASTotalSales,
     },
     {
-      name: 'Section Option',
+      name: 'Section Field',
       defaultState: 'Off',
       setterFunc: setASSection,
     },
     {
-      name: 'Hourly Rate Option',
+      name: 'Hourly Rate Field',
       defaultState: 'On',
       setterFunc: setASHourlyRate,
     },
     {
-      name: 'Job Title Default',
+      name: 'Default Job Title',
       defaultState: 'On',
       setterFunc: setASJobTitleDefault,
     },
     {
-      name: 'Hours Default',
+      name: 'Default Hours',
       defaultState: 'Off',
       setterFunc: setASHoursDefault,
     },
     {
-      name: 'Minutes Default',
+      name: 'Default Minutes',
       defaultState: 'Off',
       setterFunc: setASMinutesDefault,
     },
     {
-      name: 'Hourly Rate Default',
+      name: 'Default Hourly Rate',
       defaultState: 'On',
       setterFunc: setASHourlyRateDefault,
     },
@@ -124,13 +124,13 @@ export const OptionsProvider = ({children}: any) => {
     ASHourlyRateDefault,
     createDefaultStorageState: async () => {
       // If this is not the first time the app is being launched, grab the stored state for each switch
-      if ((await getData('Cash and Credit Option')) !== undefined) {
+      if ((await getData('Cash and Credit Field')) !== undefined) {
         storageObjectArray.forEach(element => {
           getAndSetData(element.name, element.setterFunc);
         });
       }
       // If this is the first time the app is being launched set the defaults for each switch
-      if ((await getData('Cash and Credit Option')) === undefined) {
+      if ((await getData('Cash and Credit Field')) === undefined) {
         storageObjectArray.forEach(element => {
           storeData(element.name, element.defaultState);
           element.setterFunc(element.defaultState);

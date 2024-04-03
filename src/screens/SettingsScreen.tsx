@@ -1,5 +1,12 @@
 import React, {useContext} from 'react';
-import {View, Text, StyleSheet, Pressable, Alert} from 'react-native';
+import {
+  ScrollView,
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  Alert,
+} from 'react-native';
 import SettingSwitch from '../components/SettingSwitch';
 import {OptionsContext} from '../providers/OptionsProvider';
 import Information from '../assets/SVG/information-variant-circle-outline.svg';
@@ -18,7 +25,6 @@ export default function SettingsScreen(): React.JSX.Element {
     ASHoursDefault,
     ASMinutesDefault,
     ASHourlyRateDefault,
-    clearAllAsyncStorage,
   } = useContext(OptionsContext);
 
   function handleAlertPress(alertTitle: string, alertMessage: string) {
@@ -31,14 +37,11 @@ export default function SettingsScreen(): React.JSX.Element {
   }
 
   return (
-    <View>
+    <ScrollView>
       <View style={styles.textContainer}>
         <Text style={styles.titleText}>Optional Fields</Text>
         <Pressable
-          style={{
-            marginLeft: -20,
-            marginRight: -10,
-          }}
+          style={styles.iconContaner}
           onPress={() =>
             handleAlertPress(
               'Optional Fields',
@@ -85,10 +88,7 @@ export default function SettingsScreen(): React.JSX.Element {
       <View style={styles.textContainer}>
         <Text style={styles.titleText}>Optional Defaults</Text>
         <Pressable
-          style={{
-            marginLeft: -20,
-            marginRight: -10,
-          }}
+          style={styles.iconContaner}
           onPress={() =>
             handleAlertPress(
               'Optional Defaults',
@@ -120,9 +120,9 @@ export default function SettingsScreen(): React.JSX.Element {
       <SettingSwitch
         iconName={'cash-clock'}
         titleText={'Default Hourly Rate'}
-        currentState={ASHourlyRateDefault}
+        currentState={ASHourlyRate === 'On' ? ASHourlyRateDefault : 'Off'}
       />
-    </View>
+    </ScrollView>
   );
 }
 
@@ -134,4 +134,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   titleText: {fontSize: 16, fontWeight: '600'},
+  iconContaner: {
+    marginLeft: -20,
+    marginRight: -10,
+  },
 });
