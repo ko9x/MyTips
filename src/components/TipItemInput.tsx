@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, TextInput, Text, Alert} from 'react-native';
+import {View, TextInput, Text, Alert, StyleSheet} from 'react-native';
 import Colors from '../global/Colors';
 import {iconSmall} from '../global/Variables';
 import {iconComponentArrayToSize} from '../helpers/helpers';
@@ -166,28 +166,11 @@ export default function TipItemInput({
   const iconComponent = iconComponentArray.find(obj => obj.name === iconName);
 
   return (
-    <View
-      style={{
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingTop: 10,
-      }}>
-      <View
-        style={{
-          marginBottom: -1,
-          marginRight: '80%',
-          zIndex: 1000,
-          alignSelf: 'flex-start',
-          width: 200,
-          paddingLeft: 20,
-        }}>
+    <View style={styles.container}>
+      <View style={styles.titleContainer}>
         <Text style={{color: textColor, fontWeight: '600'}}>{inputTitle}</Text>
       </View>
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-        }}>
+      <View style={styles.textInputContainer}>
         <View
           style={{
             marginRight: multiline ? 0 : -50,
@@ -201,9 +184,12 @@ export default function TipItemInput({
             paddingTop: multiline ? 10 : null,
             paddingRight: multiline ? 5 : 0,
             backgroundColor: Colors.lighterGrey,
-            width: '95%',
+            width: isDefault ? '65%' : '95%',
             height: multiline ? 80 : 50,
-            borderRadius: 15,
+            borderTopLeftRadius: 15,
+            borderBottomLeftRadius: 15,
+            borderTopRightRadius: isDefault ? 0 : 15,
+            borderBottomRightRadius: isDefault ? 0 : 15,
             marginLeft: multiline ? 0 : -10,
             color: 'black',
           }}
@@ -222,7 +208,41 @@ export default function TipItemInput({
               : null
           }
         />
+        {isDefault ? (
+          <View style={styles.defaultButton}>
+            <Text style={{color: Colors.white}}>Set as default</Text>
+          </View>
+        ) : null}
       </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 10,
+  },
+  titleContainer: {
+    marginBottom: -1,
+    marginRight: '80%',
+    zIndex: 1000,
+    alignSelf: 'flex-start',
+    width: 200,
+    paddingLeft: 20,
+  },
+  textInputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  defaultButton: {
+    width: '30%',
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.primary,
+    borderTopRightRadius: 15,
+    borderBottomRightRadius: 15,
+  },
+});
