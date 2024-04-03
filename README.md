@@ -35,8 +35,11 @@
 - Hit the build button and it should install the release version to the iPhone (release doesn't try to find/use Metro)
 
 ### Steps to convert from Release build to Debug build and get the run 12mini command to launch MyTips in simulator
+- Double click the MyTips.xcworkspace file to launch xCode and go to Product -> Scheme -> Edit Scheme
+- Change the Build Configuration to Debug and hit Close
 - Kill Xcode and Simulator if they are running (Because we want to launch them clean later)
-- In react-native.config comment out this line `'react-native-flipper': {platforms: {ios: null}},`
+<!-- - In react-native.config comment out this line `'react-native-flipper': {platforms: {ios: null}},` -->
+  - We used to follow the step above but we don't comment out that line in the config anymore.
 - In PodFile add this code:
     post_install do |installer|
       react_native_post_install(
@@ -56,14 +59,14 @@
   end
   end
   end
-- Run `npx pod-install ios` in the root of MyApps (not in the ios folder)
-- Double click the MyTips.xcworkspace file
-- Once xCode has launched go to Product -> Scheme -> Edit Scheme
-- Change the Build Configuration to Debug and hit Close
-- Disconnect iPhone if connected and select a simulator device (usually iPhone 12 mini)
-- Hit the build button and it should launch the simulator and start MyApps
-- Once it gives the Build Succeeded let the app finish launching in the simulator
-- If the app doesn't fully build you should still be able to use the `npm run 12mini` command and launch the app
+<!-- - Run `npx pod-install ios` in the root of MyApps (not in the ios folder) -->
+  - We now cd into the ios folder and run this command `NO_FLIPPER=1 pod install`
+- Now try running the `npm run 12mini` command and the app should build. If not you can try the steps below
+  - Double click the MyTips.xcworkspace file
+  - Disconnect iPhone if connected and select a simulator device (usually iPhone 12 mini)
+  - Hit the build button and it should launch the simulator and start MyApps
+  - Once it gives the Build Succeeded let the app finish launching in the simulator
+  - If the app doesn't fully build you should still be able to use the `npm run 12mini` command and launch the app
 
 ### Cocoapods and pod install
 
