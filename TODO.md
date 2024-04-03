@@ -1,7 +1,8 @@
 # What to do next
-- Get the app on Stephanie's iPhone
-  - Have her test it and tell me what she likes and doesn't like
-    - Have her enter the same data into her other app and see if anything doesn't match up math wise
+- Settings/ManageTipModal
+  - If the default option is turned on in settings there will be a "Set as default" button next to the input
+    - Maybe make the "set as default" button look like part of the textInput
+      - Once the default is set the button changes to "clear default"
 - Export
   - Find a library that lets me turn an SQLite database into an excel sheet and import/export them
 - Stats
@@ -166,3 +167,4 @@
           - On by default and turning off will clear local storage and no longer ask the user to set as default
       - Use local storage to store what filters the user has turned on or off
         - We can just remove each specified TipItemInput with a ternary expression
+- Get the app on Stephanie's iPhone

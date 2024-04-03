@@ -84,6 +84,8 @@ export default function ManageTipModal({
   const [jobArray, setJobArray] = useState<StringArrayObj>();
   const [ASJob, setASJob] = useState<string>('');
   const [ASRate, setASRate] = useState<string>('');
+  const [ASHours, setASHours] = useState<string>('');
+  const [ASMinutes, setASMinutes] = useState<string>('');
   const {
     ASCashAndCredit,
     ASTipIn,
@@ -91,6 +93,10 @@ export default function ManageTipModal({
     ASTotalSales,
     ASSection,
     ASHourlyRate,
+    ASJobTitleDefault,
+    ASHoursDefault,
+    ASMinutesDefault,
+    ASHourlyRateDefault,
   } = useContext(OptionsContext);
 
   interface StringArrayObj {
@@ -270,9 +276,17 @@ export default function ManageTipModal({
     }
   }
 
-  checkLocalStorage('Job Title', setASJob);
-  if (ASHourlyRate === 'On') {
+  if (ASJobTitleDefault === 'On') {
+    checkLocalStorage('Job Title', setASJob);
+  }
+  if (ASHourlyRateDefault === 'On') {
     checkLocalStorage('Hourly Rate', setASRate);
+  }
+  if (ASHoursDefault === 'On') {
+    checkLocalStorage('Hours', setASHours);
+  }
+  if (ASMinutesDefault === 'On') {
+    checkLocalStorage('Minutes', setASMinutes);
   }
 
   function renderTipItemInput(optionName: any, resDataVal: string) {
@@ -320,10 +334,12 @@ export default function ManageTipModal({
                   ? toDollars(resDataObj!.hourly_rate).slice(1)
                   : ASRate,
                 job: isEdit ? resDataObj!.job : ASJob,
-                hours: isEdit ? toHoursAndMinutes(resDataObj!.time).hours : '',
+                hours: isEdit
+                  ? toHoursAndMinutes(resDataObj!.time).hours
+                  : ASHours,
                 minutes: isEdit
                   ? toHoursAndMinutes(resDataObj!.time).minutes
-                  : '',
+                  : ASMinutes,
                 tip_in: isEdit ? toDollars(resDataObj!.tip_in).slice(1) : '',
                 tip_out: isEdit ? toDollars(resDataObj!.tip_out).slice(1) : '',
                 total_sales: isEdit
@@ -334,7 +350,7 @@ export default function ManageTipModal({
               }}
               innerRef={formRef}
               onSubmit={values => console.log(values)}>
-              {({handleChange, handleBlur, handleSubmit, values}) => (
+              {({handleChange, handleBlur, values}) => (
                 <ScrollView>
                   <View style={determineKBOpenPadding()}>
                     <View style={{paddingLeft: 10, paddingTop: 20}}>
@@ -440,6 +456,7 @@ export default function ManageTipModal({
                       textColor={Colors.dark}
                       keyboardType={'default'}
                       jobArr={jobArray}
+                      isDefault={ASJobTitleDefault === 'On'}
                     />
                     <TipItemInput
                       handleChange={handleChange('hours')}
@@ -450,6 +467,7 @@ export default function ManageTipModal({
                       iconName={'clock-outline'}
                       textColor={Colors.dark}
                       keyboardType={'numeric'}
+                      isDefault={ASHoursDefault === 'On'}
                     />
                     <TipItemInput
                       handleChange={handleChange('minutes')}
@@ -460,6 +478,7 @@ export default function ManageTipModal({
                       iconName={'clock-outline'}
                       textColor={Colors.dark}
                       keyboardType={'numeric'}
+                      isDefault={ASMinutesDefault === 'On'}
                     />
                     {renderTipItemInput(
                       ASHourlyRate,
@@ -476,6 +495,7 @@ export default function ManageTipModal({
                         keyboardType={'numeric'}
                         money
                         jobArr={jobArray}
+                        isDefault={ASHourlyRateDefault === 'On'}
                       />
                     ) : null}
                     {renderTipItemInput(ASSection, resDataObj!?.section) ? (

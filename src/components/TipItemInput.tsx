@@ -17,6 +17,7 @@ export default function TipItemInput({
   money,
   multiline,
   jobArr,
+  isDefault,
 }: any) {
   let inputValue;
   // We are solving a couple problems here.
@@ -79,6 +80,12 @@ export default function TipItemInput({
       // error reading value
     }
   };
+
+  function handleEndEditing(val: any) {
+    if (isDefault && val) {
+      handleChangeHandler(val);
+    }
+  }
 
   async function handleChangeHandler(str: string) {
     // Check if the user has selected the current default
@@ -205,6 +212,7 @@ export default function TipItemInput({
           placeholder={placeholder}
           onChangeText={handleChange}
           onBlur={handleBlur}
+          onEndEditing={e => handleEndEditing(e.nativeEvent.text)}
           value={handleValueProp(inputValue)}
           multiline={multiline}
           textAlignVertical={multiline ? 'top' : 'center'}
