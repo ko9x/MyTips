@@ -8,18 +8,27 @@ export interface OptionsContextType {
   ASTotalSales: string;
   ASSection: string;
   ASHourlyRate: string;
+  ASJobTitleDefault: string;
+  ASHoursDefault: string;
+  ASMinutesDefault: string;
+  ASHourlyRateDefault: string;
   createDefaultStorageState: Function;
+  clearAllAsyncStorage: Function;
 }
 
 export const OptionsContext = createContext({} as OptionsContextType);
 
 export const OptionsProvider = ({children}: any) => {
-  const [ASCashAndCredit, setASCashAndCredit] = useState<string>('');
+  const [ASCashAndCredit, setASCashAndCredit] = useState('');
   const [ASTipIn, setASTipIn] = useState('');
   const [ASTipOut, setASTipOut] = useState('');
   const [ASTotalSales, setASTotalSales] = useState('');
   const [ASSection, setASSection] = useState('');
   const [ASHourlyRate, setASHourlyRate] = useState('');
+  const [ASJobTitleDefault, setASJobTitleDefault] = useState('');
+  const [ASHoursDefault, setASHoursDefault] = useState('');
+  const [ASMinutesDefault, setASMinutesDefault] = useState('');
+  const [ASHourlyRateDefault, setASHourlyRateDefault] = useState('');
   const storageObjectArray: Array<any> = [
     {
       name: 'Cash and Credit Option',
@@ -50,6 +59,26 @@ export const OptionsProvider = ({children}: any) => {
       name: 'Hourly Rate Option',
       defaultState: 'On',
       setterFunc: setASHourlyRate,
+    },
+    {
+      name: 'Job Title Default',
+      defaultState: 'On',
+      setterFunc: setASJobTitleDefault,
+    },
+    {
+      name: 'Hours Default',
+      defaultState: 'Off',
+      setterFunc: setASHoursDefault,
+    },
+    {
+      name: 'Minutes Default',
+      defaultState: 'Off',
+      setterFunc: setASMinutesDefault,
+    },
+    {
+      name: 'Hourly Rate Default',
+      defaultState: 'On',
+      setterFunc: setASHourlyRateDefault,
     },
   ];
   const storeData = async (propName: string, propVal: string) => {
@@ -89,6 +118,10 @@ export const OptionsProvider = ({children}: any) => {
     ASTotalSales,
     ASSection,
     ASHourlyRate,
+    ASJobTitleDefault,
+    ASHoursDefault,
+    ASMinutesDefault,
+    ASHourlyRateDefault,
     createDefaultStorageState: async () => {
       // If this is not the first time the app is being launched, grab the stored state for each switch
       if ((await getData('Cash and Credit Option')) !== undefined) {
@@ -103,6 +136,9 @@ export const OptionsProvider = ({children}: any) => {
           element.setterFunc(element.defaultState);
         });
       }
+    },
+    clearAllAsyncStorage: async () => {
+      AsyncStorage.clear();
     },
   };
   return (
