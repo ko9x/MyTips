@@ -494,7 +494,6 @@ export default function ManageTipModal({
                         textColor={Colors.dark}
                         keyboardType={'numeric'}
                         money
-                        jobArr={jobArray}
                         isDefault={ASHourlyRateDefault === 'On'}
                       />
                     ) : null}

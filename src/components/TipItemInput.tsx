@@ -1,8 +1,16 @@
-import React from 'react';
-import {View, TextInput, Text, Alert, StyleSheet} from 'react-native';
+import React, {useContext} from 'react';
+import {
+  View,
+  TextInput,
+  Text,
+  Alert,
+  StyleSheet,
+  Pressable,
+} from 'react-native';
 import Colors from '../global/Colors';
 import {iconSmall} from '../global/Variables';
 import {iconComponentArrayToSize} from '../helpers/helpers';
+import {OptionsContext} from '../providers/OptionsProvider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function TipItemInput({
@@ -19,7 +27,8 @@ export default function TipItemInput({
   jobArr,
   isDefault,
 }: any) {
-  let inputValue;
+  const {createDefaultStorageState} = useContext(OptionsContext);
+  let inputValue: any;
   // We are solving a couple problems here.
   // 1st, if we don't remove the $ at char 0 the TextInput will add another every time the user enters a number
   // 2nd, we want to make sure we only add $ to the input UI if the user has entered a number
@@ -69,7 +78,7 @@ export default function TipItemInput({
     }
   };
 
-  // We use this function in handleChangeHandler to see if the user has selected a Job or Rate that is not the default
+  // We no longer use this function but we could use it to check the currently stored prop value
   const getData = async (propName: string) => {
     try {
       const propVal = await AsyncStorage.getItem(propName);
@@ -81,34 +90,9 @@ export default function TipItemInput({
     }
   };
 
-  function handleEndEditing(val: any) {
-    if (isDefault && val) {
-      handleChangeHandler(val);
-    }
-  }
-
-  async function handleChangeHandler(str: string) {
-    // Check if the user has selected the current default
-    if (str && str !== (await getData(inputTitle))) {
-      Alert.alert(`Set ${str} as the default ${inputTitle}?`, '', [
-        {
-          text: 'Yes',
-          onPress: () => {
-            // Save to local storage here
-            storeData(inputTitle, str);
-            handleChange(str);
-          },
-        },
-        {
-          text: 'No',
-          onPress: () => {
-            handleChange(str);
-          },
-        },
-      ]);
-    } else {
-      handleChange(str);
-    }
+  async function setDefaultValue(str: string) {
+    await storeData(inputTitle, str);
+    await createDefaultStorageState();
   }
 
   function createAlertButtonArr() {
@@ -117,7 +101,7 @@ export default function TipItemInput({
       {
         text: `Add new ${inputTitle}`,
         onPress: () => {
-          handleChangeHandler('');
+          handleChange('');
         },
       },
       {
@@ -130,17 +114,7 @@ export default function TipItemInput({
         alertButtonArr.unshift({
           text: element,
           onPress: () => {
-            handleChangeHandler(element);
-          },
-        });
-      });
-    }
-    if (inputTitle === 'Hourly Rate') {
-      jobArr?.wages.forEach((element: string) => {
-        alertButtonArr.unshift({
-          text: element,
-          onPress: () => {
-            handleChangeHandler(element);
+            handleChange(element);
           },
         });
       });
@@ -198,20 +172,34 @@ export default function TipItemInput({
           placeholder={placeholder}
           onChangeText={handleChange}
           onBlur={handleBlur}
-          onEndEditing={e => handleEndEditing(e.nativeEvent.text)}
           value={handleValueProp(inputValue)}
           multiline={multiline}
           textAlignVertical={multiline ? 'top' : 'center'}
           onFocus={() =>
-            inputTitle === 'Job Title' || inputTitle === 'Hourly Rate'
-              ? handleSelectablePressed()
-              : null
+            inputTitle === 'Job Title' ? handleSelectablePressed() : null
           }
         />
         {isDefault ? (
-          <View style={styles.defaultButton}>
+          <Pressable
+            android_ripple={{
+              color: Colors.white,
+              borderless: false,
+              foreground: true,
+            }}
+            style={({pressed}) => [
+              {
+                backgroundColor: pressed ? Colors.dark : Colors.primary,
+                width: '30%',
+                height: 50,
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderTopRightRadius: 15,
+                borderBottomRightRadius: 15,
+              },
+            ]}
+            onPress={() => setDefaultValue(inputValue)}>
             <Text style={{color: Colors.white}}>Set as default</Text>
-          </View>
+          </Pressable>
         ) : null}
       </View>
     </View>
