@@ -58,7 +58,7 @@ export default function ViewTipModal({
   }
 
   function handleEditButtonPress() {
-    Alert.alert('', '', [
+    Alert.alert('Select an action', '', [
       {
         text: 'Update',
         onPress: () => setShowManageTipModal(true),
