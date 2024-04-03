@@ -332,14 +332,24 @@ export default function ManageTipModal({
                 credit: isEdit ? toDollars(resDataObj!.credit).slice(1) : '',
                 hourly_rate: isEdit
                   ? toDollars(resDataObj!.hourly_rate).slice(1)
-                  : ASRate,
-                job: isEdit ? resDataObj!.job : ASJob,
+                  : ASHourlyRateDefault === 'On'
+                  ? ASRate
+                  : '',
+                job: isEdit
+                  ? resDataObj!.job
+                  : ASJobTitleDefault === 'On'
+                  ? ASJob
+                  : '',
                 hours: isEdit
                   ? toHoursAndMinutes(resDataObj!.time).hours
-                  : ASHours,
+                  : ASHoursDefault === 'On'
+                  ? ASHours
+                  : '',
                 minutes: isEdit
                   ? toHoursAndMinutes(resDataObj!.time).minutes
-                  : ASMinutes,
+                  : ASMinutesDefault === 'On'
+                  ? ASMinutes
+                  : '',
                 tip_in: isEdit ? toDollars(resDataObj!.tip_in).slice(1) : '',
                 tip_out: isEdit ? toDollars(resDataObj!.tip_out).slice(1) : '',
                 total_sales: isEdit
