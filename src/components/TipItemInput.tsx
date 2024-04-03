@@ -26,6 +26,7 @@ export default function TipItemInput({
   multiline,
   jobArr,
   isDefault,
+  defaultValueSetter,
 }: any) {
   const {createDefaultStorageState} = useContext(OptionsContext);
   let inputValue: any;
@@ -92,7 +93,7 @@ export default function TipItemInput({
 
   async function setDefaultValue(str: string) {
     await storeData(inputTitle, str);
-    await createDefaultStorageState();
+    defaultValueSetter(str);
   }
 
   function createAlertButtonArr() {

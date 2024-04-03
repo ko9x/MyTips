@@ -457,6 +457,7 @@ export default function ManageTipModal({
                       keyboardType={'default'}
                       jobArr={jobArray}
                       isDefault={ASJobTitleDefault === 'On'}
+                      defaultValueSetter={setASJob}
                     />
                     <TipItemInput
                       handleChange={handleChange('hours')}
@@ -468,6 +469,7 @@ export default function ManageTipModal({
                       textColor={Colors.dark}
                       keyboardType={'numeric'}
                       isDefault={ASHoursDefault === 'On'}
+                      defaultValueSetter={setASHours}
                     />
                     <TipItemInput
                       handleChange={handleChange('minutes')}
@@ -479,6 +481,7 @@ export default function ManageTipModal({
                       textColor={Colors.dark}
                       keyboardType={'numeric'}
                       isDefault={ASMinutesDefault === 'On'}
+                      defaultValueSetter={setASMinutes}
                     />
                     {renderTipItemInput(
                       ASHourlyRate,
@@ -495,6 +498,7 @@ export default function ManageTipModal({
                         keyboardType={'numeric'}
                         money
                         isDefault={ASHourlyRateDefault === 'On'}
+                        defaultValueSetter={setASRate}
                       />
                     ) : null}
                     {renderTipItemInput(ASSection, resDataObj!?.section) ? (
