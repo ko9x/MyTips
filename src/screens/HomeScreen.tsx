@@ -284,7 +284,11 @@ export default function HomeScreen() {
                       No tips entered for today
                     </Text>
                   </View>
-                  <AddTipButton onPressFunc={setShowManageTipModal} />
+                  <AddTipButton
+                    onPressFunc={() => setShowManageTipModal(true)}
+                    iconName={'dollar-card'}
+                    buttonText={'Add Tips'}
+                  />
                 </View>
               </Animated.View>
             );
