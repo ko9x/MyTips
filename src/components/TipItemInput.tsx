@@ -199,7 +199,10 @@ export default function TipItemInput({
               },
             ]}
             onPress={() => setDefaultValue(inputValue)}>
-            <Text style={{color: Colors.white}}>Set as default</Text>
+            <View>
+              <Text style={{color: Colors.white}}>Press to</Text>
+              <Text style={{color: Colors.white}}>set as default</Text>
+            </View>
           </Pressable>
         ) : null}
       </View>

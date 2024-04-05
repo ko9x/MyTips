@@ -1,17 +1,8 @@
 import React, {useContext} from 'react';
-import {
-  ScrollView,
-  View,
-  Text,
-  StyleSheet,
-  Pressable,
-  Alert,
-} from 'react-native';
+import {ScrollView} from 'react-native';
 import SettingSwitch from '../components/SettingSwitch';
 import {OptionsContext} from '../providers/OptionsProvider';
-import Information from '../assets/SVG/information-variant-circle-outline.svg';
-import {iconSmall} from '../global/Variables';
-import Colors from '../global/Colors';
+import InformationAlert from '../components/InformationAlert';
 
 export default function SettingsScreen(): React.JSX.Element {
   const {
@@ -27,34 +18,12 @@ export default function SettingsScreen(): React.JSX.Element {
     ASHourlyRateDefault,
   } = useContext(OptionsContext);
 
-  function handleAlertPress(alertTitle: string, alertMessage: string) {
-    Alert.alert(alertTitle, alertMessage, [
-      {
-        text: 'Okay',
-        onPress: () => {},
-      },
-    ]);
-  }
-
   return (
     <ScrollView>
-      <View style={styles.textContainer}>
-        <Text style={styles.titleText}>Optional Fields</Text>
-        <Pressable
-          style={styles.iconContaner}
-          onPress={() =>
-            handleAlertPress(
-              'Optional Fields',
-              'Add or remove optional fields to better manage your tips',
-            )
-          }>
-          <Information
-            width={iconSmall.width}
-            height={iconSmall.height}
-            color={Colors.dark}
-          />
-        </Pressable>
-      </View>
+      <InformationAlert
+        title={'Optional Fields'}
+        message={'Add or remove optional fields to better manage your tips'}
+      />
       <SettingSwitch
         iconName={'dollar-card'}
         titleText={'Cash and Credit Field'}
@@ -85,23 +54,12 @@ export default function SettingsScreen(): React.JSX.Element {
         titleText={'Hourly Rate Field'}
         currentState={ASHourlyRate}
       />
-      <View style={styles.textContainer}>
-        <Text style={styles.titleText}>Optional Defaults</Text>
-        <Pressable
-          style={styles.iconContaner}
-          onPress={() =>
-            handleAlertPress(
-              'Optional Defaults',
-              'Set default values for fields that will be the same for all tips',
-            )
-          }>
-          <Information
-            width={iconSmall.width}
-            height={iconSmall.height}
-            color={Colors.dark}
-          />
-        </Pressable>
-      </View>
+      <InformationAlert
+        title={'Optional Defaults'}
+        message={
+          'Set default values for fields that will be the same for all tips'
+        }
+      />
       <SettingSwitch
         iconName={'book-outline'}
         titleText={'Default Job Title'}
@@ -125,17 +83,3 @@ export default function SettingsScreen(): React.JSX.Element {
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  textContainer: {
-    paddingVertical: 10,
-    paddingLeft: 5,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  titleText: {fontSize: 16, fontWeight: '600'},
-  iconContaner: {
-    marginLeft: -20,
-    marginRight: -10,
-  },
-});
