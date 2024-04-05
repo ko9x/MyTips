@@ -1,10 +1,41 @@
 import React from 'react';
 import {View, Text, Pressable} from 'react-native';
 import DollarCard from '../assets/SVG/dollar-card.svg';
+import FileExport from '../assets/SVG/file-export.svg';
+import FileImport from '../assets/SVG/file-import.svg';
 import {iconSmall} from '../global/Variables';
 import Colors from '../global/Colors';
 
-export default function AddTipButton({onPressFunc}: any) {
+export default function AddTipButton({onPressFunc, iconName, buttonText}: any) {
+  function determineIcon() {
+    if (iconName === 'dollar-card') {
+      return (
+        <DollarCard
+          width={iconSmall.width}
+          height={iconSmall.height}
+          color={Colors.white}
+        />
+      );
+    }
+    if (iconName === 'file-export') {
+      return (
+        <FileExport
+          width={iconSmall.width}
+          height={iconSmall.height}
+          color={Colors.white}
+        />
+      );
+    }
+    if (iconName === 'file-import') {
+      return (
+        <FileImport
+          width={iconSmall.width}
+          height={iconSmall.height}
+          color={Colors.white}
+        />
+      );
+    }
+  }
   return (
     <Pressable
       android_ripple={{
@@ -24,7 +55,7 @@ export default function AddTipButton({onPressFunc}: any) {
         },
       ]}
       onPress={() => {
-        onPressFunc(true);
+        onPressFunc();
       }}>
       <View
         style={{
@@ -39,13 +70,11 @@ export default function AddTipButton({onPressFunc}: any) {
             marginLeft: -20,
             marginRight: -10,
           }}>
-          <DollarCard
-            width={iconSmall.width}
-            height={iconSmall.height}
-            color={Colors.white}
-          />
+          {determineIcon()}
         </View>
-        <Text style={{color: Colors.white, fontWeight: '600'}}>Add Tips</Text>
+        <Text style={{color: Colors.white, fontWeight: '600'}}>
+          {buttonText}
+        </Text>
       </View>
     </Pressable>
   );
