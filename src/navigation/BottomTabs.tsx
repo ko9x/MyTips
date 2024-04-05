@@ -24,10 +24,10 @@ const tabs = [
     icon: 'chart-bar',
   },
   {
-    title: 'Export',
+    title: 'Database',
     name: 'Export',
     screen: ExportScreen,
-    icon: 'file-export-outline',
+    icon: 'database-outline',
   },
   {
     title: 'Settings',
