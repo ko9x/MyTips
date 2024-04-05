@@ -5,7 +5,7 @@ import React, {
   useCallback,
   useContext,
 } from 'react';
-import {StyleSheet, View, Text, Animated} from 'react-native';
+import {StyleSheet, View, Text, Animated, Pressable} from 'react-native';
 import {
   ExpandableCalendar,
   CalendarProvider,
@@ -35,6 +35,8 @@ const rightArrowIcon = require('../img/next.png');
 import MoneyBag from '../assets/SVG/money-bag.svg';
 import AddTipButton from '../components/AddTipButton';
 import {OptionsContext} from '../providers/OptionsProvider';
+import Share from 'react-native-share';
+import RNFS from 'react-native-fs';
 
 export default function HomeScreen() {
   const [showTodayButton, setShowTodayButton] = useState(false);
@@ -50,6 +52,8 @@ export default function HomeScreen() {
   const [deltaY, setDeltaY] = useState(new Animated.Value(-260));
   const [openY, setOpenY] = useState(new Animated.Value(150));
   const [userSaved, setUserSaved] = useState(false);
+  const [documentsFolder, setDocumentsFolder] = useState('');
+  const [files, setFiles] = useState<any>([]);
   const {createDefaultStorageState, clearAllAsyncStorage} =
     useContext(OptionsContext);
 
@@ -98,6 +102,11 @@ export default function HomeScreen() {
     [selectedDate],
   );
 
+  const getFileContent = async (path: any) => {
+    const reader = await RNFS.readDir(path);
+    setFiles(reader);
+  };
+
   const initializeApp = useCallback(() => {
     async function getTipData() {
       // await clearAllAsyncStorage();
@@ -110,12 +119,31 @@ export default function HomeScreen() {
       setMonthTotals(getCurrentMonthTotals(tipData.itemArr, selectedDate));
     }
     getTipData();
+    setDocumentsFolder(RNFS.DocumentDirectoryPath); //alternative to MainBundleDirectory.
+    getFileContent(RNFS.DocumentDirectoryPath);
   }, [
     selectedDate,
     createMarked,
     createDefaultStorageState,
     // clearAllAsyncStorage,
   ]);
+
+  function shareDB() {
+    Share.open({
+      title: 'This is the DB',
+      message: 'Working?',
+      url: files[2].path,
+      subject: 'DB',
+    })
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        err && console.log(err);
+      });
+  }
+
+  console.log(files);
 
   // Gives the calendar a half second to update after the calendar is closed
   useEffect(() => {
@@ -264,6 +292,13 @@ export default function HomeScreen() {
           }}
         />
       </CalendarProvider>
+      <Text>Documents folder: {documentsFolder}</Text>
+      <Pressable
+        onPress={() => {
+          shareDB();
+        }}>
+        <Text>Share</Text>
+      </Pressable>
       <ManageTipModal
         date={selectedDate}
         showManageTipModal={showManageTipModal}
