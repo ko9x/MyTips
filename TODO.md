@@ -1,9 +1,12 @@
 # What to do next
 - Export
+  - Get the export functionality working on android
   - Move the Import and Export buttons to the Export tab
   - Ensure the user has selected a file named tips.db
   - Maybe have an info icon with an alert that explains what import and export does and how to use them
     - Make sure we tell the user not to rename the file (or at least ensure it is named tip.db when they import it)
+  - Test on physical devices
+    - We need an Android development device
   - Rename the export tab to something that lets the user know it can also import?
   - Style the Export page
   - Add a spinner while the database is importing
@@ -27,6 +30,7 @@
     - Talk to Stephanie and see which stats she would like to see
 
 # General TODO
+- Get an Android device
 - See what styling needs to be fixed when viewing on a physical device
 - Doublecheck that all the maths is being done correctly and displaying correctly!
   - Stephanie is going to help with this
