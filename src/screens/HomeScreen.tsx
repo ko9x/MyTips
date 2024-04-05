@@ -25,6 +25,12 @@ import {
   getCalendarData,
 } from '../providers/TipProvider';
 import {getCurrentMonthTotals} from '../helpers/helpers';
+import MoneyBag from '../assets/SVG/money-bag.svg';
+import AddTipButton from '../components/AddTipButton';
+import {OptionsContext} from '../providers/OptionsProvider';
+import Share from 'react-native-share';
+import RNFS from 'react-native-fs';
+import DocumentPicker from 'react-native-document-picker';
 const initialDate = new Date();
 const offsetAmount = initialDate.getTimezoneOffset() * 60000;
 const offsetDate = initialDate.getTime() - offsetAmount;
@@ -32,11 +38,6 @@ const momentDate = Moment(offsetDate);
 const today = momentDate.toISOString().split('T')[0];
 const leftArrowIcon = require('../img/previous.png');
 const rightArrowIcon = require('../img/next.png');
-import MoneyBag from '../assets/SVG/money-bag.svg';
-import AddTipButton from '../components/AddTipButton';
-import {OptionsContext} from '../providers/OptionsProvider';
-import Share from 'react-native-share';
-import RNFS from 'react-native-fs';
 
 export default function HomeScreen() {
   const [showTodayButton, setShowTodayButton] = useState(false);
@@ -54,6 +55,7 @@ export default function HomeScreen() {
   const [userSaved, setUserSaved] = useState(false);
   const [documentsFolder, setDocumentsFolder] = useState('');
   const [files, setFiles] = useState<any>([]);
+  const [fileResponse, setFileResponse] = useState<any>([]);
   const {createDefaultStorageState, clearAllAsyncStorage} =
     useContext(OptionsContext);
 
@@ -107,6 +109,21 @@ export default function HomeScreen() {
     setFiles(reader);
   };
 
+  const replaceDatabase = async (DBPath: any) => {
+    const db = await connectToDatabase();
+    try {
+      const response = await DocumentPicker.pick({
+        presentationStyle: 'fullScreen',
+      });
+      await db.close();
+      await RNFS.unlink(DBPath);
+      await RNFS.copyFile(response[0].uri, DBPath);
+      initializeApp();
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
   const initializeApp = useCallback(() => {
     async function getTipData() {
       // await clearAllAsyncStorage();
@@ -119,7 +136,7 @@ export default function HomeScreen() {
       setMonthTotals(getCurrentMonthTotals(tipData.itemArr, selectedDate));
     }
     getTipData();
-    setDocumentsFolder(RNFS.DocumentDirectoryPath); //alternative to MainBundleDirectory.
+    setDocumentsFolder(RNFS.DocumentDirectoryPath);
     getFileContent(RNFS.DocumentDirectoryPath);
   }, [
     selectedDate,
@@ -142,8 +159,6 @@ export default function HomeScreen() {
         err && console.log(err);
       });
   }
-
-  console.log(files);
 
   // Gives the calendar a half second to update after the calendar is closed
   useEffect(() => {
@@ -297,7 +312,13 @@ export default function HomeScreen() {
         onPress={() => {
           shareDB();
         }}>
-        <Text>Share</Text>
+        <Text>Export Database</Text>
+      </Pressable>
+      <Pressable
+        onPress={() => {
+          replaceDatabase(files[2].path);
+        }}>
+        <Text>Import Database</Text>
       </Pressable>
       <ManageTipModal
         date={selectedDate}
