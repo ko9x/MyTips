@@ -1,10 +1,12 @@
 # What to do next
-- Settings/ManageTipModal
-  - If the default option is turned on in settings there will be a "Set as default" button next to the input
-    - Maybe make the "set as default" button look like part of the textInput
-      - Once the default is set the button changes to "clear default"
 - Export
-  - Find a library that lets me turn an SQLite database into an excel sheet and import/export them
+  - Move the Import and Export buttons to the Export tab
+  - Ensure the user has selected a file named tips.db
+  - Maybe have an info icon with an alert that explains what import and export does and how to use them
+    - Make sure we tell the user not to rename the file (or at least ensure it is named tip.db when they import it)
+  - Rename the export tab to something that lets the user know it can also import?
+  - Style the Export page
+  - Add a spinner while the database is importing
 - Stats
   - Find a library that can turn our data into graphs and other displays to vizualize the data
     - Graphs

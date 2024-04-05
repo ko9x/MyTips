@@ -4,7 +4,9 @@
 
 ### open a new tab and run `npm run iPhone13` or `npm run 12mini` to run the simulator for the desired device
 
-### Stesp to convert from Debug build to Release build and deploy to iPhone
+### Pod install without flipper `NO_FLIPPER=1 npx pod-install ios`
+
+### Steps to convert from Debug build to Release build and deploy to iPhone
 - Kill Xcode and Simulator if they are running (Because we want to launch them clean later)
 - In react-native.config add this line `'react-native-flipper': {platforms: {ios: null}},`
 - In PodFile comment out this code:
@@ -72,6 +74,7 @@
 
 - When you install a package you generally need to run pod install afterward. To do so run `npx pod-install ios`
   - You don't have to cd into the ios folder to run this command
+    - I think now we have to run `NO_FLIPPER=1 npx pod-install ios` to ensure flipper isn't installed
 
 ### Console log in Metro
 
