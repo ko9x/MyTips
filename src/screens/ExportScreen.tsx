@@ -1,10 +1,54 @@
-import React from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {View, StyleSheet} from 'react-native';
 import InformationAlert from '../components/InformationAlert';
 import AddTipButton from '../components/AddTipButton';
 import Colors from '../global/Colors';
+import {connectToDatabase} from '../providers/TipProvider';
+import Share from 'react-native-share';
+import RNFS from 'react-native-fs';
+import DocumentPicker from 'react-native-document-picker';
+import {OptionsContext} from '../providers/OptionsProvider';
 
 export default function ExportScreen(): React.JSX.Element {
+  const [files, setFiles] = useState<any>([]);
+  const {setDatabaseImported} = useContext(OptionsContext);
+
+  const getFileContent = async (path: any) => {
+    const reader = await RNFS.readDir(path);
+    setFiles(reader);
+  };
+
+  const replaceDatabase = async (DBPath: any) => {
+    setDatabaseImported(false);
+    const db = await connectToDatabase();
+    try {
+      const response = await DocumentPicker.pick({
+        presentationStyle: 'fullScreen',
+      });
+      await db.close();
+      await RNFS.unlink(DBPath);
+      await RNFS.copyFile(response[0].uri, DBPath);
+      setDatabaseImported(true);
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
+  useEffect(() => {
+    getFileContent(RNFS.DocumentDirectoryPath);
+  }, []);
+
+  function shareDB() {
+    Share.open({
+      url: files[2].path,
+    })
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        err && console.log(err);
+      });
+  }
   return (
     <View>
       <InformationAlert
@@ -15,6 +59,7 @@ export default function ExportScreen(): React.JSX.Element {
       />
       <View style={styles.buttonContainer}>
         <AddTipButton
+          onPressFunc={() => shareDB()}
           iconName={'file-export'}
           buttonText={'Export Tips Database'}
         />
@@ -27,6 +72,7 @@ export default function ExportScreen(): React.JSX.Element {
       />
       <View style={styles.buttonContainer}>
         <AddTipButton
+          onPressFunc={() => replaceDatabase(files[2].path)}
           iconName={'file-import'}
           buttonText={'Import Tips Database'}
         />

@@ -5,7 +5,7 @@ import React, {
   useCallback,
   useContext,
 } from 'react';
-import {StyleSheet, View, Text, Animated, Pressable} from 'react-native';
+import {StyleSheet, View, Text, Animated} from 'react-native';
 import {
   ExpandableCalendar,
   CalendarProvider,
@@ -28,9 +28,6 @@ import {getCurrentMonthTotals} from '../helpers/helpers';
 import MoneyBag from '../assets/SVG/money-bag.svg';
 import AddTipButton from '../components/AddTipButton';
 import {OptionsContext} from '../providers/OptionsProvider';
-import Share from 'react-native-share';
-import RNFS from 'react-native-fs';
-import DocumentPicker from 'react-native-document-picker';
 const initialDate = new Date();
 const offsetAmount = initialDate.getTimezoneOffset() * 60000;
 const offsetDate = initialDate.getTime() - offsetAmount;
@@ -53,10 +50,7 @@ export default function HomeScreen() {
   const [deltaY, setDeltaY] = useState(new Animated.Value(-260));
   const [openY, setOpenY] = useState(new Animated.Value(150));
   const [userSaved, setUserSaved] = useState(false);
-  const [documentsFolder, setDocumentsFolder] = useState('');
-  const [files, setFiles] = useState<any>([]);
-  const [fileResponse, setFileResponse] = useState<any>([]);
-  const {createDefaultStorageState, clearAllAsyncStorage} =
+  const {createDefaultStorageState, clearAllAsyncStorage, databaseImported} =
     useContext(OptionsContext);
 
   useEffect(() => {
@@ -104,26 +98,6 @@ export default function HomeScreen() {
     [selectedDate],
   );
 
-  const getFileContent = async (path: any) => {
-    const reader = await RNFS.readDir(path);
-    setFiles(reader);
-  };
-
-  const replaceDatabase = async (DBPath: any) => {
-    const db = await connectToDatabase();
-    try {
-      const response = await DocumentPicker.pick({
-        presentationStyle: 'fullScreen',
-      });
-      await db.close();
-      await RNFS.unlink(DBPath);
-      await RNFS.copyFile(response[0].uri, DBPath);
-      initializeApp();
-    } catch (err) {
-      console.warn(err);
-    }
-  };
-
   const initializeApp = useCallback(() => {
     async function getTipData() {
       // await clearAllAsyncStorage();
@@ -136,29 +110,12 @@ export default function HomeScreen() {
       setMonthTotals(getCurrentMonthTotals(tipData.itemArr, selectedDate));
     }
     getTipData();
-    setDocumentsFolder(RNFS.DocumentDirectoryPath);
-    getFileContent(RNFS.DocumentDirectoryPath);
   }, [
     selectedDate,
     createMarked,
     createDefaultStorageState,
     // clearAllAsyncStorage,
   ]);
-
-  function shareDB() {
-    Share.open({
-      title: 'This is the DB',
-      message: 'Working?',
-      url: files[2].path,
-      subject: 'DB',
-    })
-      .then(res => {
-        console.log(res);
-      })
-      .catch(err => {
-        err && console.log(err);
-      });
-  }
 
   // Gives the calendar a half second to update after the calendar is closed
   useEffect(() => {
@@ -176,7 +133,7 @@ export default function HomeScreen() {
 
   useEffect(() => {
     initializeApp();
-  }, [selectedDate, initializeApp]);
+  }, [selectedDate, initializeApp, databaseImported]);
 
   useEffect(() => {
     initializeApp();
@@ -311,19 +268,6 @@ export default function HomeScreen() {
           }}
         />
       </CalendarProvider>
-      <Text>Documents folder: {documentsFolder}</Text>
-      <Pressable
-        onPress={() => {
-          shareDB();
-        }}>
-        <Text>Export Database</Text>
-      </Pressable>
-      <Pressable
-        onPress={() => {
-          replaceDatabase(files[2].path);
-        }}>
-        <Text>Import Database</Text>
-      </Pressable>
       <ManageTipModal
         date={selectedDate}
         showManageTipModal={showManageTipModal}

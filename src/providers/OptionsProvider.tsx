@@ -12,6 +12,8 @@ export interface OptionsContextType {
   ASHoursDefault: string;
   ASMinutesDefault: string;
   ASHourlyRateDefault: string;
+  databaseImported: boolean;
+  setDatabaseImported: Function;
   createDefaultStorageState: Function;
   clearAllAsyncStorage: Function;
 }
@@ -29,6 +31,8 @@ export const OptionsProvider = ({children}: any) => {
   const [ASHoursDefault, setASHoursDefault] = useState('');
   const [ASMinutesDefault, setASMinutesDefault] = useState('');
   const [ASHourlyRateDefault, setASHourlyRateDefault] = useState('');
+  // databaseImported is used to trigger the initializeApp function when a user imports a new database
+  const [databaseImported, setDatabaseImported] = useState(false);
   const storageObjectArray: Array<any> = [
     {
       name: 'Cash and Credit Field',
@@ -122,6 +126,8 @@ export const OptionsProvider = ({children}: any) => {
     ASHoursDefault,
     ASMinutesDefault,
     ASHourlyRateDefault,
+    databaseImported,
+    setDatabaseImported,
     createDefaultStorageState: async () => {
       // If this is not the first time the app is being launched, grab the stored state for each switch
       if ((await getData('Cash and Credit Field')) !== undefined) {
