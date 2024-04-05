@@ -14,7 +14,7 @@ enablePromise(true);
 // Initial call to the database to create the database object to call db.executeSql
 export const connectToDatabase = async () => {
   return openDatabase(
-    {name: 'tip.db', createFromLocation: 1},
+    {name: 'tip.db', location: 'Documents'},
     () => {},
     error => {
       console.log(error);
