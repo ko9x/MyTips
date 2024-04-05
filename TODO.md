@@ -1,15 +1,10 @@
 # What to do next
 - Export
   - Get the export functionality working on android
-  - Move the Import and Export buttons to the Export tab
-  - Ensure the user has selected a file named tips.db
-  - Maybe have an info icon with an alert that explains what import and export does and how to use them
-    - Make sure we tell the user not to rename the file (or at least ensure it is named tip.db when they import it)
   - Test on physical devices
-    - We need an Android development device
-  - Rename the export tab to something that lets the user know it can also import?
-  - Style the Export page
-  - Add a spinner while the database is importing
+  - Add a spinner while the database is importing and exporting
+    - Add a success toast once it has successfully completed
+
 - Stats
   - Find a library that can turn our data into graphs and other displays to vizualize the data
     - Graphs

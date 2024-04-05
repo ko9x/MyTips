@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Alert} from 'react-native';
 import InformationAlert from '../components/InformationAlert';
 import AddTipButton from '../components/AddTipButton';
 import Colors from '../global/Colors';
@@ -18,6 +18,44 @@ export default function ExportScreen(): React.JSX.Element {
     setFiles(reader);
   };
 
+  function confirmImport() {
+    Alert.alert(
+      'Warning!',
+      'Importing a new database will erase the existing database. We recommend you export the existing database first as a backup',
+      [
+        {
+          text: 'Export Database',
+          onPress: () => {
+            shareDB();
+          },
+        },
+        {
+          text: 'Import Database',
+          onPress: () => {
+            replaceDatabase(files[2].path);
+          },
+        },
+        {
+          text: 'Cancel',
+          onPress: () => {},
+        },
+      ],
+    );
+  }
+
+  function wrongFileNameAlert() {
+    Alert.alert(
+      'Incorrect File Name',
+      'The database file must have the name "tip.db"',
+      [
+        {
+          text: 'Okay',
+          onPress: () => {},
+        },
+      ],
+    );
+  }
+
   const replaceDatabase = async (DBPath: any) => {
     setDatabaseImported(false);
     const db = await connectToDatabase();
@@ -25,10 +63,14 @@ export default function ExportScreen(): React.JSX.Element {
       const response = await DocumentPicker.pick({
         presentationStyle: 'fullScreen',
       });
-      await db.close();
-      await RNFS.unlink(DBPath);
-      await RNFS.copyFile(response[0].uri, DBPath);
-      setDatabaseImported(true);
+      if (response[0].name === 'tip.db') {
+        await db.close();
+        await RNFS.unlink(DBPath);
+        await RNFS.copyFile(response[0].uri, DBPath);
+        setDatabaseImported(true);
+      } else {
+        wrongFileNameAlert();
+      }
     } catch (err) {
       console.warn(err);
     }
@@ -72,7 +114,7 @@ export default function ExportScreen(): React.JSX.Element {
       />
       <View style={styles.buttonContainer}>
         <AddTipButton
-          onPressFunc={() => replaceDatabase(files[2].path)}
+          onPressFunc={() => confirmImport()}
           iconName={'file-import'}
           buttonText={'Import Tips Database'}
         />
