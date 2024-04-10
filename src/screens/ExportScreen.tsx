@@ -1,5 +1,12 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {View, StyleSheet, Alert, Platform} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Alert,
+  Platform,
+  ActivityIndicator,
+} from 'react-native';
 import InformationAlert from '../components/InformationAlert';
 import AddTipButton from '../components/AddTipButton';
 import Colors from '../global/Colors';
@@ -10,6 +17,7 @@ import DocumentPicker from 'react-native-document-picker';
 import {OptionsContext} from '../providers/OptionsProvider';
 
 export default function ExportScreen(): React.JSX.Element {
+  const [isLoading, setIsLoading] = useState(false);
   const [files, setFiles] = useState<any>([]);
   const [androidFiles, setAndroidFiles] = useState<any>([]);
   const {setDatabaseImported} = useContext(OptionsContext);
@@ -64,14 +72,19 @@ export default function ExportScreen(): React.JSX.Element {
 
   // Copy the database to the download folder on android since the share feature doesn't include this option
   const copyToDownloadFolder = async () => {
-    await RNFS.copyFile(
-      androidFiles[2].path,
-      DownloadDirectoryPath + '/tip.db',
-    );
+    try {
+      await RNFS.copyFile(
+        androidFiles[2].path,
+        DownloadDirectoryPath + '/tip.db',
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const replaceDatabase = async (DBPath: any) => {
     setDatabaseImported(false);
+    setIsLoading(true);
     const db = await connectToDatabase();
     try {
       const response = await DocumentPicker.pick({
@@ -82,10 +95,15 @@ export default function ExportScreen(): React.JSX.Element {
         await RNFS.unlink(DBPath);
         await RNFS.copyFile(response[0].uri, DBPath);
         setDatabaseImported(true);
+        setIsLoading(false);
       } else {
+        setDatabaseImported(true);
+        setIsLoading(false);
         wrongFileNameAlert();
       }
     } catch (err) {
+      setDatabaseImported(true);
+      setIsLoading(false);
       console.warn(err);
     }
   };
@@ -104,6 +122,7 @@ export default function ExportScreen(): React.JSX.Element {
   }, []);
 
   function shareDB() {
+    setIsLoading(true);
     // If ios, use the document share feature
     if (Platform.OS === 'ios') {
       Share.open({
@@ -111,13 +130,16 @@ export default function ExportScreen(): React.JSX.Element {
       })
         .then(res => {
           console.log(res);
+          setIsLoading(false);
         })
         .catch(err => {
           err && console.log(err);
+          setIsLoading(false);
         });
     } else {
       // If android, use copyToDowload to copy the database to the download folder
       copyToDownloadFolder();
+      setIsLoading(false);
     }
   }
   return (
@@ -147,6 +169,13 @@ export default function ExportScreen(): React.JSX.Element {
           iconName={'file-import'}
           buttonText={'Import Tips Database'}
         />
+      </View>
+      <View
+        style={{
+          paddingTop: 50,
+          alignItems: 'center',
+        }}>
+        <ActivityIndicator size={'large'} animating={isLoading} />
       </View>
     </View>
   );
