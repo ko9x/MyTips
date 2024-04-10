@@ -1,20 +1,20 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   Alert,
   Platform,
+  Share,
   ActivityIndicator,
 } from 'react-native';
 import InformationAlert from '../components/InformationAlert';
 import AddTipButton from '../components/AddTipButton';
 import Colors from '../global/Colors';
 import {connectToDatabase} from '../providers/TipProvider';
-import Share from 'react-native-share';
 import RNFS, {DownloadDirectoryPath} from 'react-native-fs';
 import DocumentPicker from 'react-native-document-picker';
 import {OptionsContext} from '../providers/OptionsProvider';
+import Toast from 'react-native-toast-message';
 
 export default function ExportScreen(): React.JSX.Element {
   const [isLoading, setIsLoading] = useState(false);
@@ -26,6 +26,13 @@ export default function ExportScreen(): React.JSX.Element {
     const reader = await RNFS.readDir(path);
     setterFunc(reader);
   };
+
+  function showToast(type: string, text1: string) {
+    Toast.show({
+      type: type,
+      text1: text1,
+    });
+  }
 
   function confirmImport() {
     Alert.alert(
@@ -77,7 +84,9 @@ export default function ExportScreen(): React.JSX.Element {
         androidFiles[2].path,
         DownloadDirectoryPath + '/tip.db',
       );
+      showToast('success', 'Tip database exported to downloads folder!');
     } catch (error) {
+      showToast('error', 'Tip database was not exported');
       console.log(error);
     }
   };
@@ -96,6 +105,7 @@ export default function ExportScreen(): React.JSX.Element {
         await RNFS.copyFile(response[0].uri, DBPath);
         setDatabaseImported(true);
         setIsLoading(false);
+        showToast('success', 'Tip database imported successfully!');
       } else {
         setDatabaseImported(true);
         setIsLoading(false);
@@ -105,6 +115,7 @@ export default function ExportScreen(): React.JSX.Element {
       setDatabaseImported(true);
       setIsLoading(false);
       console.warn(err);
+      showToast('error', 'Tip database was not imported');
     }
   };
 
@@ -125,16 +136,18 @@ export default function ExportScreen(): React.JSX.Element {
     setIsLoading(true);
     // If ios, use the document share feature
     if (Platform.OS === 'ios') {
-      Share.open({
+      Share.share({
         url: files[2].path,
       })
         .then(res => {
           console.log(res);
           setIsLoading(false);
+          showToast('success', 'Tip database exported successfully!');
         })
         .catch(err => {
           err && console.log(err);
           setIsLoading(false);
+          showToast('error', 'Tip database was not exported');
         });
     } else {
       // If android, use copyToDowload to copy the database to the download folder
