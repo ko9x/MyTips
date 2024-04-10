@@ -22,7 +22,9 @@ export default function SettingsScreen(): React.JSX.Element {
     <ScrollView>
       <InformationAlert
         title={'Optional Fields'}
-        message={'Add or remove optional fields to better manage your tips'}
+        message={
+          'Add or remove optional fields to more efficiently manage your tips'
+        }
       />
       <SettingSwitch
         iconName={'dollar-card'}

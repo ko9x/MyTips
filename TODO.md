@@ -1,9 +1,11 @@
 # What to do next
 - Export
-  - Get the export functionality working on android
-  - Test on physical devices
   - Add a spinner while the database is importing and exporting
-    - Add a success toast once it has successfully completed
+      - Add a success toast once it has successfully completed
+  - Test on physical devices
+    - Weird bug on ios where the replace option doesn't work more than once.
+      - If I import the other Share package (there is one from react-native and then react-native-share) it will work again but only once.
+        - Hopefully this is just an issue with the emulator and doesn't happen on a real device
 
 - Stats
   - Find a library that can turn our data into graphs and other displays to vizualize the data
@@ -25,6 +27,7 @@
     - Talk to Stephanie and see which stats she would like to see
 
 # General TODO
+- Fix the alert font color on Android. It is hard to read
 - Get an Android device
 - See what styling needs to be fixed when viewing on a physical device
 - Doublecheck that all the maths is being done correctly and displaying correctly!

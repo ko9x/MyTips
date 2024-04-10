@@ -1,21 +1,22 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {View, StyleSheet, Alert} from 'react-native';
+import {View, StyleSheet, Alert, Platform} from 'react-native';
 import InformationAlert from '../components/InformationAlert';
 import AddTipButton from '../components/AddTipButton';
 import Colors from '../global/Colors';
 import {connectToDatabase} from '../providers/TipProvider';
 import Share from 'react-native-share';
-import RNFS from 'react-native-fs';
+import RNFS, {DownloadDirectoryPath} from 'react-native-fs';
 import DocumentPicker from 'react-native-document-picker';
 import {OptionsContext} from '../providers/OptionsProvider';
 
 export default function ExportScreen(): React.JSX.Element {
   const [files, setFiles] = useState<any>([]);
+  const [androidFiles, setAndroidFiles] = useState<any>([]);
   const {setDatabaseImported} = useContext(OptionsContext);
 
-  const getFileContent = async (path: any) => {
+  const getFileContent = async (path: any, setterFunc: Function) => {
     const reader = await RNFS.readDir(path);
-    setFiles(reader);
+    setterFunc(reader);
   };
 
   function confirmImport() {
@@ -32,7 +33,12 @@ export default function ExportScreen(): React.JSX.Element {
         {
           text: 'Import Database',
           onPress: () => {
-            replaceDatabase(files[2].path);
+            if (Platform.OS === 'ios') {
+              replaceDatabase(files[2].path);
+            }
+            if (Platform.OS === 'android') {
+              replaceDatabase(androidFiles[2].path);
+            }
           },
         },
         {
@@ -56,6 +62,14 @@ export default function ExportScreen(): React.JSX.Element {
     );
   }
 
+  // Copy the database to the download folder on android since the share feature doesn't include this option
+  const copyToDownloadFolder = async () => {
+    await RNFS.copyFile(
+      androidFiles[2].path,
+      DownloadDirectoryPath + '/tip.db',
+    );
+  };
+
   const replaceDatabase = async (DBPath: any) => {
     setDatabaseImported(false);
     const db = await connectToDatabase();
@@ -77,19 +91,34 @@ export default function ExportScreen(): React.JSX.Element {
   };
 
   useEffect(() => {
-    getFileContent(RNFS.DocumentDirectoryPath);
+    if (Platform.OS === 'ios') {
+      getFileContent(RNFS.DocumentDirectoryPath, setFiles);
+    }
+    if (Platform.OS === 'android') {
+      getFileContent(RNFS.DocumentDirectoryPath, setFiles);
+      getFileContent(
+        '/data/data/com.mytips.bsproductions/databases',
+        setAndroidFiles,
+      );
+    }
   }, []);
 
   function shareDB() {
-    Share.open({
-      url: files[2].path,
-    })
-      .then(res => {
-        console.log(res);
+    // If ios, use the document share feature
+    if (Platform.OS === 'ios') {
+      Share.open({
+        url: files[2].path,
       })
-      .catch(err => {
-        err && console.log(err);
-      });
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          err && console.log(err);
+        });
+    } else {
+      // If android, use copyToDowload to copy the database to the download folder
+      copyToDownloadFolder();
+    }
   }
   return (
     <View>
