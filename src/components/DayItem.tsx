@@ -58,7 +58,11 @@ export default function DayItem({
           </Text>
           <Text style={styles.agendaSubTitle}>Tip size</Text>
         </View>
-        <AddTipButton onPressFunc={setShowManageTipModal} />
+        <AddTipButton
+          iconName={'dollar-card'}
+          buttonText={'Add Tips'}
+          onPressFunc={setShowManageTipModal}
+        />
       </View>
       <View
         style={{
