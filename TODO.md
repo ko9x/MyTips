@@ -1,11 +1,14 @@
 # What to do next
 - Export
-  - Add a spinner while the database is importing and exporting
-      - Add a success toast once it has successfully completed
+  - Change name on the page from Export to Database
   - Test on physical devices
-    - Weird bug on ios where the replace option doesn't work more than once.
-      - If I import the other Share package (there is one from react-native and then react-native-share) it will work again but only once.
-        - Hopefully this is just an issue with the emulator and doesn't happen on a real device
+  - Weird bug on ios where the replace option doesn't work more than once.
+    - If I refresh the app after each step the replace option seems to work correctly.
+      - I think we are gettin a stale reference because the useEffect is only running once. 
+        - We need to use finder to grab the db file and look at it in DB Browser to see what is going on
+          - We have to refresh when using iOS but we don't have to when using android
+            - Which is weird because the are both getting their path during the useEffect
+  - When canceling out of exporting the database it shows success toast on ios (can cancel on android)
 
 - Stats
   - Find a library that can turn our data into graphs and other displays to vizualize the data
@@ -36,6 +39,9 @@
   - Transform any words the user enters to be capitalized also if we decide to capitalize?
     - If we don't then the user could end up with duplicate job titles
       - But maybe we should leave it as is and see if people complain
+- Get rid of react-native-share? The default Share from react-native seems to work just fine
+  - We would need to delete the import from the package.json
+    - Would we also need to remove it from the podlock file or would removing it from the package.json prevent it from getting added to the podlock file?
 
 # Database TODO
 
