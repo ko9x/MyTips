@@ -2,12 +2,8 @@
 - Export
   - Change name on the page from Export to Database
   - Test on physical devices
-  - Weird bug on ios where the replace option doesn't work more than once.
-    - If I refresh the app after each step the replace option seems to work correctly.
-      - I think we are gettin a stale reference because the useEffect is only running once. 
-        - We need to use finder to grab the db file and look at it in DB Browser to see what is going on
-          - We have to refresh when using iOS but we don't have to when using android
-            - Which is weird because the are both getting their path during the useEffect
+  - Weird bug on ios where the replace database file in the file system doesn't update unless the app reloads
+    - Which doesn't make sense because we know the file is changing because we are getting data from the DB to load the information in the calendar
   - When canceling out of exporting the database it shows success toast on ios (can cancel on android)
 
 - Stats
