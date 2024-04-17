@@ -520,7 +520,11 @@ export default function ManageTipModal({
                         placeholder={'Enter section'}
                         iconName={'map-marker'}
                         textColor={Colors.dark}
-                        keyboardType={'default'}
+                        keyboardType={
+                          Platform.OS === 'ios'
+                            ? 'numbers-and-punctuation'
+                            : 'default'
+                        }
                       />
                     ) : null}
                     <TipItemInput
