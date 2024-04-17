@@ -15,6 +15,7 @@ import RNFS, {DownloadDirectoryPath} from 'react-native-fs';
 import DocumentPicker from 'react-native-document-picker';
 import {OptionsContext} from '../providers/OptionsProvider';
 import Toast from 'react-native-toast-message';
+import RNRestart from 'react-native-restart';
 
 export default function ExportScreen(): React.JSX.Element {
   const [isLoading, setIsLoading] = useState(false);
@@ -132,6 +133,27 @@ export default function ExportScreen(): React.JSX.Element {
     }
   }, []);
 
+  function confirmShareDB() {
+    Alert.alert(
+      'Attention!',
+      'Update the database file before exporting to ensure any recent changes are not lost',
+      [
+        {
+          text: 'Update',
+          onPress: () => updateDB(),
+        },
+        {
+          text: 'Export',
+          onPress: () => shareDB(),
+        },
+        {
+          text: 'Cancel',
+          onPress: () => {},
+        },
+      ],
+    );
+  }
+
   function shareDB() {
     setIsLoading(true);
     // If ios, use the document share feature
@@ -141,8 +163,12 @@ export default function ExportScreen(): React.JSX.Element {
       })
         .then(res => {
           console.log(res);
+          if (res.action === 'sharedAction') {
+            showToast('success', 'Tip database exported successfully!');
+          } else {
+            showToast('error', 'Tip database was not exported');
+          }
           setIsLoading(false);
-          showToast('success', 'Tip database exported successfully!');
         })
         .catch(err => {
           err && console.log(err);
@@ -155,8 +181,38 @@ export default function ExportScreen(): React.JSX.Element {
       setIsLoading(false);
     }
   }
+
+  function updateDB() {
+    Alert.alert(
+      'Update Database',
+      'The app will restart after the database is updated',
+      [
+        {
+          text: 'Okay',
+          onPress: () => RNRestart.restart(),
+        },
+      ],
+    );
+  }
   return (
     <View>
+      {Platform.OS === 'ios' ? (
+        <>
+          <InformationAlert
+            title={'Update Database'}
+            message={
+              'Update the database file before exporting to ensure the database is up to date with your latest changes'
+            }
+          />
+          <View style={styles.buttonContainer}>
+            <AddTipButton
+              onPressFunc={() => updateDB()}
+              iconName={'update'}
+              buttonText={'Update Tips Database'}
+            />
+          </View>
+        </>
+      ) : null}
       <InformationAlert
         title={'Export Tips'}
         message={
@@ -165,7 +221,9 @@ export default function ExportScreen(): React.JSX.Element {
       />
       <View style={styles.buttonContainer}>
         <AddTipButton
-          onPressFunc={() => shareDB()}
+          onPressFunc={() =>
+            Platform.OS === 'ios' ? confirmShareDB() : shareDB()
+          }
           iconName={'file-export'}
           buttonText={'Export Tips Database'}
         />

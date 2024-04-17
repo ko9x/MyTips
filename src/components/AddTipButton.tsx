@@ -3,6 +3,7 @@ import {View, Text, Pressable} from 'react-native';
 import DollarCard from '../assets/SVG/dollar-card.svg';
 import FileExport from '../assets/SVG/file-export.svg';
 import FileImport from '../assets/SVG/file-import.svg';
+import Update from '../assets/SVG/update.svg';
 import {iconSmall} from '../global/Variables';
 import Colors from '../global/Colors';
 
@@ -29,6 +30,15 @@ export default function AddTipButton({onPressFunc, iconName, buttonText}: any) {
     if (iconName === 'file-import') {
       return (
         <FileImport
+          width={iconSmall.width}
+          height={iconSmall.height}
+          color={Colors.white}
+        />
+      );
+    }
+    if (iconName === 'update') {
+      return (
+        <Update
           width={iconSmall.width}
           height={iconSmall.height}
           color={Colors.white}
