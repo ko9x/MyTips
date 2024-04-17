@@ -25,7 +25,7 @@ const tabs = [
   },
   {
     title: 'Database',
-    name: 'Export',
+    name: 'Database',
     screen: ExportScreen,
     icon: 'database-outline',
   },
