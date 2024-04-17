@@ -42,9 +42,7 @@ export default function ExportScreen(): React.JSX.Element {
       [
         {
           text: 'Export Database',
-          onPress: () => {
-            shareDB();
-          },
+          onPress: () => (Platform.OS === 'ios' ? confirmShareDB() : shareDB()),
         },
         {
           text: 'Import Database',
