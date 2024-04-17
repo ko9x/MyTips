@@ -35,31 +35,36 @@ export default function ExportScreen(): React.JSX.Element {
     });
   }
 
+  // Created an array constant so we could .reverse to display the correct order on android
+  const confirmImportButtonArr = [
+    {
+      text: 'Export Database',
+      onPress: () => (Platform.OS === 'ios' ? confirmShareDB() : shareDB()),
+    },
+    {
+      text: 'Import Database',
+      onPress: () => {
+        if (Platform.OS === 'ios') {
+          replaceDatabase(files[2].path);
+        }
+        if (Platform.OS === 'android') {
+          replaceDatabase(androidFiles[2].path);
+        }
+      },
+    },
+    {
+      text: 'Cancel',
+      onPress: () => {},
+    },
+  ];
+
   function confirmImport() {
     Alert.alert(
       'Warning!',
       'Importing a new database will erase the existing database. We recommend you export the existing database first as a backup',
-      [
-        {
-          text: 'Export Database',
-          onPress: () => (Platform.OS === 'ios' ? confirmShareDB() : shareDB()),
-        },
-        {
-          text: 'Import Database',
-          onPress: () => {
-            if (Platform.OS === 'ios') {
-              replaceDatabase(files[2].path);
-            }
-            if (Platform.OS === 'android') {
-              replaceDatabase(androidFiles[2].path);
-            }
-          },
-        },
-        {
-          text: 'Cancel',
-          onPress: () => {},
-        },
-      ],
+      Platform.OS === 'ios'
+        ? confirmImportButtonArr
+        : confirmImportButtonArr.reverse(),
     );
   }
 
@@ -131,6 +136,7 @@ export default function ExportScreen(): React.JSX.Element {
     }
   }, []);
 
+  // Only shown on iOS so no need to reverse the array
   function confirmShareDB() {
     Alert.alert(
       'Attention!',
