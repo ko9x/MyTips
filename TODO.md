@@ -1,19 +1,16 @@
 # What to do next
-- Export
-  - Change name on the page from Export to Database
-  - Test on physical devices
-  - Weird bug on ios where the replace database file in the file system doesn't update unless the app reloads
-    - Which doesn't make sense because we know the file is changing because we are getting data from the DB to load the information in the calendar
-  - When canceling out of exporting the database it shows success toast on ios (can cancel on android)
 
 - Stats
+
   - Find a library that can turn our data into graphs and other displays to vizualize the data
+
     - Graphs
       - Total income
       - Let the use choose any metric like wages, tip-in tip-out and see a graph for it
       - If the user tracks sections have a graph with a different color line for each section
       - If the user has multiple jobs have a graph with a different color line for each job
       - Have a graph with a different color line for each day of the week
+      
     - Info Boxes
       - Which Day of the week makes the most money
         - Show the days of the week graph when the user taps this info box
@@ -26,7 +23,7 @@
     - Talk to Stephanie and see which stats she would like to see
 
 # General TODO
-- Fix the alert font color on Android. It is hard to read
+
 - Get an Android device
 - See what styling needs to be fixed when viewing on a physical device
 - Doublecheck that all the maths is being done correctly and displaying correctly!
@@ -46,8 +43,8 @@
 - Create the rest of the functions needed to supply the data we need
 
 # HomeScreen TODO
+
 - General
-  
 - Main
   - Find a better position for the "Today" button
     - It is currently commented out
@@ -78,7 +75,7 @@
         - If a value is entered it must follow a pattern of either a whole number or a number with one decimal point
           - Android gives the user a keyboard that includes a coma, a dash and a space key
             - We need to make sure a user can't send a value with one of those characters to the database
-      - If the user has already selected a job, check the database to see if all the entries with that job title have the   same hourly rate. If so, enter that into the hourly rate field but still allow the user to change it if they want to.
+      - If the user has already selected a job, check the database to see if all the entries with that job title have the same hourly rate. If so, enter that into the hourly rate field but still allow the user to change it if they want to.
         - If 2 rates exist for the same job show the more common one, if more than 2 exist, don't auto fill the rate field
     - Note (text area type field)
       - optional
@@ -92,6 +89,7 @@
   - Make sure the modal looks good with and without the optional inputs (tip in, tip out, total sales, and hourly rate)
 - Modal Testing
   - Make sure the modal looks good on multiple different devices for android and ios
+
 # StatsScreen TODO
 
 - Look into packages to display our data in some cool looking graphs
@@ -120,8 +118,12 @@
 - Make a custom icon to replace the marked day dot
 
 # Bugs
+
 - Fix this error or at least figure out what it means and if it needs to be fixed
   - `VirtualizedList: You have a large list that is slow to update - make sure your renderItem function renders components that follow React performance best practices like PureComponent, shouldComponentUpdate, etc. {"contentLength": 4875, "dt": 105431, "prevDt": 108791}`
+- Weird bug on ios where the replace database file in the file system doesn't update unless the app reloads
+  - Which doesn't make sense because we know the file is changing because we are getting data from the DB to load the information in the calendar
+    - As a workaround I added an update database button that just reloads the app
 
 # Done
 
@@ -142,7 +144,7 @@
   - We added the calClosedTimer state and a useEffect to give the calendar time to update the week after cal is closed
     - While calClosedTimer is true a we render a blank View with a high zIndex which prevents the user from pressing any buttons
 - The useEffect is mad because the getTipData function is not in the dependancy array
-    - Fixing this will require adding some useCallbacks
+  - Fixing this will require adding some useCallbacks
 - If there are no tips for the selected day, Add an image of a pile of money or something and an "Add Tips" button
   - The "Add Tips" button will open a modal
 - Continue validation for required inputs
@@ -153,24 +155,24 @@
 - Finish adding the existing values functionality for job and hourly wage
   - Update the list if the user adds a new job or hourly rate
 - Settings
-    - This will pretty much just be the filters
-      - Decide which filters should be created
-        - Cash and Credit
-          - On by default and turning off will just show a field that says money and we will store it under credit
-        - Tip in
-          - Off by default
-        - Tip out
-          - Off by default
-        - Total Sales
-          - Off by default
-        - Section
-          - Off by default
-        - Hourly Rate
-          - On by default and turning off will prevent the field from showing so we don't actually need to worry about turing off the default hourly rate functionality
-        - Default Hourly Rate
-          - On by default and turning off will clear local storage and no longer ask the user to set as default
-        - Default job title
-          - On by default and turning off will clear local storage and no longer ask the user to set as default
-      - Use local storage to store what filters the user has turned on or off
-        - We can just remove each specified TipItemInput with a ternary expression
+  - This will pretty much just be the filters
+    - Decide which filters should be created
+      - Cash and Credit
+        - On by default and turning off will just show a field that says money and we will store it under credit
+      - Tip in
+        - Off by default
+      - Tip out
+        - Off by default
+      - Total Sales
+        - Off by default
+      - Section
+        - Off by default
+      - Hourly Rate
+        - On by default and turning off will prevent the field from showing so we don't actually need to worry about turing off the default hourly rate functionality
+      - Default Hourly Rate
+        - On by default and turning off will clear local storage and no longer ask the user to set as default
+      - Default job title
+        - On by default and turning off will clear local storage and no longer ask the user to set as default
+    - Use local storage to store what filters the user has turned on or off
+      - We can just remove each specified TipItemInput with a ternary expression
 - Get the app on Stephanie's iPhone
