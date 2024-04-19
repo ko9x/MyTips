@@ -61,7 +61,7 @@ export default function AddTipButton({onPressFunc, iconName, buttonText}: any) {
           shadowOpacity: 0.5,
           shadowOffset: {width: 0, height: 2},
           shadowRadius: 2.5,
-          elevation: 5,
+          elevation: 3,
         },
       ]}
       onPress={() => {
