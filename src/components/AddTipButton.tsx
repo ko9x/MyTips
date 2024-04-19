@@ -58,10 +58,10 @@ export default function AddTipButton({onPressFunc, iconName, buttonText}: any) {
           backgroundColor: pressed ? Colors.dark : Colors.primary,
           borderRadius: 20,
           shadowColor: 'black',
-          shadowOpacity: 0.2,
-          shadowOffset: {width: 0, height: 3},
-          shadowRadius: 5,
-          elevation: 3,
+          shadowOpacity: 0.5,
+          shadowOffset: {width: 0, height: 2},
+          shadowRadius: 2.5,
+          elevation: 5,
         },
       ]}
       onPress={() => {
