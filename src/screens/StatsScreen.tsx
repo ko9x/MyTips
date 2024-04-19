@@ -23,14 +23,11 @@ export default function StatsScreen(): React.JSX.Element {
   };
   const barChartConfig = {
     backgroundGradientFrom: '#FFFFFF',
-    // backgroundGradientFromOpacity: 0,
     backgroundGradientTo: '#FFFFFF',
-    // backgroundGradientToOpacity: 0.5,
-    color: (opacity = 1) => `rgba(33, 153, 91, ${opacity})`,
-    strokeWidth: 2, // optional, default 3
+    color: (opacity = 1) => `rgba(33, 153, 91, ${opacity})`, // rgba version of Colors.Dark
+    strokeWidth: 2,
     decimalPlaces: 0,
     barPercentage: 0.5,
-    useShadowColorFromDataset: false, // optional
   };
   const bezierData = {
     labels: [
@@ -65,17 +62,7 @@ export default function StatsScreen(): React.JSX.Element {
     ],
   };
   return (
-    <View
-      style={{
-        justifyContent: 'center',
-        alignItems: 'center',
-        shadowColor: 'black',
-        shadowOpacity: 0.5,
-        shadowOffset: {width: 0, height: 2},
-        shadowRadius: 2.5,
-        elevation: 3,
-        marginHorizontal: 5,
-      }}>
+    <View style={styles.container}>
       <LineChart
         data={bezierData}
         width={screenWidth}
@@ -100,8 +87,19 @@ export default function StatsScreen(): React.JSX.Element {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 5,
+  },
   chartContainer: {
     marginVertical: 8,
     borderRadius: 5,
+    backgroundColor: Colors.white,
+    shadowColor: 'black',
+    shadowOpacity: 0.5,
+    shadowOffset: {width: 0, height: 2},
+    shadowRadius: 2.5,
+    elevation: 3,
   },
 });
