@@ -1,8 +1,26 @@
 # What to do next
 
-- Stats
+- Figure out a way to create a database file with a ton of realistic data and import it 
+- Get real data from the database to populate the charts
 
-  - Find a library that can turn our data into graphs and other displays to vizualize the data
+- Stats
+    - Data
+      - Total income all time
+        - Average for each year
+        - Average for each month
+          - So the user can see which month they make the most money
+        - Average for each day of the week
+          - So the user can see which day of the week they make the most money
+        - Average for each section
+          - Only show section data if the database has instances of it
+      - Total income since the start of the year
+        - Total for each month during the year
+      - Total income for each month
+        - Total for each day during that month
+      - Total income for the last 365 days
+        - Plot each month
+      - Total income for the last 30 days
+        - plot each day
 
     - Graphs
       - Total income
@@ -21,6 +39,9 @@
           - If the user isn't tracking sections maybe have a note saying they should
 
     - Talk to Stephanie and see which stats she would like to see
+
+    - Settings toggle for different charts?
+      - This is more of a todo later
 
 # General TODO
 
@@ -116,6 +137,7 @@
 
 - Add a fade transition which you switch tabs
 - Make a custom icon to replace the marked day dot
+- Give the user the option to turn on or off different charts in the stats tab
 
 # Bugs
 
