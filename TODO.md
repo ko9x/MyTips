@@ -3,7 +3,7 @@
 - Figure out a way to create a database file with a ton of realistic data and import it 
 - Get real data from the database to populate the charts
 
-- Stats
+# Stats Screen
     - Data
       - Total income all time
         - Average for each year
@@ -43,6 +43,16 @@
     - Settings toggle for different charts?
       - This is more of a todo later
 
+# Settings Screen
+- Reminders
+  - Add tip reminder
+    - This will be a modal that allows the user to select which days they would like to be reminded and a time
+  - Back up reminder
+    - This will be a modal that pops up and allows the user to set an interval of time to be reminded to backup the database
+
+  - We should be able to do some sort of lockscreen banner like bill tracker does
+    - See what other tip apps do
+
 # General TODO
 
 - Get an Android device
@@ -57,87 +67,25 @@
   - We would need to delete the import from the package.json
     - Would we also need to remove it from the podlock file or would removing it from the package.json prevent it from getting added to the podlock file?
 
-# Database TODO
-
-# TipProvider TODO
-
-- Create the rest of the functions needed to supply the data we need
-
-# HomeScreen TODO
-
-- General
-- Main
-  - Find a better position for the "Today" button
-    - It is currently commented out
-- Tip Modal
-  - Add a Tips Section with the following inputs
-    - cash amount
-      - ensure at least one of cash or credit has an amount entered
-    - credit amount
-      - ensure at least one of cash or credit has an amount entered
-    - tip in
-      - optional
-    - tip out
-      - optional
-    - total sales
-      - optional
-  - Add Job Section with the following inputs
-    - Job title
-      - Job must have a value entered
-      - Search the database for existing jobs and display a list. Also have an option to enter a new job title
-    - Hours
-      - Make sure at least one of hours and minutes has a value entered
-      - Only allow whole numbers
-    - Minutes
-    - Make sure at least one of hours and minutes has a value entered
-      - Only allow whole numbers
-    - Hourly rate
-      - optional
-        - If a value is entered it must follow a pattern of either a whole number or a number with one decimal point
-          - Android gives the user a keyboard that includes a coma, a dash and a space key
-            - We need to make sure a user can't send a value with one of those characters to the database
-      - If the user has already selected a job, check the database to see if all the entries with that job title have the same hourly rate. If so, enter that into the hourly rate field but still allow the user to change it if they want to.
-        - If 2 rates exist for the same job show the more common one, if more than 2 exist, don't auto fill the rate field
-    - Note (text area type field)
-      - optional
-- Main Styling
-  - Add a $ icon instead of the dot. Use the multidot option to show days with larger tips
-  - Have a subtitle under the date in the DayItem that says the tip size
-  - When the calendar is opens and closes I would like the MultiItemBar to have an animation like the calendar does
-  - Add some icons to the DayItem component to give it a litle more character
-  - See if we can add some shadow to the white `selectedDay` icon
-- Modal Styling
-  - Make sure the modal looks good with and without the optional inputs (tip in, tip out, total sales, and hourly rate)
-- Modal Testing
-  - Make sure the modal looks good on multiple different devices for android and ios
-
-# StatsScreen TODO
-
-- Look into packages to display our data in some cool looking graphs
-
-# ExportScreen TODO
-
-- Look into packages that will allow us to export our database in an excel or csv file.
-  - Also want to be able to import the data
-
-# SettingsScreen TODO
-
-- Reminder
-  - This will be a modal that allows the user to select which days they would like to be reminded and a time
-    - Hopefully this isn't too difficult to implement
-- Sliders to activiate/deactivate the following options
-  - Cash & Credit
-  - Hourly Wages
-  - Tip In
-  - Tip Out
-  - Total Sales
-  - Section
 
 # What to do later
 
 - Add a fade transition which you switch tabs
 - Make a custom icon to replace the marked day dot
 - Give the user the option to turn on or off different charts in the stats tab
+
+# HomeScreen Later
+
+- General
+  - Find a better position for the "Today" button
+    - It is currently commented out
+      - Do users even want it?
+- Styling
+  - Add a $ icon instead of the dot. Use the multidot option to show days with larger tips
+  - Have a subtitle under the date in the DayItem that says the tip size
+  - When the calendar opens and closes I would like the MultiItemBar to have an animation like the calendar does
+  - Add some icons to the DayItem component to give it a litle more character
+  - See if we can add some shadow to the white `selectedDay` icon
 
 # Bugs
 
