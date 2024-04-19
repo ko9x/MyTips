@@ -12,16 +12,16 @@ const Tab = createBottomTabNavigator();
 
 const tabs = [
   {
-    title: 'Home',
-    name: 'MyTips',
-    screen: HomeScreen,
-    icon: 'home',
-  },
-  {
     title: 'Stats',
     name: 'Stats',
     screen: StatsScreen,
     icon: 'chart-bar',
+  },
+  {
+    title: 'Home',
+    name: 'MyTips',
+    screen: HomeScreen,
+    icon: 'home',
   },
   {
     title: 'Database',
